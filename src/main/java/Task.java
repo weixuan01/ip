@@ -15,6 +15,14 @@ public class Task {
         isDone = false;
     }
 
+    public String getTaskName() {
+        return taskName;
+    }
+
+    public boolean getIsDone() {
+        return isDone;
+    }
+
     public String toString() {
         if (isDone) {
             return "[X] " + taskName;
