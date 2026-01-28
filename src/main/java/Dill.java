@@ -46,10 +46,42 @@ public class Dill {
                 System.out.println("      " + tasks.get(taskIndex));
                 System.out.println(LINE);
             }
+            else if (userInput.startsWith("todo")) {
+                String taskName = userInput.substring(5);
+                tasks.add(new ToDo(taskName));
+                System.out.println(LINE);
+                System.out.println("    Got it. I've added this task:");
+                System.out.println("      " + tasks.getLast());
+                System.out.println("    Now you have " + tasks.size() + " tasks in the list");
+                System.out.println(LINE);
+            }
+            else if (userInput.startsWith("deadline")) {
+                String taskName = userInput.substring(9, userInput.indexOf("/by") - 1);
+                String deadline = userInput.substring(userInput.indexOf("/by") + 4);
+                tasks.add(new Deadline(taskName, deadline));
+                System.out.println(LINE);
+                System.out.println("    Got it. I've added this task:");
+                System.out.println("      " + tasks.getLast());
+                System.out.println("    Now you have " + tasks.size() + " tasks in the list");
+                System.out.println(LINE);
+            }
+            else if (userInput.startsWith("event")) {
+                String taskName = userInput.substring(6, userInput.indexOf("/start") - 1);
+                String startTime = userInput.substring(userInput.indexOf("/start") + 7, userInput.indexOf("/end") - 1);
+                String endTime = userInput.substring(userInput.indexOf("/end") + 5);
+                tasks.add(new Event(taskName, startTime, endTime));
+                System.out.println(LINE);
+                System.out.println("    Got it. I've added this task:");
+                System.out.println("      " + tasks.getLast());
+                System.out.println("    Now you have " + tasks.size() + " tasks in the list");
+                System.out.println(LINE);
+            }
             else {
                 tasks.add(new Task(userInput));
                 System.out.println(LINE);
-                System.out.println("    added: " + userInput);
+                System.out.println("    Got it. I've added this task:");
+                System.out.println("      " + tasks.getLast());
+                System.out.println("    Now you have " + tasks.size() + " tasks in the list");
                 System.out.println(LINE);
             }
         }
