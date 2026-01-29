@@ -1,4 +1,4 @@
-public class Task {
+public abstract class Task {
     private String taskName;
     private boolean isDone;
 
@@ -13,14 +13,6 @@ public class Task {
 
     public void markUndone() {
         isDone = false;
-    }
-
-    public String getTaskName() {
-        return taskName;
-    }
-
-    public boolean getIsDone() {
-        return isDone;
     }
 
     public String toString() {

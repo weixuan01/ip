@@ -9,9 +9,6 @@ public class Event extends Task {
     }
 
     public String toString() {
-        if (getIsDone()) {
-            return "[E][X] " + getTaskName() + " (start: " + startTime + ", end: " + endTime + ")";
-        }
-        return "[E][ ] " + getTaskName() + " (start: " + startTime + ", end: " + endTime + ")";
+        return "[E]" + super.toString() + " (start: " + startTime + ", end: " + endTime + ")";
     }
 }

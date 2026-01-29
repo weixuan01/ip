@@ -20,11 +20,6 @@ public class Dill {
         System.out.println(LINE);
     }
 
-    private static void addTask(String userInput) {
-        tasks.add(new Task(userInput));
-        printTaskAdded();
-    }
-
     private static void printTaskList() {
         System.out.println(LINE);
         System.out.println("    Here are the tasks in your list:");
@@ -103,7 +98,7 @@ public class Dill {
             } else if (userInput.startsWith("event ")) {
                 addEvent(userInput);
             } else {
-                addTask(userInput);
+                System.out.println("Invalid input: task must be todo, deadline, or event.");
             }
         }
     }

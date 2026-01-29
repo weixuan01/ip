@@ -4,9 +4,6 @@ public class ToDo extends Task {
     }
 
     public String toString() {
-        if (getIsDone()) {
-            return "[T][X] " + getTaskName();
-        }
-        return "[T][ ] " + getTaskName();
+        return "[T]" + super.toString();
     }
 }

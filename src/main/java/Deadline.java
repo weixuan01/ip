@@ -7,9 +7,6 @@ public class Deadline extends Task {
     }
 
     public String toString() {
-        if (getIsDone()) {
-            return "[D][X] " + getTaskName() + " (by: " + date + ")";
-        }
-        return "[D][ ] " + getTaskName() + " (by: " + date + ")";
+        return "[D]" + super.toString() + " (by: " + date + ")";
     }
 }
