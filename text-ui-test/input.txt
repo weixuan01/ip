@@ -1,0 +1,28 @@
+list
+task 1
+task 2
+list
+mark 1
+list
+unmark 1
+list
+todo todo task 1
+list
+task 3
+list
+mark 3
+list
+deadline deadline task 1 /by 14th March
+list
+event event task 1 /start 10th Feb 0800 /end 11th Feb 2100
+list
+mark 5
+list
+mark 6
+list
+unmark 6
+task 4
+list
+mark 7
+list
+bye

@@ -77,7 +77,7 @@ public class Dill {
         System.out.println(LINE);
         System.out.println("    Got it. I've added this task:");
         System.out.println("      " + tasks.getLast());
-        System.out.println("    Now you have " + tasks.size() + " tasks in the list");
+        System.out.println("    Now you have " + tasks.size() + " tasks in the list.");
         System.out.println(LINE);
     }
 
