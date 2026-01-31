@@ -76,7 +76,7 @@ public class Dill {
     private static void addDeadline(String userInput) throws InvalidCommandException{
         int byIndex = userInput.indexOf("/by ");
         if (!userInput.startsWith("deadline ") || userInput.equals("deadline ") || byIndex == 9) {
-            throw new InvalidCommandException("Please specify deadline task name");
+            throw new InvalidCommandException("Please specify deadline task name.");
         }
         if (byIndex < 0) {
             throw new InvalidCommandException("Please specify a deadline.");
@@ -124,8 +124,8 @@ public class Dill {
         System.out.println("        todo <task_name>: adds a todo task.");
         System.out.println("        deadline <task_name> /by <deadline>: adds a deadline task.");
         System.out.println("        event <task_name> /start <start_time> /end <end_time>: adds an event task.");
-        System.out.println("        mark <entry_number>: marks task as done.");
-        System.out.println("        unmark <entry_number>: marks task as undone.");
+        System.out.println("        mark <entry_number>: marks a task as done.");
+        System.out.println("        unmark <entry_number>: marks a task as undone.");
         System.out.println(LINE);
     }
 
