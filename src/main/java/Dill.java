@@ -145,30 +145,62 @@ public class Dill {
         System.out.println(LINE);
     }
 
+    private static Command extractCommand(String userInput) {
+        if (userInput.equals("bye")) {
+            return Command.EXIT;
+        }
+        if (userInput.equals("list")) {
+            return Command.LIST;
+        }
+        if (userInput.startsWith("mark")) {
+            return Command.MARK;
+        }
+        if (userInput.startsWith("unmark")) {
+            return Command.UNMARK;
+        }
+        if (userInput.startsWith("todo")) {
+            return Command.TODO;
+        }
+        if (userInput.startsWith("deadline")) {
+            return Command.DEADLINE;
+        }
+        if (userInput.startsWith("event")) {
+            return Command.EVENT;
+        }
+        if (userInput.equals("help")) {
+            return Command.HELP;
+        }
+        if (userInput.startsWith("delete")) {
+            return Command.DELETE;
+        }
+        return Command.UNKNOWN;
+    }
+
     public static void main(String[] args) {
         printGreeting();
         Scanner scanner = new Scanner(System.in);
         while (true) {
             try {
                 String userInput = scanner.nextLine();
-                if (userInput.equals("bye")) {
+                Command cmd = extractCommand(userInput);
+                if (cmd == Command.EXIT) {
                     printExit();
                     break;
-                } else if (userInput.equals("list")) {
+                } else if (cmd == Command.LIST) {
                     printTaskList();
-                } else if (userInput.startsWith("mark")) {
+                } else if (cmd == Command.MARK) {
                     markTask(userInput);
-                } else if (userInput.startsWith("unmark")) {
+                } else if (cmd == Command.UNMARK) {
                     unmarkTask(userInput);
-                } else if (userInput.startsWith("todo")) {
+                } else if (cmd == Command.TODO) {
                     addToDo(userInput);
-                } else if (userInput.startsWith("deadline")) {
+                } else if (cmd == Command.DEADLINE) {
                     addDeadline(userInput);
-                } else if (userInput.startsWith("event")) {
+                } else if (cmd == Command.EVENT) {
                     addEvent(userInput);
-                } else if (userInput.equals("help")) {
+                } else if (cmd == Command.HELP) {
                     printHelp();
-                } else if (userInput.startsWith("delete")) {
+                } else if (cmd == Command.DELETE) {
                     deleteTask(userInput);
                 } else {
                     throw new InvalidCommandException("I'm not quite sure what you meant.\n    Type \"help\" if you wish to view a list of available commands.");
