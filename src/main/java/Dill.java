@@ -129,6 +129,22 @@ public class Dill {
         System.out.println(LINE);
     }
 
+    private static void deleteTask(String userInput) throws InvalidCommandException {
+        if (!userInput.startsWith("delete ") || userInput.equals("delete ")) {
+            throw new InvalidCommandException("Please specify an entry to delete.");
+        }
+        int taskIndex = Integer.parseInt(userInput.substring(7)) - 1;
+        if (taskIndex > tasks.size() - 1 || taskIndex < 0) {
+            throw new InvalidCommandException("Cannot delete an entry that is not in the list!");
+        }
+        Task remove = tasks.remove(taskIndex);
+        System.out.println(LINE);
+        System.out.println("    Noted. I've removed this task:");
+        System.out.println("      " + remove);
+        System.out.println("    Now you have " + tasks.size() + " tasks in the list.");
+        System.out.println(LINE);
+    }
+
     public static void main(String[] args) {
         printGreeting();
         Scanner scanner = new Scanner(System.in);
@@ -152,6 +168,8 @@ public class Dill {
                     addEvent(userInput);
                 } else if (userInput.equals("help")) {
                     printHelp();
+                } else if (userInput.startsWith("delete")) {
+                    deleteTask(userInput);
                 } else {
                     throw new InvalidCommandException("I'm not quite sure what you meant.\n    Type \"help\" if you wish to view a list of available commands.");
                 }
