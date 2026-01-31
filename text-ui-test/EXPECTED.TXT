@@ -3,63 +3,44 @@
     What can I do for you?
     ____________________________________________________________
     ____________________________________________________________
-    Here are the tasks in your list:
+    There are no tasks in the list!
     ____________________________________________________________
     ____________________________________________________________
-    Got it. I've added this task:
-      [ ] task 1
-    Now you have 1 tasks in the list.
+    I'm not quite sure what you meant.
+    Type "help" if you wish to view a list of available commands.
     ____________________________________________________________
     ____________________________________________________________
-    Got it. I've added this task:
-      [ ] task 2
-    Now you have 2 tasks in the list.
+    Here are the available commands:
+        list: displays the tasks in your list.
+        todo <task_name>: adds a todo task.
+        deadline <task_name> /by <deadline>: adds a deadline task.
+        event <task_name> /start <start_time> /end <end_time>: adds an event task.
+        mark <entry_number>: marks a task as done.
+        unmark <entry_number>: marks a task as undone.
     ____________________________________________________________
     ____________________________________________________________
-    Here are the tasks in your list:
-    1.[ ] task 1
-    2.[ ] task 2
+    There are no tasks in the list!
     ____________________________________________________________
     ____________________________________________________________
-    Nice! I've marked this task as done:
-      [X] task 1
+    Cannot mark an entry that is not in the list!
     ____________________________________________________________
     ____________________________________________________________
-    Here are the tasks in your list:
-    1.[X] task 1
-    2.[ ] task 2
+    Please specify an entry to mark.
     ____________________________________________________________
     ____________________________________________________________
-    OK, I've marked this task as not done yet:
-      [ ] task 1
+    Cannot unmark an entry that is not in the list!
     ____________________________________________________________
     ____________________________________________________________
-    Here are the tasks in your list:
-    1.[ ] task 1
-    2.[ ] task 2
+    Please specify todo task name.
     ____________________________________________________________
     ____________________________________________________________
     Got it. I've added this task:
       [T][ ] todo task 1
-    Now you have 3 tasks in the list.
+    Now you have 1 tasks in the list.
     ____________________________________________________________
     ____________________________________________________________
     Here are the tasks in your list:
-    1.[ ] task 1
-    2.[ ] task 2
-    3.[T][ ] todo task 1
-    ____________________________________________________________
-    ____________________________________________________________
-    Got it. I've added this task:
-      [ ] task 3
-    Now you have 4 tasks in the list.
-    ____________________________________________________________
-    ____________________________________________________________
-    Here are the tasks in your list:
-    1.[ ] task 1
-    2.[ ] task 2
-    3.[T][ ] todo task 1
-    4.[ ] task 3
+    1.[T][ ] todo task 1
     ____________________________________________________________
     ____________________________________________________________
     Nice! I've marked this task as done:
@@ -67,50 +48,52 @@
     ____________________________________________________________
     ____________________________________________________________
     Here are the tasks in your list:
-    1.[ ] task 1
-    2.[ ] task 2
-    3.[T][X] todo task 1
-    4.[ ] task 3
+    1.[T][X] todo task 1
+    ____________________________________________________________
+    ____________________________________________________________
+    Please specify deadline task name.
+    ____________________________________________________________
+    ____________________________________________________________
+    Please specify deadline task name.
+    ____________________________________________________________
+    ____________________________________________________________
+    Please specify deadline task name.
+    ____________________________________________________________
+    ____________________________________________________________
+    Please specify a deadline.
     ____________________________________________________________
     ____________________________________________________________
     Got it. I've added this task:
-      [D][ ] deadline task 1 (by: 14th March)
-    Now you have 5 tasks in the list.
+      [D][ ] assignment1 (by: 14th March)
+    Now you have 2 tasks in the list.
     ____________________________________________________________
     ____________________________________________________________
     Here are the tasks in your list:
-    1.[ ] task 1
-    2.[ ] task 2
-    3.[T][X] todo task 1
-    4.[ ] task 3
-    5.[D][ ] deadline task 1 (by: 14th March)
+    1.[T][X] todo task 1
+    2.[D][ ] assignment1 (by: 14th March)
+    ____________________________________________________________
+    ____________________________________________________________
+    Please specify event task name.
+    ____________________________________________________________
+    ____________________________________________________________
+    Please specify event task name.
+    ____________________________________________________________
+    ____________________________________________________________
+    Please specify an end time.
+    ____________________________________________________________
+    ____________________________________________________________
+    Please specify start time followed by end time, in that order.
     ____________________________________________________________
     ____________________________________________________________
     Got it. I've added this task:
       [E][ ] event task 1 (start: 10th Feb 0800, end: 11th Feb 2100)
-    Now you have 6 tasks in the list.
+    Now you have 3 tasks in the list.
     ____________________________________________________________
     ____________________________________________________________
     Here are the tasks in your list:
-    1.[ ] task 1
-    2.[ ] task 2
-    3.[T][X] todo task 1
-    4.[ ] task 3
-    5.[D][ ] deadline task 1 (by: 14th March)
-    6.[E][ ] event task 1 (start: 10th Feb 0800, end: 11th Feb 2100)
-    ____________________________________________________________
-    ____________________________________________________________
-    Nice! I've marked this task as done:
-      [D][X] deadline task 1 (by: 14th March)
-    ____________________________________________________________
-    ____________________________________________________________
-    Here are the tasks in your list:
-    1.[ ] task 1
-    2.[ ] task 2
-    3.[T][X] todo task 1
-    4.[ ] task 3
-    5.[D][X] deadline task 1 (by: 14th March)
-    6.[E][ ] event task 1 (start: 10th Feb 0800, end: 11th Feb 2100)
+    1.[T][X] todo task 1
+    2.[D][ ] assignment1 (by: 14th March)
+    3.[E][ ] event task 1 (start: 10th Feb 0800, end: 11th Feb 2100)
     ____________________________________________________________
     ____________________________________________________________
     Nice! I've marked this task as done:
@@ -118,45 +101,35 @@
     ____________________________________________________________
     ____________________________________________________________
     Here are the tasks in your list:
-    1.[ ] task 1
-    2.[ ] task 2
-    3.[T][X] todo task 1
-    4.[ ] task 3
-    5.[D][X] deadline task 1 (by: 14th March)
-    6.[E][X] event task 1 (start: 10th Feb 0800, end: 11th Feb 2100)
-    ____________________________________________________________
-    ____________________________________________________________
-    OK, I've marked this task as not done yet:
-      [E][ ] event task 1 (start: 10th Feb 0800, end: 11th Feb 2100)
-    ____________________________________________________________
-    ____________________________________________________________
-    Got it. I've added this task:
-      [ ] task 4
-    Now you have 7 tasks in the list.
-    ____________________________________________________________
-    ____________________________________________________________
-    Here are the tasks in your list:
-    1.[ ] task 1
-    2.[ ] task 2
-    3.[T][X] todo task 1
-    4.[ ] task 3
-    5.[D][X] deadline task 1 (by: 14th March)
-    6.[E][ ] event task 1 (start: 10th Feb 0800, end: 11th Feb 2100)
-    7.[ ] task 4
+    1.[T][X] todo task 1
+    2.[D][ ] assignment1 (by: 14th March)
+    3.[E][X] event task 1 (start: 10th Feb 0800, end: 11th Feb 2100)
     ____________________________________________________________
     ____________________________________________________________
     Nice! I've marked this task as done:
-      [X] task 4
+      [D][X] assignment1 (by: 14th March)
     ____________________________________________________________
     ____________________________________________________________
     Here are the tasks in your list:
-    1.[ ] task 1
-    2.[ ] task 2
-    3.[T][X] todo task 1
-    4.[ ] task 3
-    5.[D][X] deadline task 1 (by: 14th March)
-    6.[E][ ] event task 1 (start: 10th Feb 0800, end: 11th Feb 2100)
-    7.[X] task 4
+    1.[T][X] todo task 1
+    2.[D][X] assignment1 (by: 14th March)
+    3.[E][X] event task 1 (start: 10th Feb 0800, end: 11th Feb 2100)
+    ____________________________________________________________
+    ____________________________________________________________
+    OK, I've marked this task as not done yet:
+      [T][ ] todo task 1
+    ____________________________________________________________
+    ____________________________________________________________
+    Got it. I've added this task:
+      [T][ ] todo task 2
+    Now you have 4 tasks in the list.
+    ____________________________________________________________
+    ____________________________________________________________
+    Here are the tasks in your list:
+    1.[T][ ] todo task 1
+    2.[D][X] assignment1 (by: 14th March)
+    3.[E][X] event task 1 (start: 10th Feb 0800, end: 11th Feb 2100)
+    4.[T][ ] todo task 2
     ____________________________________________________________
     ____________________________________________________________
     Bye. Hope to see you again soon!
