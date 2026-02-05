@@ -22,12 +22,14 @@ deadline/by 14th March
 deadline /by 14th March
 deadline test
 deadline assignment1 /by 14th March
+deadline assignment1 /by 2026-03-14
 list
 event
 event /start 1000
 event test /start 1000
 event test /end 1000 /start 1100
-event event task 1 /start 10th Feb 0800 /end 11th Feb 2100
+event event task 1 /start 10th Feb /end 11th Feb
+event event task 1 /start 2026-03-14 /end 2026-05-18
 list
 mark 3
 list

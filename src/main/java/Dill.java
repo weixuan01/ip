@@ -5,6 +5,9 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
+
 
 public class Dill {
     public static final String CHATBOT_NAME = "Dill";
@@ -95,8 +98,9 @@ public class Dill {
             throw new InvalidCommandException("Please specify a deadline.");
         }
         String taskName = userInput.substring(9, byIndex - 1);
-        String deadline = userInput.substring(byIndex + 4);
-        tasks.add(new Deadline(taskName, deadline));
+        String rawDate = userInput.substring(byIndex + 4);
+        LocalDate date = LocalDate.parse(rawDate);
+        tasks.add(new Deadline(taskName, date));
         printTaskAdded();
         saveTasks();
     }
@@ -117,9 +121,11 @@ public class Dill {
             throw new InvalidCommandException("Please specify start time followed by end time, in that order.");
         }
         String taskName = userInput.substring(6, userInput.indexOf("/start") - 1);
-        String startTime = userInput.substring(userInput.indexOf("/start") + 7, userInput.indexOf("/end") - 1);
-        String endTime = userInput.substring(userInput.indexOf("/end") + 5);
-        tasks.add(new Event(taskName, startTime, endTime));
+        String rawStartDate = userInput.substring(userInput.indexOf("/start") + 7, userInput.indexOf("/end") - 1);
+        String rawEndDate = userInput.substring(userInput.indexOf("/end") + 5);
+        LocalDate startDate = LocalDate.parse(rawStartDate);
+        LocalDate endDate = LocalDate.parse(rawEndDate);
+        tasks.add(new Event(taskName, startDate, endDate));
         printTaskAdded();
         saveTasks();
     }
@@ -137,8 +143,8 @@ public class Dill {
         System.out.println("    Here are the available commands:");
         System.out.println("        list: displays the tasks in your list.");
         System.out.println("        todo <task_name>: adds a todo task.");
-        System.out.println("        deadline <task_name> /by <deadline>: adds a deadline task.");
-        System.out.println("        event <task_name> /start <start_time> /end <end_time>: adds an event task.");
+        System.out.println("        deadline <task_name> /by <yyyy-mm-dd>: adds a deadline task.");
+        System.out.println("        event <task_name> /start <yyyy-mm-dd> /end <yyyy-mm-dd>: adds an event task.");
         System.out.println("        mark <entry_number>: marks a task as done.");
         System.out.println("        unmark <entry_number>: marks a task as undone.");
         System.out.println(LINE);
@@ -217,14 +223,14 @@ public class Dill {
 
     private static Task decodeTask(String[] taskVars) {
         switch (taskVars[0]) {
-            case "T":
-                return new ToDo(taskVars[2]);
-            case "D":
-                return new Deadline(taskVars[2], taskVars[3]);
-            case "E":
-                return new Event(taskVars[2], taskVars[3], taskVars[4]);
-            default:
-                return null;
+        case "T":
+            return new ToDo(taskVars[2]);
+        case "D":
+            return new Deadline(taskVars[2], LocalDate.parse(taskVars[3]));
+        case "E":
+            return new Event(taskVars[2], LocalDate.parse(taskVars[3]), LocalDate.parse(taskVars[4]));
+        default:
+            return null;
         }
     }
 
@@ -277,6 +283,10 @@ public class Dill {
             } catch (InvalidCommandException e) {
                 System.out.println(LINE);
                 System.out.println("    " + e.getMessage());
+                System.out.println(LINE);
+            } catch (DateTimeParseException e) {
+                System.out.println(LINE);
+                System.out.println("    Please enter dates in the format yyyy-mm-dd.");
                 System.out.println(LINE);
             }
         }
