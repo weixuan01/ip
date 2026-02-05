@@ -1,18 +1,21 @@
-public class Event extends Task {
-    private String startTime;
-    private String endTime;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
-    public Event(String taskName, String startTime, String endTime) {
+public class Event extends Task {
+    private LocalDate startDate;
+    private LocalDate endDate;
+
+    public Event(String taskName, LocalDate startDate, LocalDate endDate) {
         super(taskName);
-        this.startTime = startTime;
-        this.endTime = endTime;
+        this.startDate = startDate;
+        this.endDate = endDate;
     }
 
     public String toString() {
-        return "[E]" + super.toString() + " (start: " + startTime + ", end: " + endTime + ")";
+        return "[E]" + super.toString() + " (start: " + startDate.format(DateTimeFormatter.ofPattern("dd MMM yyyy")) + ", end: " + endDate.format(DateTimeFormatter.ofPattern("dd MMM yyyy")) + ")";
     }
 
     public String toFileString() {
-        return "E | " + super.toFileString() + " | " + startTime + " | " + endTime;
+        return "E | " + super.toFileString() + " | " + startDate + " | " + endDate;
     }
 }
