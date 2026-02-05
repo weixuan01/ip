@@ -11,4 +11,8 @@ public class Event extends Task {
     public String toString() {
         return "[E]" + super.toString() + " (start: " + startTime + ", end: " + endTime + ")";
     }
+
+    public String toFileString() {
+        return "E | " + super.toFileString() + " | " + startTime + " | " + endTime;
+    }
 }

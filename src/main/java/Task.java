@@ -21,4 +21,11 @@ public abstract class Task {
         }
         return "[ ] " + taskName;
     }
+
+    public String toFileString() {
+        if (isDone) {
+            return "1 | " + taskName;
+        }
+        return "0 | " + taskName;
+    }
 }

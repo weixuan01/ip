@@ -1,15 +1,25 @@
 import java.util.Scanner;
 import java.util.List;
 import java.util.ArrayList;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class Dill {
     public static final String CHATBOT_NAME = "Dill";
     private static final String LINE = "    ____________________________________________________________";
     private static final List<Task> tasks = new ArrayList<>();
+    private static final File DATA_FILE = new File("./data/dill.txt");
 
     private static void printGreeting() {
         System.out.println(LINE);
         System.out.println("    Hello! I'm " + CHATBOT_NAME + ".");
+        if (tasks.isEmpty()) {
+            System.out.println("    I could not find any previous tasks. Let's start fresh!");
+        } else {
+            System.out.println("    I found " + tasks.size() + " previously saved tasks.");
+        }
         System.out.println("    What can I do for you?");
         System.out.println(LINE);
     }
@@ -47,6 +57,7 @@ public class Dill {
         System.out.println("    Nice! I've marked this task as done:");
         System.out.println("      " + tasks.get(taskIndex));
         System.out.println(LINE);
+        saveTasks();
     }
 
     private static void unmarkTask(String userInput) throws InvalidCommandException {
@@ -62,6 +73,7 @@ public class Dill {
         System.out.println("    OK, I've marked this task as not done yet:");
         System.out.println("      " + tasks.get(taskIndex));
         System.out.println(LINE);
+        saveTasks();
     }
 
     private static void addToDo(String userInput) throws InvalidCommandException {
@@ -71,6 +83,7 @@ public class Dill {
         String taskName = userInput.substring(5);
         tasks.add(new ToDo(taskName));
         printTaskAdded();
+        saveTasks();
     }
 
     private static void addDeadline(String userInput) throws InvalidCommandException{
@@ -85,6 +98,7 @@ public class Dill {
         String deadline = userInput.substring(byIndex + 4);
         tasks.add(new Deadline(taskName, deadline));
         printTaskAdded();
+        saveTasks();
     }
 
     private static void addEvent(String userInput) throws InvalidCommandException {
@@ -107,6 +121,7 @@ public class Dill {
         String endTime = userInput.substring(userInput.indexOf("/end") + 5);
         tasks.add(new Event(taskName, startTime, endTime));
         printTaskAdded();
+        saveTasks();
     }
 
     private static void printTaskAdded() {
@@ -143,6 +158,7 @@ public class Dill {
         System.out.println("      " + remove);
         System.out.println("    Now you have " + tasks.size() + " tasks in the list.");
         System.out.println(LINE);
+        saveTasks();
     }
 
     private static Command extractCommand(String userInput) {
@@ -176,7 +192,56 @@ public class Dill {
         return Command.UNKNOWN;
     }
 
+    private static void loadTasks() {
+        try {
+            Scanner scanner = new Scanner(DATA_FILE);
+            while (scanner.hasNextLine()) {
+                String[] taskVars = scanner.nextLine().split(" \\| ");
+                Task task = decodeTask(taskVars);
+                if (task != null) {
+                    if (taskVars[1].equals("1")) {
+                        task.markDone();
+                    }
+                    tasks.add(task);
+                }
+            }
+        } catch (FileNotFoundException e1) {
+            try {
+                DATA_FILE.getParentFile().mkdirs(); // create data folder if it doesn't exist
+                DATA_FILE.createNewFile();
+            } catch (IOException e2) {
+                System.out.println("    Error creating dill.txt");
+            }
+        }
+    }
+
+    private static Task decodeTask(String[] taskVars) {
+        switch (taskVars[0]) {
+            case "T":
+                return new ToDo(taskVars[2]);
+            case "D":
+                return new Deadline(taskVars[2], taskVars[3]);
+            case "E":
+                return new Event(taskVars[2], taskVars[3], taskVars[4]);
+            default:
+                return null;
+        }
+    }
+
+    private static void saveTasks() {
+        try {
+            FileWriter fileWriter = new FileWriter(DATA_FILE);
+            for (Task t : tasks) {
+                fileWriter.write(t.toFileString() + "\n");
+            }
+            fileWriter.close();
+        } catch (IOException e) {
+            System.out.println("    Error saving tasks to disk.");
+        }
+    }
+
     public static void main(String[] args) {
+        loadTasks();
         printGreeting();
         Scanner scanner = new Scanner(System.in);
         while (true) {
