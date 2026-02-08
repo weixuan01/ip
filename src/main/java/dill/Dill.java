@@ -36,8 +36,7 @@ public class Dill {
 
     /**
      * Starts the main loop of the chatbot.
-     * Displays a greeting message, then repeatedly reads, parses, and executes
-     * user inputs until an exit command ("bye") is given.
+     * Displays a greeting message, then reads, parses, and executes inputs until an exit command ("bye") is given.
      */
     public void start() {
         ui.displayGreeting();

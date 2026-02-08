@@ -54,7 +54,7 @@ public class UserInterface {
     /**
      * Output a system message specifying a data storage load failure.
      *
-     * @param errorMessage Specific details of the failure.
+     * @param errorMessage Message specifying details of the failure.
      */
     public void displayLoadError(String errorMessage) {
         displaySystemMessage(errorMessage + "\n" +
