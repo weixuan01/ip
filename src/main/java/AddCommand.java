@@ -5,13 +5,17 @@ public class AddCommand extends Command {
         this.task = task;
     }
 
-    public void execute(TaskList tasks, UserInterface ui, Storage storage) throws ExecutionException {
-        tasks.addTask(task); // if not successful throw exception
-        String addMessage = "    Got it. I've added this task:\n" +
-                                  "    " + task + "\n" +
-                                  "    Now you have " + tasks.getSize() + " tasks in the list.";
-        ui.displayMessage(addMessage);
-        // SAVE to DISK here
+    public void execute(TaskList tasks, UserInterface ui, Storage storage) {
+        try {
+            tasks.addTask(task);
+            String addMessage = "    Got it. I've added this task:\n" +
+                                "      " + task + "\n" +
+                                "    Now you have " + tasks.getSize() + " tasks in the list.";
+            ui.displayMessage(addMessage);
+            storage.saveTasks(tasks);
+        } catch (StorageException e) {
+            ui.displaySystemMessage(e.getMessage());
+        }
     }
 }
 

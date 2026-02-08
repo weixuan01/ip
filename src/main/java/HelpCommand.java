@@ -6,7 +6,7 @@ public class HelpCommand extends Command {
             "        deadline <task_name> /by <yyyy-mm-dd>: adds a deadline task.\n" +
             "        event <task_name> /start <yyyy-mm-dd> /end <yyyy-mm-dd>: adds an event task.\n" +
             "        mark <entry_number>: marks a task as done.\n" +
-            "        unmark <entry_number>: marks a task as undone.\n";
+            "        unmark <entry_number>: marks a task as undone.";
 
     public void execute(TaskList tasks, UserInterface ui, Storage storage) {
         ui.displayMessage(HELP_MESSAGE);
