@@ -2,7 +2,6 @@ package dill.parser;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
-
 import dill.command.Command;
 import dill.command.ListCommand;
 import dill.command.AddCommand;
@@ -16,9 +15,23 @@ import dill.task.Event;
 import dill.task.ToDo;
 import dill.exception.InvalidCommandException;
 
+/**
+ * Represents the user input interpreter of Dill.
+ */
 public class Parser {
+    /**
+     * Creates an instance of Parser.
+     */
     public Parser() {}
 
+    /**
+     * Deciphers raw user input and converts them into Commands.
+     * Handles syntax validation and parameter extraction.
+     *
+     * @param userInput The raw string input of the user.
+     * @return A specific command that can be executed by Dill.
+     * @throws InvalidCommandException If the input is unrecognizable or missing parameters.
+     */
     public static Command parse(String userInput) throws InvalidCommandException {
         if (userInput.equals("bye")) {
             return new ExitCommand();
