@@ -3,14 +3,7 @@ package dill.parser;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
-import dill.command.Command;
-import dill.command.ListCommand;
-import dill.command.AddCommand;
-import dill.command.DeleteCommand;
-import dill.command.MarkCommand;
-import dill.command.UnmarkCommand;
-import dill.command.HelpCommand;
-import dill.command.ExitCommand;
+import dill.command.*;
 import dill.task.Deadline;
 import dill.task.Event;
 import dill.task.ToDo;
@@ -46,6 +39,8 @@ public class Parser {
         }
         if (userInput.startsWith("delete")) {
             return validateDelete(userInput);
+        } if (userInput.startsWith("find")) {
+            return validateFind(userInput);
         }
         throw new InvalidCommandException("    I'm not quite sure what you meant.\n" +
                                           "    Type \"help\" if you wish to view a list of available commands.");
@@ -138,5 +133,13 @@ public class Parser {
         } catch (NumberFormatException e) {
             throw new InvalidCommandException("    Entry must be an integer!");
         }
+    }
+
+    private static Command validateFind(String userInput) throws InvalidCommandException {
+        if (!userInput.startsWith("find ") || userInput.equals("find ")) {
+            throw new InvalidCommandException("    Please specify a keyword for matching.");
+        }
+        String keyword = userInput.substring(5);
+        return new FindCommand(keyword);
     }
 }

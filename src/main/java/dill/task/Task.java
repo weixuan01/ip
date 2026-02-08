@@ -17,6 +17,10 @@ public abstract class Task {
         isDone = false;
     }
 
+    public String getTaskName() {
+        return taskName;
+    }
+
     public String toString() {
         if (isDone) {
             return "[X] " + taskName;
