@@ -27,11 +27,11 @@ public class TaskList {
     }
 
     public void markTask(int taskIndex) {
-        tasks.get(taskIndex).markDone();
+        tasks.get(taskIndex).setDone();
     }
 
     public void unmarkTask(int taskIndex) {
-        tasks.get(taskIndex).markUndone();
+        tasks.get(taskIndex).setUndone();
     }
 
     public Task deleteTask(int index) {

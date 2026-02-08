@@ -32,7 +32,7 @@ public class Storage {
                 Task task = decodeTask(taskVars);
                 if (task != null) {
                     if (taskVars[1].equals("1")) {
-                        task.markDone();
+                        task.setDone();
                     }
                     taskList.add(task);
                 }
