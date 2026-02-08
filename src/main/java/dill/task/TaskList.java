@@ -82,23 +82,43 @@ public class TaskList {
     }
 
     /**
+     * Search for tasks in the list containing the specified keyword.
+     *
+     * @param keyword The specified matching keyword.
+     * @return A formatted string representation of a task list containing all matching tasks.
+     */
+    public String findTasks(String keyword) {
+        String output = "";
+        for (int i = 0; i < tasks.size(); i++) {
+            Task t = tasks.get(i);
+            if (t.toString().contains(keyword)) {
+                output += "    " + (i + 1) + "." + t + "\n";
+            }
+        }
+        if (output.isEmpty()) {
+            return "    No matching tasks found.";
+        }
+        return "    Here are the matching tasks in your list:\n" + output.stripTrailing();
+    }
+
+    /**
      * Returns a string representation of the task list.
      *
      * @return A formatted string representation of the task list.
      */
     public String listTasks() {
-        String list = "";
+        String output = "";
         if (tasks.isEmpty()) {
-            list += "    There are no tasks in the list!";
+            output += "    There are no tasks in the list!";
         } else {
-            list += "    Here are the tasks in your list:\n";
+            output += "    Here are the tasks in your list:\n";
             for (int i = 0; i < tasks.size(); i++) {
-                list += "    " + (i + 1) + "." + tasks.get(i);
+                output += "    " + (i + 1) + "." + tasks.get(i);
                 if (i != tasks.size() - 1) {
-                    list += "\n";
+                    output += "\n";
                 }
             }
         }
-        return list;
+        return output;
     }
 }
