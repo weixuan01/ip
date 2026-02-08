@@ -1,3 +1,5 @@
+package dill.userinterface;
+
 import java.util.Scanner;
 
 public class UserInterface {

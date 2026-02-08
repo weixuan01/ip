@@ -1,3 +1,5 @@
+package dill.storage;
+
 import java.util.Scanner;
 import java.io.File;
 import java.io.FileWriter;
@@ -6,6 +8,13 @@ import java.io.IOException;
 import java.util.List;
 import java.util.ArrayList;
 import java.time.LocalDate;
+
+import dill.task.Task;
+import dill.task.TaskList;
+import dill.task.ToDo;
+import dill.task.Deadline;
+import dill.task.Event;
+import dill.exception.StorageException;
 
 public class Storage {
     private File storageFile;
