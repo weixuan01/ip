@@ -4,15 +4,28 @@ import dill.task.TaskList;
 import dill.userinterface.UserInterface;
 import dill.storage.Storage;
 
+/**
+ * Represents a command to terminate the application.
+ */
 public class ExitCommand extends Command {
     private final String EXIT_MESSAGE = "    Bye. Hope to see you again soon!";
 
+    /**
+     * Executes the exit command by displaying an exit message.
+     *
+     * @param taskList The list of tasks to be executed on.
+     * @param ui The user interface for displaying messages.
+     * @param storage The data storage handler for saving and loading tasks.
+     */
     public void execute(TaskList taskList, UserInterface ui, Storage storage) {
         ui.displayMessage(EXIT_MESSAGE);
     }
 
+    /**
+     * Signals the program to terminate.
+     * @return Always true, as this is the exit command.
+     */
     public boolean isExit() {
         return true;
     }
-
 }

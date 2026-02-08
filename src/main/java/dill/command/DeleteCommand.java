@@ -7,13 +7,28 @@ import dill.storage.Storage;
 import dill.exception.StorageException;
 import dill.exception.ExecutionException;
 
+/**
+ * Represents a command to remove a task from the list.
+ */
 public class DeleteCommand extends Command {
     private int taskIndex;
 
+    /**
+     * Creates an instance of DeleteCommand and initializes it with the specified task.
+     * @param taskIndex The index of the task to be removed from the task list.
+     */
     public DeleteCommand(int taskIndex) {
         this.taskIndex = taskIndex;
     }
 
+    /**
+     * Executes the removal of a task from the task list.
+     *
+     * @param taskList The list of tasks to be executed on.
+     * @param ui The user interface for displaying messages.
+     * @param storage The data storage handler for saving and loading tasks.
+     * @throws ExecutionException If the provided task index is out of range.
+     */
     public void execute(TaskList taskList, UserInterface ui, Storage storage) throws ExecutionException {
         try {
             Task removed = taskList.deleteTask(taskIndex);
