@@ -3,6 +3,9 @@ package dill.parser;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
+import dill.task.Deadline;
+import dill.task.Event;
+import dill.task.ToDo;
 import dill.command.Command;
 import dill.command.ListCommand;
 import dill.command.AddCommand;
@@ -11,9 +14,6 @@ import dill.command.MarkCommand;
 import dill.command.UnmarkCommand;
 import dill.command.HelpCommand;
 import dill.command.ExitCommand;
-import dill.task.Deadline;
-import dill.task.Event;
-import dill.task.ToDo;
 import dill.exception.InvalidCommandException;
 
 public class Parser {
