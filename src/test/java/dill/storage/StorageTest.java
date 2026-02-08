@@ -23,7 +23,7 @@ public class StorageTest {
     @Test
     void saveTasksValidFileTest() throws IOException {
         Path tempFile = tempDir.resolve("saveTasksTest.txt");
-        storage = new Storage(tempFile.toString());
+        storage = new Storage(tempFile.toString(), "");
 
         TaskList mockTaskList = Mockito.mock(TaskList.class);
         Task mockTask1 = Mockito.mock(Task.class);
@@ -44,7 +44,7 @@ public class StorageTest {
 
     @Test
     void saveTasksInvalidFileTest() {
-        storage = new Storage("./nonexistentDir/test.txt");
+        storage = new Storage("./nonexistentDir/test.txt", "");
         TaskList mockTaskList = Mockito.mock(TaskList.class);
         assertThrows(StorageException.class, () -> storage.saveTasks(mockTaskList));
     }

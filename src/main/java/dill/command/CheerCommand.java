@@ -5,15 +5,9 @@ import dill.userinterface.UserInterface;
 import dill.storage.Storage;
 import dill.quote.QuoteList;
 
-public class ExitCommand extends Command {
-    private final String EXIT_MESSAGE = "    Bye. Hope to see you again soon!";
-
+public class CheerCommand extends Command {
     public void execute(TaskList taskList, UserInterface ui, Storage storage, QuoteList quoteList) {
-        ui.displayMessage(EXIT_MESSAGE);
-    }
+        ui.displayMessage("    " + quoteList.getRandomQuote());
 
-    public boolean isExit() {
-        return true;
     }
-
 }

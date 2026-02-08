@@ -3,14 +3,7 @@ package dill.parser;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
-import dill.command.Command;
-import dill.command.ListCommand;
-import dill.command.AddCommand;
-import dill.command.DeleteCommand;
-import dill.command.MarkCommand;
-import dill.command.UnmarkCommand;
-import dill.command.HelpCommand;
-import dill.command.ExitCommand;
+import dill.command.*;
 import dill.task.Deadline;
 import dill.task.Event;
 import dill.task.ToDo;
@@ -28,6 +21,9 @@ public class Parser {
         }
         if (userInput.equals("help")) {
             return new HelpCommand();
+        }
+        if (userInput.equals("cheer")) {
+            return new CheerCommand();
         }
         if (userInput.startsWith("mark")) {
             return validateMark(userInput);
