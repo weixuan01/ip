@@ -3,6 +3,7 @@ package dill.command;
 import dill.task.TaskList;
 import dill.userinterface.UserInterface;
 import dill.storage.Storage;
+import dill.quote.QuoteList;
 
 /**
  * Represents a command to display the list of available commands and their syntaxes.
@@ -23,7 +24,7 @@ public class HelpCommand extends Command {
      * @param ui The user interface for displaying messages.
      * @param storage The data storage handler for saving and loading tasks.
      */
-    public void execute(TaskList taskList, UserInterface ui, Storage storage) {
+    public void execute(TaskList taskList, UserInterface ui, Storage storage, QuoteList quoteList) {
         ui.displayMessage(HELP_MESSAGE);
     }
 }

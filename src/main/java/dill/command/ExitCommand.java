@@ -3,6 +3,7 @@ package dill.command;
 import dill.task.TaskList;
 import dill.userinterface.UserInterface;
 import dill.storage.Storage;
+import dill.quote.QuoteList;
 
 /**
  * Represents a command to terminate the application.
@@ -16,8 +17,9 @@ public class ExitCommand extends Command {
      * @param taskList The list of tasks to be executed on.
      * @param ui The user interface for displaying messages.
      * @param storage The data storage handler for saving and loading tasks.
+     * @param quoteList The list of quotes containing motivational messages.
      */
-    public void execute(TaskList taskList, UserInterface ui, Storage storage) {
+    public void execute(TaskList taskList, UserInterface ui, Storage storage, QuoteList quoteList) {
         ui.displayMessage(EXIT_MESSAGE);
     }
 

@@ -3,6 +3,7 @@ package dill.command;
 import dill.task.Task;
 import dill.task.TaskList;
 import dill.userinterface.UserInterface;
+import dill.quote.QuoteList;
 import dill.storage.Storage;
 import dill.exception.StorageException;
 import dill.exception.ExecutionException;
@@ -27,9 +28,10 @@ public class DeleteCommand extends Command {
      * @param taskList The list of tasks to be executed on.
      * @param ui The user interface for displaying messages.
      * @param storage The data storage handler for saving and loading tasks.
+     * @param quoteList The list of quotes containing motivational messages.
      * @throws ExecutionException If the provided task index is out of range.
      */
-    public void execute(TaskList taskList, UserInterface ui, Storage storage) throws ExecutionException {
+    public void execute(TaskList taskList, UserInterface ui, Storage storage, QuoteList quoteList) throws ExecutionException {
         try {
             Task removed = taskList.deleteTask(taskIndex);
             String deleteMessage = "    Noted. I've removed this task:\n"

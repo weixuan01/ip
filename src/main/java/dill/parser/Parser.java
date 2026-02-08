@@ -15,7 +15,7 @@ import dill.command.UnmarkCommand;
 import dill.command.HelpCommand;
 import dill.command.ExitCommand;
 import dill.command.FindCommand;
-
+import dill.command.CheerCommand;
 import dill.exception.InvalidCommandException;
 
 /**
@@ -44,6 +44,9 @@ public class Parser {
         }
         if (userInput.equals("help")) {
             return new HelpCommand();
+        }
+        if (userInput.equals("cheer")) {
+            return new CheerCommand();
         }
         if (userInput.startsWith("mark")) {
             return validateMark(userInput);

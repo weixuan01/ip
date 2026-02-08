@@ -19,15 +19,18 @@ import dill.exception.StorageException;
  * Represents the data storage management component of Dill.
  */
 public class Storage {
-    private File storageFile;
+    private File taskFile;
+    private File quoteFile;
 
     /**
      * Creates an instance of Storage and initializes it with a file path.
      *
-     * @param filePath The relative path of the data storage file.
+     * @param taskPath The relative path of the task storage file.
+     * @param quotePath The relative path of the quote storage file.
      */
-    public Storage(String filePath) {
-        this.storageFile = new File(filePath);
+    public Storage(String taskPath, String quotePath) {
+        this.taskFile = new File(taskPath);
+        this.quoteFile = new File(quotePath);
     }
 
     /**
@@ -37,9 +40,9 @@ public class Storage {
      * @throws StorageException If the file path does not exist or the file is unreadable
      */
     public List<Task> loadTasks() throws StorageException {
-        List<Task> taskList = new ArrayList<>();
+        List<Task> tasks = new ArrayList<>();
         try {
-            Scanner scanner = new Scanner(storageFile);
+            Scanner scanner = new Scanner(taskFile);
             while (scanner.hasNextLine()) {
                 String[] taskVars = scanner.nextLine().split(" \\| ");
                 Task task = decodeTask(taskVars);
@@ -47,17 +50,17 @@ public class Storage {
                     if (taskVars[1].equals("1")) {
                         task.setDone();
                     }
-                    taskList.add(task);
+                    tasks.add(task);
                 }
             }
-            return taskList;
+            return tasks;
         } catch (FileNotFoundException e1) {
             try {
-                storageFile.getParentFile().mkdirs(); // create data folder if it doesn't exist
-                storageFile.createNewFile();
-                return taskList;
+                taskFile.getParentFile().mkdirs(); // create data folder if it doesn't exist
+                taskFile.createNewFile();
+                return tasks;
             } catch (IOException e2) {
-                throw new StorageException("    [SYSTEM]: Error creating storage file");
+                throw new StorageException("    [SYSTEM]: Error creating task storage file");
             }
         }
     }
@@ -71,13 +74,32 @@ public class Storage {
     public void saveTasks(TaskList taskList) throws StorageException {
         try {
             // creates file if file doesn't exist, throws IOException if parent dir also doesn't exist
-            FileWriter fileWriter = new FileWriter(storageFile);
+            FileWriter fileWriter = new FileWriter(taskFile);
             for (int i = 0; i < taskList.getSize(); i++) {
                 fileWriter.write(taskList.getTask(i).toFileString() + "\n");
             }
             fileWriter.close();
         } catch (IOException e) {
             throw new StorageException("    [SYSTEM]: Error saving to disk");
+        }
+    }
+
+    public List<String> loadQuotes() throws StorageException {
+        List<String> quotes = new ArrayList<>();
+        try {
+            Scanner scanner = new Scanner(quoteFile);
+            while (scanner.hasNextLine()) {
+                quotes.add(scanner.nextLine());
+            }
+            return quotes;
+        } catch (FileNotFoundException e1) {
+            try {
+                quoteFile.getParentFile().mkdirs(); // create data folder if it doesn't exist
+                quoteFile.createNewFile();
+                return quotes;
+            } catch (IOException e2) {
+                throw new StorageException("    [SYSTEM]: Error creating quote storage file");
+            }
         }
     }
 

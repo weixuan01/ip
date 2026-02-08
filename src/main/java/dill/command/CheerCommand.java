@@ -5,14 +5,9 @@ import dill.userinterface.UserInterface;
 import dill.storage.Storage;
 import dill.quote.QuoteList;
 
-public class FindCommand extends Command {
-    private String keyword;
-
-    public FindCommand(String keyword) {
-        this.keyword = keyword;
-    }
-
+public class CheerCommand extends Command {
     public void execute(TaskList taskList, UserInterface ui, Storage storage, QuoteList quoteList) {
-        ui.displayMessage(taskList.findTasks(keyword));
+        ui.displayMessage("    " + quoteList.getRandomQuote());
+
     }
 }
