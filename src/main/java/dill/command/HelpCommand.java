@@ -1,3 +1,9 @@
+package dill.command;
+
+import dill.task.TaskList;
+import dill.userinterface.UserInterface;
+import dill.storage.Storage;
+
 public class HelpCommand extends Command {
     private final String HELP_MESSAGE =
             "    Here are the available commands:\n" +

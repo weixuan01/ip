@@ -1,3 +1,11 @@
+package dill.command;
+
+import dill.task.Task;
+import dill.task.TaskList;
+import dill.userinterface.UserInterface;
+import dill.storage.Storage;
+import dill.exception.StorageException;
+
 public class AddCommand extends Command {
     private Task task;
 
