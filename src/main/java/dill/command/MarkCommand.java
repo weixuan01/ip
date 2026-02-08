@@ -32,8 +32,8 @@ public class MarkCommand extends Command {
     public void execute(TaskList taskList, UserInterface ui, Storage storage) throws ExecutionException {
         try {
             taskList.markTask(taskIndex);
-            String markMessage = "    Nice! I've marked this task as done:\n" +
-                    "      " + taskList.getTask(taskIndex);
+            String markMessage = "    Nice! I've marked this task as done:\n"
+                    + "      " + taskList.getTask(taskIndex);
             ui.displayMessage(markMessage);
             storage.saveTasks(taskList);
         } catch (IndexOutOfBoundsException e1) {

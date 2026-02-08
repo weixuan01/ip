@@ -32,8 +32,8 @@ public class UnmarkCommand extends Command {
     public void execute(TaskList taskList, UserInterface ui, Storage storage) throws ExecutionException {
         try {
             taskList.unmarkTask(taskIndex);
-            String unmarkMessage = "    OK, I've marked this task as not done yet:\n" +
-                    "      " + taskList.getTask(taskIndex);
+            String unmarkMessage = "    OK, I've marked this task as not done yet:\n"
+                    + "      " + taskList.getTask(taskIndex);
             ui.displayMessage(unmarkMessage);
             storage.saveTasks(taskList);
         } catch (IndexOutOfBoundsException e1) {

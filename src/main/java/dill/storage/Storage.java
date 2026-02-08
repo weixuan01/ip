@@ -1,12 +1,12 @@
 package dill.storage;
 
-import java.util.Scanner;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Scanner;
 import java.time.LocalDate;
 import dill.task.Task;
 import dill.task.TaskList;
@@ -45,7 +45,7 @@ public class Storage {
                 Task task = decodeTask(taskVars);
                 if (task != null) {
                     if (taskVars[1].equals("1")) {
-                        task.markDone();
+                        task.setDone();
                     }
                     taskList.add(task);
                 }

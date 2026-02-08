@@ -8,8 +8,8 @@ import java.util.Scanner;
  */
 public class UserInterface {
     public final String CHATBOT_NAME = "Dill";
-    private final String LINE_DIVIDER = "    ____________________________________________________________";
-    private final String DOT_DIVIDER =  "    ............................................................";
+    private final String DIVIDER_LINE = "    ____________________________________________________________";
+    private final String DIVIDER_DOT =  "    ............................................................";
     private Scanner scanner;
 
     /**
@@ -26,9 +26,9 @@ public class UserInterface {
      * @param message The unformatted message to be displayed.
      */
     public void displayMessage(String message) {
-        System.out.println(LINE_DIVIDER);
+        System.out.println(DIVIDER_LINE);
         System.out.println(message);
-        System.out.println(LINE_DIVIDER);
+        System.out.println(DIVIDER_LINE);
     }
 
     /**
@@ -38,17 +38,17 @@ public class UserInterface {
      * @param message The unformatted message to be displayed.
      */
     public void displaySystemMessage(String message) {
-        System.out.println(DOT_DIVIDER);
+        System.out.println(DIVIDER_DOT);
         System.out.println(message);
-        System.out.println(DOT_DIVIDER);
+        System.out.println(DIVIDER_DOT);
     }
 
     /**
      * Outputs a greeting message to the console.
      */
     public void displayGreeting() {
-        displayMessage("    Hello! I'm " + CHATBOT_NAME + ".\n" +
-                       "    What can I do for you?");
+        displayMessage("    Hello! I'm " + CHATBOT_NAME + ".\n"
+                + "    What can I do for you?");
     }
 
     /**
@@ -57,8 +57,8 @@ public class UserInterface {
      * @param errorMessage Message specifying details of the failure.
      */
     public void displayLoadError(String errorMessage) {
-        displaySystemMessage(errorMessage + "\n" +
-                             "    [SYSTEM]: Task list for this session will not be saved");
+        displaySystemMessage(errorMessage + "\n"
+                + "    [SYSTEM]: Task list for this session will not be saved");
     }
 
     /**

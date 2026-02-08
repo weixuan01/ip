@@ -20,14 +20,14 @@ public abstract class Task {
     /**
      * Marks the task as completed.
      */
-    public void markDone() {
+    public void setDone() {
         isDone = true;
     }
 
     /**
      * Marks the task as incomplete.
      */
-    public void markUndone() {
+    public void setUndone() {
         isDone = false;
     }
 

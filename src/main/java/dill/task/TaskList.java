@@ -59,7 +59,7 @@ public class TaskList {
      * @param taskIndex The index of the task in the list.
      */
     public void markTask(int taskIndex) {
-        tasks.get(taskIndex).markDone();
+        tasks.get(taskIndex).setDone();
     }
 
     /**
@@ -68,7 +68,7 @@ public class TaskList {
      * @param taskIndex The index of the task in the list.
      */
     public void unmarkTask(int taskIndex) {
-        tasks.get(taskIndex).markUndone();
+        tasks.get(taskIndex).setUndone();
     }
 
     /**
