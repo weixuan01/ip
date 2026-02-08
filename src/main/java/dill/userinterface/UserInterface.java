@@ -25,13 +25,13 @@ public class UserInterface {
     }
 
     public void displayGreeting() {
-        displayMessage("    Hello! I'm " + CHATBOT_NAME + ".\n" +
-                       "    What can I do for you?");
+        displayMessage("    Hello! I'm " + CHATBOT_NAME + ".\n"
+                + "    What can I do for you?");
     }
 
     public void displayLoadError(String errorMessage) {
-        displaySystemMessage(errorMessage + "\n" +
-                             "    [SYSTEM]: Task list for this session will not be saved");
+        displaySystemMessage(errorMessage + "\n"
+                + "    [SYSTEM]: Task list for this session will not be saved");
     }
 
     public void displayLoadSuccess(int n) {
