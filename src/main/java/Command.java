@@ -1,3 +1,7 @@
-public enum Command {
-    EXIT, LIST, MARK, UNMARK, TODO, DEADLINE, EVENT, HELP, DELETE, UNKNOWN
+public abstract class Command {
+    public abstract void execute(TaskList tasks, UserInterface ui, Storage storage) throws DillException;
+
+    public boolean isExit() {
+        return false;
+    }
 }

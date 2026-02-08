@@ -1,0 +1,67 @@
+import java.util.Scanner;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.List;
+import java.util.ArrayList;
+import java.time.LocalDate;
+
+public class Storage {
+    private File storageFile;
+
+    public Storage(String filePath) {
+        this.storageFile = new File(filePath);
+    }
+
+    public List<Task> loadTasks() throws StorageException {
+        List<Task> tasks = new ArrayList<>();
+        try {
+            Scanner scanner = new Scanner(storageFile);
+            while (scanner.hasNextLine()) {
+                String[] taskVars = scanner.nextLine().split(" \\| ");
+                Task task = decodeTask(taskVars);
+                if (task != null) {
+                    if (taskVars[1].equals("1")) {
+                        task.markDone();
+                    }
+                    tasks.add(task);
+                }
+            }
+            return tasks;
+        } catch (FileNotFoundException e1) {
+            try {
+                storageFile.getParentFile().mkdirs(); // create data folder if it doesn't exist
+                storageFile.createNewFile();
+                return tasks;
+            } catch (IOException e2) {
+                throw new StorageException("    [SYSTEM]: Error creating storage file");
+            }
+        }
+    }
+
+    public void saveTasks(TaskList tasks) throws StorageException {
+        try {
+            FileWriter fileWriter = new FileWriter(storageFile);
+            for (int i = 0; i < tasks.getSize(); i++) {
+                fileWriter.write(tasks.getTask(i).toFileString() + "\n");
+            }
+            fileWriter.close();
+        } catch (IOException e) {
+            throw new StorageException("    [SYSTEM]: Error saving to disk");
+        }
+    }
+
+    private Task decodeTask(String[] taskVars) {
+        switch (taskVars[0]) {
+            case "T":
+                return new ToDo(taskVars[2]);
+            case "D":
+                return new Deadline(taskVars[2], LocalDate.parse(taskVars[3]));
+            case "E":
+                return new Event(taskVars[2], LocalDate.parse(taskVars[3]), LocalDate.parse(taskVars[4]));
+            default:
+                return null;
+        }
+    }
+}

@@ -1,0 +1,22 @@
+public class DeleteCommand extends Command {
+    private int taskIndex;
+
+    public DeleteCommand(int taskIndex) {
+        this.taskIndex = taskIndex;
+    }
+
+    public void execute(TaskList tasks, UserInterface ui, Storage storage) throws ExecutionException {
+        try {
+            Task removed = tasks.deleteTask(taskIndex);
+            String deleteMessage = "    Noted. I've removed this task:\n" +
+                                   "      " + removed + "\n" +
+                                   "    Now you have " + tasks.getSize() + " tasks in the list.";
+            ui.displayMessage(deleteMessage);
+            storage.saveTasks(tasks);
+        } catch (IndexOutOfBoundsException e1) {
+            throw new ExecutionException("    Cannot delete an entry that is not in the list!");
+        } catch (StorageException e2) {
+            ui.displaySystemMessage(e2.getMessage());
+        }
+    }
+}
