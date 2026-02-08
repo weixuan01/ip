@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.ArrayList;
 import java.time.LocalDate;
-
 import dill.task.Task;
 import dill.task.TaskList;
 import dill.task.ToDo;
@@ -16,13 +15,27 @@ import dill.task.Deadline;
 import dill.task.Event;
 import dill.exception.StorageException;
 
+/**
+ * Represents the data storage management component of Dill.
+ */
 public class Storage {
     private File storageFile;
 
+    /**
+     * Creates an instance of Storage and initializes it with a file path.
+     *
+     * @param filePath The relative path of the data storage file.
+     */
     public Storage(String filePath) {
         this.storageFile = new File(filePath);
     }
 
+    /**
+     * Loads task from the data storage file
+     *
+     * @return A list of tasks loaded from storage.
+     * @throws StorageException If the file path does not exist or the file is unreadable
+     */
     public List<Task> loadTasks() throws StorageException {
         List<Task> taskList = new ArrayList<>();
         try {
@@ -49,6 +62,12 @@ public class Storage {
         }
     }
 
+    /**
+     * Save tasks to the data storage file.
+     *
+     * @param taskList The list of tasks to be saved.
+     * @throws StorageException If the file path does not exist or the file is unreadable
+     */
     public void saveTasks(TaskList taskList) throws StorageException {
         try {
             // creates file if file doesn't exist, throws IOException if parent dir also doesn't exist
