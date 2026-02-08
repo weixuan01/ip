@@ -10,7 +10,7 @@ import dill.exception.StorageException;
 
 public class Dill {
     private static final String FILE_PATH = "./data/dill.txt";
-    private TaskList tasks;
+    private TaskList taskList;
     private UserInterface ui;
     private Storage storage;
 
@@ -18,11 +18,11 @@ public class Dill {
         this.ui = new UserInterface();
         this.storage = new Storage(filePath);
         try {
-            this.tasks = new TaskList(storage.loadTasks());
-            ui.displayLoadSuccess(tasks.getSize());
+            this.taskList = new TaskList(storage.loadTasks());
+            ui.displayLoadSuccess(taskList.getSize());
         } catch (StorageException e) {
             ui.displayLoadError(e.getMessage());
-            this.tasks = new TaskList();
+            this.taskList = new TaskList();
         }
     }
 
@@ -33,7 +33,7 @@ public class Dill {
             try {
                 String userInput = ui.readInput();
                 Command cmd = Parser.parse(userInput);
-                cmd.execute(tasks, ui, storage);
+                cmd.execute(taskList, ui, storage);
                 isExit = cmd.isExit();
             } catch (DillException e) {
                 ui.displayMessage(e.getMessage());

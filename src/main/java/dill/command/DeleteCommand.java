@@ -14,14 +14,14 @@ public class DeleteCommand extends Command {
         this.taskIndex = taskIndex;
     }
 
-    public void execute(TaskList tasks, UserInterface ui, Storage storage) throws ExecutionException {
+    public void execute(TaskList taskList, UserInterface ui, Storage storage) throws ExecutionException {
         try {
-            Task removed = tasks.deleteTask(taskIndex);
+            Task removed = taskList.deleteTask(taskIndex);
             String deleteMessage = "    Noted. I've removed this task:\n" +
                                    "      " + removed + "\n" +
-                                   "    Now you have " + tasks.getSize() + " tasks in the list.";
+                                   "    Now you have " + taskList.getSize() + " tasks in the list.";
             ui.displayMessage(deleteMessage);
-            storage.saveTasks(tasks);
+            storage.saveTasks(taskList);
         } catch (IndexOutOfBoundsException e1) {
             throw new ExecutionException("    Cannot delete an entry that is not in the list!");
         } catch (StorageException e2) {

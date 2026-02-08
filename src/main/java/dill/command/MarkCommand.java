@@ -13,13 +13,13 @@ public class MarkCommand extends Command {
         this.taskIndex = taskIndex;
     }
 
-    public void execute(TaskList tasks, UserInterface ui, Storage storage) throws ExecutionException {
+    public void execute(TaskList taskList, UserInterface ui, Storage storage) throws ExecutionException {
         try {
-            tasks.markTask(taskIndex);
+            taskList.markTask(taskIndex);
             String markMessage = "    Nice! I've marked this task as done:\n" +
-                    "      " + tasks.getTask(taskIndex);
+                    "      " + taskList.getTask(taskIndex);
             ui.displayMessage(markMessage);
-            storage.saveTasks(tasks);
+            storage.saveTasks(taskList);
         } catch (IndexOutOfBoundsException e1) {
             throw new ExecutionException("    Cannot mark an entry that is not in the list!");
         } catch (StorageException e2) {

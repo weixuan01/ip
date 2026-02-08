@@ -13,14 +13,14 @@ public class AddCommand extends Command {
         this.task = task;
     }
 
-    public void execute(TaskList tasks, UserInterface ui, Storage storage) {
+    public void execute(TaskList taskList, UserInterface ui, Storage storage) {
         try {
-            tasks.addTask(task);
+            taskList.addTask(task);
             String addMessage = "    Got it. I've added this task:\n" +
                                 "      " + task + "\n" +
-                                "    Now you have " + tasks.getSize() + " tasks in the list.";
+                                "    Now you have " + taskList.getSize() + " tasks in the list.";
             ui.displayMessage(addMessage);
-            storage.saveTasks(tasks);
+            storage.saveTasks(taskList);
         } catch (StorageException e) {
             ui.displaySystemMessage(e.getMessage());
         }

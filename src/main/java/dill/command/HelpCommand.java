@@ -14,7 +14,7 @@ public class HelpCommand extends Command {
             "        mark <entry_number>: marks a task as done.\n" +
             "        unmark <entry_number>: marks a task as undone.";
 
-    public void execute(TaskList tasks, UserInterface ui, Storage storage) {
+    public void execute(TaskList taskList, UserInterface ui, Storage storage) {
         ui.displayMessage(HELP_MESSAGE);
     }
 }

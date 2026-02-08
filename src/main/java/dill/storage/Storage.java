@@ -24,7 +24,7 @@ public class Storage {
     }
 
     public List<Task> loadTasks() throws StorageException {
-        List<Task> tasks = new ArrayList<>();
+        List<Task> taskList = new ArrayList<>();
         try {
             Scanner scanner = new Scanner(storageFile);
             while (scanner.hasNextLine()) {
@@ -34,26 +34,27 @@ public class Storage {
                     if (taskVars[1].equals("1")) {
                         task.markDone();
                     }
-                    tasks.add(task);
+                    taskList.add(task);
                 }
             }
-            return tasks;
+            return taskList;
         } catch (FileNotFoundException e1) {
             try {
                 storageFile.getParentFile().mkdirs(); // create data folder if it doesn't exist
                 storageFile.createNewFile();
-                return tasks;
+                return taskList;
             } catch (IOException e2) {
                 throw new StorageException("    [SYSTEM]: Error creating storage file");
             }
         }
     }
 
-    public void saveTasks(TaskList tasks) throws StorageException {
+    public void saveTasks(TaskList taskList) throws StorageException {
         try {
+            // creates file if file doesn't exist, throws IOException if parent dir also doesn't exist
             FileWriter fileWriter = new FileWriter(storageFile);
-            for (int i = 0; i < tasks.getSize(); i++) {
-                fileWriter.write(tasks.getTask(i).toFileString() + "\n");
+            for (int i = 0; i < taskList.getSize(); i++) {
+                fileWriter.write(taskList.getTask(i).toFileString() + "\n");
             }
             fileWriter.close();
         } catch (IOException e) {

@@ -13,13 +13,13 @@ public class UnmarkCommand extends Command {
         this.taskIndex = taskIndex;
     }
 
-    public void execute(TaskList tasks, UserInterface ui, Storage storage) throws ExecutionException {
+    public void execute(TaskList taskList, UserInterface ui, Storage storage) throws ExecutionException {
         try {
-            tasks.unmarkTask(taskIndex);
+            taskList.unmarkTask(taskIndex);
             String unmarkMessage = "    OK, I've marked this task as not done yet:\n" +
-                    "      " + tasks.getTask(taskIndex);
+                    "      " + taskList.getTask(taskIndex);
             ui.displayMessage(unmarkMessage);
-            storage.saveTasks(tasks);
+            storage.saveTasks(taskList);
         } catch (IndexOutOfBoundsException e1) {
             throw new ExecutionException("    Cannot unmark an entry that is not in the list!");
         } catch (StorageException e2) {
