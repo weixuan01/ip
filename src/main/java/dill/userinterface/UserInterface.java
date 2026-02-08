@@ -4,8 +4,8 @@ import java.util.Scanner;
 
 public class UserInterface {
     public final String CHATBOT_NAME = "Dill";
-    private final String LINE_DIVIDER = "    ____________________________________________________________";
-    private final String DOT_DIVIDER =  "    ............................................................";
+    private final String DIVIDER_LINE = "    ____________________________________________________________";
+    private final String DIVIDER_DOT =  "    ............................................................";
     private Scanner scanner;
 
     public UserInterface() {
@@ -13,15 +13,15 @@ public class UserInterface {
     }
 
     public void displayMessage(String message) {
-        System.out.println(LINE_DIVIDER);
+        System.out.println(DIVIDER_LINE);
         System.out.println(message);
-        System.out.println(LINE_DIVIDER);
+        System.out.println(DIVIDER_LINE);
     }
 
     public void displaySystemMessage(String message) {
-        System.out.println(DOT_DIVIDER);
+        System.out.println(DIVIDER_DOT);
         System.out.println(message);
-        System.out.println(DOT_DIVIDER);
+        System.out.println(DIVIDER_DOT);
     }
 
     public void displayGreeting() {
