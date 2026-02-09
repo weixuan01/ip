@@ -15,7 +15,9 @@ public class HelpCommand extends Command {
             + "        deadline <task_name> /by <yyyy-mm-dd>: adds a deadline task.\n"
             + "        event <task_name> /start <yyyy-mm-dd> /end <yyyy-mm-dd>: adds an event task.\n"
             + "        mark <entry_number>: marks a task as done.\n"
-            + "        unmark <entry_number>: marks a task as undone.";
+            + "        unmark <entry_number>: marks a task as undone.\n"
+            + "        find <keyword>: displays tasks matching the specified keyword.\n"
+            + "        cheer: displays a random motivational message.";
 
     /**
      * Executes the help command by displaying a list of all supported operations.
