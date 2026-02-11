@@ -1,11 +1,12 @@
 package dill.task;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.lang.reflect.Field;
 import java.util.List;
+
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TaskListTest {
     private TaskList taskList;
@@ -13,11 +14,11 @@ public class TaskListTest {
     @Test
     void addTaskTest() throws NoSuchFieldException, IllegalAccessException {
         taskList = new TaskList();
-        Task mockTask = Mockito.mock(Task.class);   // Create mock Task to isolate TaskList
+        Task mockTask = Mockito.mock(Task.class); // Create mock Task to isolate TaskList
         taskList.addTask(mockTask);
 
         Field tasksField = TaskList.class.getDeclaredField("tasks");
-        tasksField.setAccessible(true);  // Set internal list as accessible
+        tasksField.setAccessible(true); // Set internal list as accessible
         @SuppressWarnings("unchecked")
         List<Task> internalTaskList = (List<Task>) tasksField.get(taskList); // Get internal list
 
@@ -28,10 +29,10 @@ public class TaskListTest {
     @Test
     void deleteTaskTest() throws NoSuchFieldException, IllegalAccessException {
         taskList = new TaskList();
-        Task mockTask = Mockito.mock(Task.class);   // Create mock Task to isolate TaskList
+        Task mockTask = Mockito.mock(Task.class); // Create mock Task to isolate TaskList
 
         Field tasksField = TaskList.class.getDeclaredField("tasks");
-        tasksField.setAccessible(true);  // Set internal list as accessible
+        tasksField.setAccessible(true); // Set internal list as accessible
         @SuppressWarnings("unchecked")
         List<Task> internalTaskList = (List<Task>) tasksField.get(taskList); // Get internal list
 
