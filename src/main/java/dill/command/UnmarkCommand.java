@@ -35,12 +35,11 @@ public class UnmarkCommand extends Command {
             QuoteList quoteList) throws ExecutionException {
         try {
             taskList.unmarkTask(taskIndex);
-            String unmarkMessage = "    OK, I've marked this task as not done yet:\n"
-                    + "      " + taskList.getTask(taskIndex);
-            ui.displayMessage(unmarkMessage);
+            ui.displayMessage("OK, I've marked this task as not done yet:",
+                    "  " + taskList.getTask(taskIndex));
             storage.saveTasks(taskList);
         } catch (IndexOutOfBoundsException e1) {
-            throw new ExecutionException("    Cannot unmark an entry that is not in the list!");
+            throw new ExecutionException("Cannot unmark an entry that is not in the list!");
         } catch (StorageException e2) {
             ui.displaySystemMessage(e2.getMessage());
         }

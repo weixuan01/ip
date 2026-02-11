@@ -35,13 +35,11 @@ public class DeleteCommand extends Command {
             QuoteList quoteList) throws ExecutionException {
         try {
             Task removed = taskList.deleteTask(taskIndex);
-            String deleteMessage = "    Noted. I've removed this task:\n"
-                    + "      " + removed + "\n"
-                    + "    Now you have " + taskList.getSize() + " tasks in the list.";
-            ui.displayMessage(deleteMessage);
+            ui.displayMessage("Noted. I've removed this task:",
+                    "  " + removed, "Now you have " + taskList.getSize() + " tasks in the list.");
             storage.saveTasks(taskList);
         } catch (IndexOutOfBoundsException e1) {
-            throw new ExecutionException("    Cannot delete an entry that is not in the list!");
+            throw new ExecutionException("Cannot delete an entry that is not in the list!");
         } catch (StorageException e2) {
             ui.displaySystemMessage(e2.getMessage());
         }

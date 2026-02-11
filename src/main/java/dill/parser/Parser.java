@@ -75,31 +75,31 @@ public class Parser {
 
     private static Command validateMark(String userInput) throws InvalidCommandException {
         if (!userInput.startsWith("mark ") || userInput.equals("mark ")) {
-            throw new InvalidCommandException("    Please specify an entry to mark.");
+            throw new InvalidCommandException("Please specify an entry to mark.");
         }
         try {
             int taskIndex = Integer.parseInt(userInput.substring(5)) - 1;
             return new MarkCommand(taskIndex);
         } catch (NumberFormatException e) {
-            throw new InvalidCommandException("    Entry must be an integer!");
+            throw new InvalidCommandException("Entry must be an integer!");
         }
     }
 
     private static Command validateUnmark(String userInput) throws InvalidCommandException {
         if (!userInput.startsWith("unmark ") || userInput.equals("unmark ")) {
-            throw new InvalidCommandException("    Please specify an entry to unmark.");
+            throw new InvalidCommandException("Please specify an entry to unmark.");
         }
         try {
             int taskIndex = Integer.parseInt(userInput.substring(7)) - 1;
             return new UnmarkCommand(taskIndex);
         } catch (NumberFormatException e) {
-            throw new InvalidCommandException("    Entry must be an integer!");
+            throw new InvalidCommandException("Entry must be an integer!");
         }
     }
 
     private static Command validateToDo(String userInput) throws InvalidCommandException {
         if (!userInput.startsWith("todo ") || userInput.equals("todo ")) {
-            throw new InvalidCommandException("    Please specify todo task name.");
+            throw new InvalidCommandException("Please specify todo task name.");
         }
         String taskName = userInput.substring(5);
         return new AddCommand(new ToDo(taskName));
@@ -108,10 +108,10 @@ public class Parser {
     private static Command validateDeadline(String userInput) throws InvalidCommandException {
         int byIndex = userInput.indexOf("/by ");
         if (!userInput.startsWith("deadline ") || userInput.equals("deadline ") || byIndex == 9) {
-            throw new InvalidCommandException("    Please specify deadline task name.");
+            throw new InvalidCommandException("Please specify deadline task name.");
         }
         if (byIndex < 0) {
-            throw new InvalidCommandException("    Please specify a deadline.");
+            throw new InvalidCommandException("Please specify a deadline.");
         }
         try {
             String taskName = userInput.substring(9, byIndex - 1);
@@ -119,7 +119,7 @@ public class Parser {
             LocalDate date = LocalDate.parse(rawDate);
             return new AddCommand(new Deadline(taskName, date));
         } catch (DateTimeParseException e) {
-            throw new InvalidCommandException("    Please enter dates in the format yyyy-mm-dd.");
+            throw new InvalidCommandException("Please enter dates in the format yyyy-mm-dd.");
         }
     }
 
@@ -127,16 +127,16 @@ public class Parser {
         int startIndex = userInput.indexOf("/start ");
         int endIndex = userInput.indexOf("/end ");
         if (!userInput.startsWith("event ") || userInput.equals("event ") || startIndex == 6 || endIndex == 6) {
-            throw new InvalidCommandException("    Please specify event task name.");
+            throw new InvalidCommandException("Please specify event task name.");
         }
         if (startIndex < 0) {
-            throw new InvalidCommandException("    Please specify a start time.");
+            throw new InvalidCommandException("Please specify a start time.");
         }
         if (endIndex < 0) {
-            throw new InvalidCommandException("    Please specify an end time.");
+            throw new InvalidCommandException("Please specify an end time.");
         }
         if (endIndex < startIndex) {
-            throw new InvalidCommandException("    Please specify start time followed by end time, in that order.");
+            throw new InvalidCommandException("Please specify start time followed by end time, in that order.");
         }
         try {
             String taskName = userInput.substring(6, userInput.indexOf("/start") - 1);
@@ -146,7 +146,7 @@ public class Parser {
             LocalDate endDate = LocalDate.parse(rawEndDate);
             return new AddCommand(new Event(taskName, startDate, endDate));
         } catch (DateTimeParseException e) {
-            throw new InvalidCommandException("    Please enter dates in the format yyyy-mm-dd.");
+            throw new InvalidCommandException("Please enter dates in the format yyyy-mm-dd.");
         }
     }
 

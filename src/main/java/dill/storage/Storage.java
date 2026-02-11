@@ -104,7 +104,7 @@ public class Storage {
                 quoteFile.createNewFile();
                 return quotes;
             } catch (IOException e2) {
-                throw new StorageException("    [SYSTEM]: Error creating quote storage file");
+                throw new StorageException("[SYSTEM]: Error creating quote storage file");
             }
         }
     }
