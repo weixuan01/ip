@@ -7,9 +7,9 @@ import java.util.Scanner;
  * Captures raw user input and outputs formatted messages to the user.
  */
 public class UserInterface {
-    public final String CHATBOT_NAME = "Dill";
-    private final String DIVIDER_LINE = "    ____________________________________________________________";
-    private final String DIVIDER_DOT =  "    ............................................................";
+    public static final String CHATBOT_NAME = "Dill";
+    private static final String DIVIDER_LINE = "    ____________________________________________________________";
+    private static final String DIVIDER_DOT = "    ............................................................";
     private Scanner scanner;
 
     /**

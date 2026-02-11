@@ -1,11 +1,11 @@
 package dill.command;
 
+import dill.exception.StorageException;
+import dill.quote.QuoteList;
+import dill.storage.Storage;
 import dill.task.Task;
 import dill.task.TaskList;
 import dill.userinterface.UserInterface;
-import dill.storage.Storage;
-import dill.exception.StorageException;
-import dill.quote.QuoteList;
 
 /**
  * Represents a command to add a new task to the list.

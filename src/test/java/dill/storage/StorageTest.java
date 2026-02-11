@@ -1,25 +1,27 @@
 package dill.storage;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.when;
+
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 import org.mockito.Mockito;
-import dill.task.TaskList;
-import dill.task.Task;
-import dill.exception.StorageException;
 
-import static org.mockito.Mockito.when;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import dill.exception.StorageException;
+import dill.task.Task;
+import dill.task.TaskList;
 
 public class StorageTest {
-    private Storage storage;
-
     @TempDir
     Path tempDir;
+
+    private Storage storage;
 
     @Test
     void saveTasksValidFileTest() throws IOException {

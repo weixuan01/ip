@@ -1,10 +1,10 @@
 package dill.command;
 
+import dill.exception.DillException;
+import dill.quote.QuoteList;
+import dill.storage.Storage;
 import dill.task.TaskList;
 import dill.userinterface.UserInterface;
-import dill.storage.Storage;
-import dill.quote.QuoteList;
-import dill.exception.DillException;
 
 /**
  * A general abstract class that represents a command that can be executed.
@@ -20,7 +20,8 @@ public abstract class Command {
      * @param quoteList The list of quotes containing motivational messages.
      * @throws DillException If an error occurs during execution.
      */
-    public abstract void execute(TaskList taskList, UserInterface ui, Storage storage, QuoteList quoteList) throws DillException;
+    public abstract void execute(
+            TaskList taskList, UserInterface ui, Storage storage, QuoteList quoteList) throws DillException;
 
     /**
      * Indicates if the program should terminate.

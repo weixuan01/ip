@@ -29,7 +29,8 @@ public class Event extends Task {
      * @return A formatted string representation of the task.
      */
     public String toString() {
-        return "[E]" + super.toString() + " (start: " + startDate.format(DateTimeFormatter.ofPattern("dd MMM yyyy")) + ", end: " + endDate.format(DateTimeFormatter.ofPattern("dd MMM yyyy")) + ")";
+        return "[E]" + super.toString() + " (start: " + startDate.format(DateTimeFormatter.ofPattern("dd MMM yyyy"))
+                + ", end: " + endDate.format(DateTimeFormatter.ofPattern("dd MMM yyyy")) + ")";
     }
 
     /**
