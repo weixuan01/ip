@@ -1,15 +1,15 @@
 package dill.command;
 
+import dill.quote.QuoteList;
+import dill.storage.Storage;
 import dill.task.TaskList;
 import dill.userinterface.UserInterface;
-import dill.storage.Storage;
-import dill.quote.QuoteList;
 
 /**
  * Represents a command to display the list of available commands and their syntaxes.
  */
 public class HelpCommand extends Command {
-    private final String HELP_MESSAGE = "    Here are the available commands:\n"
+    private static final String HELP_MESSAGE = "    Here are the available commands:\n"
             + "        list: displays the tasks in your list.\n"
             + "        todo <task_name>: adds a todo task.\n"
             + "        deadline <task_name> /by <yyyy-mm-dd>: adds a deadline task.\n"

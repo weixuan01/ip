@@ -1,11 +1,11 @@
 package dill.command;
 
+import dill.exception.ExecutionException;
+import dill.exception.StorageException;
+import dill.quote.QuoteList;
+import dill.storage.Storage;
 import dill.task.TaskList;
 import dill.userinterface.UserInterface;
-import dill.storage.Storage;
-import dill.quote.QuoteList;
-import dill.exception.StorageException;
-import dill.exception.ExecutionException;
 
 /**
  * Represents a command to mark a task as incomplete.
@@ -31,7 +31,8 @@ public class UnmarkCommand extends Command {
      * @param quoteList The list of quotes containing motivational messages.
      * @throws ExecutionException If the provided task index is out of range.
      */
-    public void execute(TaskList taskList, UserInterface ui, Storage storage, QuoteList quoteList) throws ExecutionException {
+    public void execute(TaskList taskList, UserInterface ui, Storage storage,
+            QuoteList quoteList) throws ExecutionException {
         try {
             taskList.unmarkTask(taskIndex);
             String unmarkMessage = "    OK, I've marked this task as not done yet:\n"

@@ -1,15 +1,15 @@
 package dill.command;
 
+import dill.quote.QuoteList;
+import dill.storage.Storage;
 import dill.task.TaskList;
 import dill.userinterface.UserInterface;
-import dill.storage.Storage;
-import dill.quote.QuoteList;
 
 /**
  * Represents a command to terminate the application.
  */
 public class ExitCommand extends Command {
-    private final String EXIT_MESSAGE = "    Bye. Hope to see you again soon!";
+    private static final String EXIT_MESSAGE = "    Bye. Hope to see you again soon!";
 
     /**
      * Executes the exit command by displaying an exit message.

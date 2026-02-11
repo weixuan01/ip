@@ -1,9 +1,9 @@
 package dill.command;
 
+import dill.quote.QuoteList;
+import dill.storage.Storage;
 import dill.task.TaskList;
 import dill.userinterface.UserInterface;
-import dill.storage.Storage;
-import dill.quote.QuoteList;
 
 /**
  * Represents a command to list all current tasks in the task list.
