@@ -1,5 +1,6 @@
 package dill.userinterface;
 
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -23,11 +24,21 @@ public class UserInterface {
      * Outputs a formatted message from Dill to the console
      * Wraps the given message with line dividers to demarcate responses from Dill.
      *
-     * @param message The unformatted message to be displayed.
+     * @param messages The unformatted messages to be displayed.
      */
-    public void displayMessage(String message) {
+    public void displayMessage(String... messages) {
         System.out.println(DIVIDER_LINE);
-        System.out.println(message);
+        for (String m : messages) {
+            System.out.println("    " + m);
+        }
+        System.out.println(DIVIDER_LINE);
+    }
+
+    public void displayMessage(List<String> messages) {
+        System.out.println(DIVIDER_LINE);
+        for (String m : messages) {
+            System.out.println("    " + m);
+        }
         System.out.println(DIVIDER_LINE);
     }
 
@@ -35,11 +46,13 @@ public class UserInterface {
      * Outputs a formatted system-level message to the console.
      * Wraps the given message with dot dividers to demarcate system messages.
      *
-     * @param message The unformatted message to be displayed.
+     * @param messages The unformatted message to be displayed.
      */
-    public void displaySystemMessage(String message) {
+    public void displaySystemMessage(String... messages) {
         System.out.println(DIVIDER_DOT);
-        System.out.println(message);
+        for (String m : messages) {
+            System.out.println("    " + m);
+        }
         System.out.println(DIVIDER_DOT);
     }
 
@@ -47,8 +60,7 @@ public class UserInterface {
      * Outputs a greeting message to the console.
      */
     public void displayGreeting() {
-        displayMessage("    Hello! I'm " + CHATBOT_NAME + ".\n"
-                + "    What can I do for you?");
+        displayMessage("Hello! I'm " + CHATBOT_NAME, "What can I do for you?");
     }
 
     /**
@@ -57,8 +69,7 @@ public class UserInterface {
      * @param errorMessage Message specifying details of the failure.
      */
     public void displayLoadError(String errorMessage) {
-        displaySystemMessage(errorMessage + "\n"
-                + "    [SYSTEM]: Task list for this session will not be saved");
+        displaySystemMessage(errorMessage, "[SYSTEM]: Task list for this session will not be saved");
     }
 
     /**
@@ -68,9 +79,9 @@ public class UserInterface {
      */
     public void displayLoadSuccess(int n) {
         if (n > 0) {
-            displaySystemMessage("    [SYSTEM]: Successfully loaded " + n + " previously saved tasks");
+            displaySystemMessage("[SYSTEM]: Successfully loaded " + n + " previously saved tasks");
         } else {
-            displaySystemMessage("    [SYSTEM]: No previously saved tasks found");
+            displaySystemMessage("[SYSTEM]: No previously saved tasks found");
         }
     }
 

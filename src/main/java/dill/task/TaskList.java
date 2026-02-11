@@ -85,39 +85,38 @@ public class TaskList {
      * Search for tasks in the list containing the specified keyword.
      *
      * @param keyword The specified matching keyword.
-     * @return A formatted string representation of a task list containing all matching tasks.
+     * @return A formatted list of strings representing the matching tasks.
      */
-    public String findTasks(String keyword) {
-        String output = "";
+    public List<String> findTasks(String keyword) {
+        List<String> output = new ArrayList<>();
         for (int i = 0; i < tasks.size(); i++) {
             Task t = tasks.get(i);
             if (t.toString().contains(keyword)) {
-                output += "    " + (i + 1) + "." + t + "\n";
+                output.add((i + 1) + "." + t);
             }
         }
         if (output.isEmpty()) {
-            return "    No matching tasks found.";
+            output.add("No matching tasks found.");
+        } else {
+            output.addFirst("Here are the matching tasks in your list:");
         }
-        return "    Here are the matching tasks in your list:\n" + output.stripTrailing();
+        return output;
     }
 
     /**
-     * Returns a string representation of the task list.
+     * Lists the tasks in the current task list.
      *
-     * @return A formatted string representation of the task list.
+     * @return A formatted list of strings representing the current tasks in the list.
      */
-    public String listTasks() {
-        String output = "";
+    public List<String> listTasks() {
+        List<String> output = new ArrayList<>();
         if (tasks.isEmpty()) {
-            output += "    There are no tasks in the list!";
-        } else {
-            output += "    Here are the tasks in your list:\n";
-            for (int i = 0; i < tasks.size(); i++) {
-                output += "    " + (i + 1) + "." + tasks.get(i);
-                if (i != tasks.size() - 1) {
-                    output += "\n";
-                }
-            }
+            output.add("There are no tasks in the list!");
+            return output;
+        }
+        output.add("Here are the tasks in your list:");
+        for (int i = 0; i < tasks.size(); i++) {
+            output.add((i + 1) + "." + tasks.get(i));
         }
         return output;
     }

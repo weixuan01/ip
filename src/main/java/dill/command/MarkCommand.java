@@ -35,12 +35,10 @@ public class MarkCommand extends Command {
             QuoteList quoteList) throws ExecutionException {
         try {
             taskList.markTask(taskIndex);
-            String markMessage = "    Nice! I've marked this task as done:\n"
-                    + "      " + taskList.getTask(taskIndex);
-            ui.displayMessage(markMessage);
+            ui.displayMessage("Nice! I've marked this task as done:", "  " + taskList.getTask(taskIndex));
             storage.saveTasks(taskList);
         } catch (IndexOutOfBoundsException e1) {
-            throw new ExecutionException("    Cannot mark an entry that is not in the list!");
+            throw new ExecutionException("Cannot mark an entry that is not in the list!");
         } catch (StorageException e2) {
             ui.displaySystemMessage(e2.getMessage());
         }

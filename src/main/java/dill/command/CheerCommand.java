@@ -17,7 +17,7 @@ public class CheerCommand extends Command {
      * @param quoteList The list of quotes containing motivational messages.
      */
     public void execute(TaskList taskList, UserInterface ui, Storage storage, QuoteList quoteList) {
-        ui.displayMessage("    " + quoteList.getRandomQuote());
+        ui.displayMessage(quoteList.getRandomQuote());
 
     }
 }

@@ -32,10 +32,8 @@ public class AddCommand extends Command {
     public void execute(TaskList taskList, UserInterface ui, Storage storage, QuoteList quoteList) {
         try {
             taskList.addTask(task);
-            String addMessage = "    Got it. I've added this task:\n"
-                    + "      " + task + "\n"
-                    + "    Now you have " + taskList.getSize() + " tasks in the list.";
-            ui.displayMessage(addMessage);
+            ui.displayMessage("Got it. I've added this task:", "  " + task,
+                    "Now you have " + taskList.getSize() + " tasks in the list.");
             storage.saveTasks(taskList);
         } catch (StorageException e) {
             ui.displaySystemMessage(e.getMessage());
