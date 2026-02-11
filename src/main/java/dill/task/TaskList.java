@@ -1,7 +1,7 @@
 package dill.task;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Represents the list of tasks stored by Dill.

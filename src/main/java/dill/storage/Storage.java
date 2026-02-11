@@ -1,19 +1,20 @@
 package dill.storage;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Scanner;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+import dill.exception.StorageException;
+import dill.task.Deadline;
+import dill.task.Event;
 import dill.task.Task;
 import dill.task.TaskList;
 import dill.task.ToDo;
-import dill.task.Deadline;
-import dill.task.Event;
-import dill.exception.StorageException;
 
 /**
  * Represents the data storage management component of Dill.
@@ -37,7 +38,7 @@ public class Storage {
      * Loads task from the data storage file
      *
      * @return A list of tasks loaded from storage.
-     * @throws StorageException If the file path does not exist or the file is unreadable
+     * @throws StorageException If the file path does not exist or the file is unreadable.
      */
     public List<Task> loadTasks() throws StorageException {
         List<Task> tasks = new ArrayList<>();
@@ -69,7 +70,7 @@ public class Storage {
      * Save tasks to the data storage file.
      *
      * @param taskList The list of tasks to be saved.
-     * @throws StorageException If the file path does not exist or the file is unreadable
+     * @throws StorageException If the file path does not exist or the file is unreadable.
      */
     public void saveTasks(TaskList taskList) throws StorageException {
         try {
@@ -84,6 +85,11 @@ public class Storage {
         }
     }
 
+    /**
+     * Load quotes from the quote storage file.
+     * @return A list of string quotes loaded from storage.
+     * @throws StorageException If the file path does not exist or the file is unreadable.
+     */
     public List<String> loadQuotes() throws StorageException {
         List<String> quotes = new ArrayList<>();
         try {
@@ -105,14 +111,14 @@ public class Storage {
 
     private Task decodeTask(String[] taskVars) {
         switch (taskVars[0]) {
-            case "T":
-                return new ToDo(taskVars[2]);
-            case "D":
-                return new Deadline(taskVars[2], LocalDate.parse(taskVars[3]));
-            case "E":
-                return new Event(taskVars[2], LocalDate.parse(taskVars[3]), LocalDate.parse(taskVars[4]));
-            default:
-                return null;
+        case "T":
+            return new ToDo(taskVars[2]);
+        case "D":
+            return new Deadline(taskVars[2], LocalDate.parse(taskVars[3]));
+        case "E":
+            return new Event(taskVars[2], LocalDate.parse(taskVars[3]), LocalDate.parse(taskVars[4]));
+        default:
+            return null;
         }
     }
 }
