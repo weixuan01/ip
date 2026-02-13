@@ -19,8 +19,8 @@ public class QuoteList {
     }
 
     /**
-     * Creates an instance of QuoteList the specified list of quotes.
-     * @param quotes The list of strings of motivational quotes.
+     * Creates an instance of QuoteList with the specified list of quotes.
+     * @param quotes The list of motivational quotes.
      */
     public QuoteList(List<String> quotes) {
         this.quotes = quotes;
