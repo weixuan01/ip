@@ -39,7 +39,7 @@ public class DeleteCommand extends Command {
                     + "Now you have " + taskList.getSize() + " tasks in the list.";
             storage.saveTasks(taskList);
         } catch (IndexOutOfBoundsException e) {
-            throw new ExecutionException("Cannot delete an entry that is not in the list!");
+            throw new ExecutionException("I cannot delete an entry that is not in the list!");
         } catch (StorageException e) {
             message += "\n" + e.getMessage();
         }

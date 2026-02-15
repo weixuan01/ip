@@ -43,8 +43,7 @@ public class Storage {
      */
     public List<Task> loadTasks() throws StorageException {
         List<Task> tasks = new ArrayList<>();
-        try {
-            Scanner scanner = new Scanner(taskFile);
+        try (Scanner scanner = new Scanner(taskFile)){
             while (scanner.hasNextLine()) {
                 String[] taskVars = scanner.nextLine().split(" \\| ");
                 Task task = decodeTask(taskVars);
