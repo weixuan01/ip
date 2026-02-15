@@ -7,7 +7,9 @@ import dill.parser.Parser;
 import dill.quote.QuoteList;
 import dill.storage.Storage;
 import dill.task.TaskList;
-import dill.userinterface.UserInterface;
+import dill.userinterface.cli.UserInterface;
+import dill.userinterface.UiMessages;
+
 
 /**
  * Main class for the Dill chatbot application.
@@ -16,35 +18,46 @@ public class Dill {
     private static final String PATH_TASKS = "./data/dill.txt";
     private static final String PATH_QUOTES = "./data/quotes.txt";
     private TaskList taskList;
-    private UserInterface ui;
+    private UserInterface textUi;
     private Storage storage;
     private QuoteList quoteList;
+    private String loadMessage = "";
 
     /**
      * Creates a new instance of Dill and initializes core components.
-     *
-     * @param taskPath The relative path of the task storage file.
-     * @param quotePath The relative path of the quote storage file.
      */
-    public Dill(String taskPath, String quotePath) {
-        this.ui = new UserInterface();
+    public Dill() {
+        this.textUi = new UserInterface();
         this.storage = new Storage(PATH_TASKS, PATH_QUOTES);
 
         // Load task list
         try {
             this.taskList = new TaskList(storage.loadTasks());
-            ui.displayLoadSuccess(taskList.getSize());
+            loadMessage += UiMessages.getLoadSuccess(taskList.getSize());
         } catch (StorageException e) {
-            ui.displayLoadError(e.getMessage());
             this.taskList = new TaskList();
+            loadMessage += UiMessages.getLoadError(e.getMessage());
         }
 
         // Load quote list
         try {
             this.quoteList = new QuoteList(storage.loadQuotes());
         } catch (StorageException e) {
-            ui.displaySystemMessage(e.getMessage());
             this.quoteList = new QuoteList();
+            loadMessage += e.getMessage();
+        }
+    }
+
+    public String getGuiBootMessage() {
+        return UiMessages.getGreeting(loadMessage);
+    }
+
+    public String getResponse(String userInput) {
+        try {
+            Command cmd = Parser.parse(userInput);
+            return cmd.execute(taskList, storage, quoteList);
+        } catch (DillException e) {
+            return e.getMessage();
         }
     }
 
@@ -53,21 +66,23 @@ public class Dill {
      * Displays a greeting message, then reads, parses, and executes inputs until an exit command ("bye") is given.
      */
     public void start() {
-        ui.displayGreeting();
+        textUi.displayMessage(UiMessages.getGreeting(loadMessage));
         boolean isExit = false;
         while (!isExit) {
             try {
-                String userInput = ui.readInput();
+                String userInput = textUi.readInput();
                 Command cmd = Parser.parse(userInput);
-                cmd.execute(taskList, ui, storage, quoteList);
+                String output = cmd.execute(taskList, storage, quoteList);
+                textUi.displayMessage(output);
                 isExit = cmd.isExit();
             } catch (DillException e) {
-                ui.displayMessage(e.getMessage());
+                textUi.displayMessage(e.getMessage());
             }
         }
     }
 
+    // text-ui entry point
     public static void main(String[] args) {
-        new Dill(PATH_TASKS, PATH_QUOTES).start();
+        new Dill().start();
     }
 }

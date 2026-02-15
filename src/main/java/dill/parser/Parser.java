@@ -69,8 +69,8 @@ public class Parser {
         if (userInput.startsWith("find")) {
             return validateFind(userInput);
         }
-        throw new InvalidCommandException("    I'm not quite sure what you meant.\n"
-                + "    Type \"help\" if you wish to view a list of available commands.");
+        throw new InvalidCommandException("I'm not quite sure what you meant.\n"
+                + "Type \"help\" if you wish to view a list of available commands.");
     }
 
     private static Command validateMark(String userInput) throws InvalidCommandException {
