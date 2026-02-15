@@ -62,7 +62,7 @@ public class Dill {
     }
 
     /**
-     * Starts the main loop of the chatbot.
+     * Starts the main loop of the text-ui chatbot.
      * Displays a greeting message, then reads, parses, and executes inputs until an exit command ("bye") is given.
      */
     public void start() {

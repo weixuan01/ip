@@ -1,6 +1,5 @@
 package dill.userinterface.cli;
 
-import java.util.List;
 import java.util.Scanner;
 
 /**
