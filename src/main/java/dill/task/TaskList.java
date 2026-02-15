@@ -92,7 +92,7 @@ public class TaskList {
         for (int i = 0; i < tasks.size(); i++) {
             Task t = tasks.get(i);
             if (t.toString().contains(keyword)) {
-                output.add((i + 1) + "." + t);
+                output.add("  " + (i + 1) + "." + t);
             }
         }
         if (output.isEmpty()) {
@@ -116,7 +116,7 @@ public class TaskList {
         }
         output.add("Here are the tasks in your list:");
         for (int i = 0; i < tasks.size(); i++) {
-            output.add((i + 1) + "." + tasks.get(i));
+            output.add("  " + (i + 1) + "." + tasks.get(i));
         }
         return output;
     }

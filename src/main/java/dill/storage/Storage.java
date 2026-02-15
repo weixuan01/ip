@@ -22,6 +22,7 @@ import dill.task.ToDo;
 public class Storage {
     private File taskFile;
     private File quoteFile;
+    private boolean isTaskWritable = false;
 
     /**
      * Creates an instance of Storage and initializes it with a file path.
@@ -54,14 +55,16 @@ public class Storage {
                     tasks.add(task);
                 }
             }
+            isTaskWritable = true;
             return tasks;
         } catch (FileNotFoundException e1) {
             try {
                 taskFile.getParentFile().mkdirs(); // create data folder if it doesn't exist
                 taskFile.createNewFile();
+                isTaskWritable = true;
                 return tasks;
             } catch (IOException e2) {
-                throw new StorageException("    [SYSTEM]: Error creating task storage file");
+                throw new StorageException("There was an error creating a task storage file.");
             }
         }
     }
@@ -73,15 +76,19 @@ public class Storage {
      * @throws StorageException If the file path does not exist or the file is unreadable.
      */
     public void saveTasks(TaskList taskList) throws StorageException {
+        if (!isTaskWritable) {
+            return; // Do not save
+        }
         try {
-            // creates file if file doesn't exist, throws IOException if parent dir also doesn't exist
             FileWriter fileWriter = new FileWriter(taskFile);
             for (int i = 0; i < taskList.getSize(); i++) {
                 fileWriter.write(taskList.getTask(i).toFileString() + "\n");
             }
             fileWriter.close();
         } catch (IOException e) {
-            throw new StorageException("    [SYSTEM]: Error saving to disk");
+            isTaskWritable = false;
+            throw new StorageException("There was an expected error saving to disk, "
+                    + "disabling auto save for the rest of this session.");
         }
     }
 
@@ -104,7 +111,7 @@ public class Storage {
                 quoteFile.createNewFile();
                 return quotes;
             } catch (IOException e2) {
-                throw new StorageException("[SYSTEM]: Error creating quote storage file");
+                throw new StorageException("There was an error creating a quote storage file.");
             }
         }
     }

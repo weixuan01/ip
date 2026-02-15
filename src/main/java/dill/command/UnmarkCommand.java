@@ -5,7 +5,6 @@ import dill.exception.StorageException;
 import dill.quote.QuoteList;
 import dill.storage.Storage;
 import dill.task.TaskList;
-import dill.userinterface.UserInterface;
 
 /**
  * Represents a command to mark a task as incomplete.
@@ -26,22 +25,23 @@ public class UnmarkCommand extends Command {
      * Executes the unmark command by marking the task at the specified index in the list as complete.
      *
      * @param taskList The list of tasks to be executed on.
-     * @param ui The user interface for displaying messages.
      * @param storage The data storage handler for saving and loading tasks.
      * @param quoteList The list of quotes containing motivational messages.
      * @throws ExecutionException If the provided task index is out of range.
      */
-    public void execute(TaskList taskList, UserInterface ui, Storage storage,
+    public String execute(TaskList taskList, Storage storage,
             QuoteList quoteList) throws ExecutionException {
+        String message = "";
         try {
             taskList.unmarkTask(taskIndex);
-            ui.displayMessage("OK, I've marked this task as not done yet:",
-                    "  " + taskList.getTask(taskIndex));
+            message += "OK, I've marked this task as not done yet:\n"
+                    + "  " + taskList.getTask(taskIndex);
             storage.saveTasks(taskList);
-        } catch (IndexOutOfBoundsException e1) {
-            throw new ExecutionException("Cannot unmark an entry that is not in the list!");
-        } catch (StorageException e2) {
-            ui.displaySystemMessage(e2.getMessage());
+        } catch (IndexOutOfBoundsException e) {
+            throw new ExecutionException("I cannot unmark an entry that is not in the list!");
+        } catch (StorageException e) {
+            message += "\n" + e.getMessage();
         }
+        return message;
     }
 }
