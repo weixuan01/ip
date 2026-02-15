@@ -152,19 +152,19 @@ public class Parser {
 
     private static Command validateDelete(String userInput) throws InvalidCommandException {
         if (!userInput.startsWith("delete ") || userInput.equals("delete ")) {
-            throw new InvalidCommandException("    Please specify an entry to delete.");
+            throw new InvalidCommandException("Please specify an entry to delete.");
         }
         try {
             int taskIndex = Integer.parseInt(userInput.substring(7)) - 1;
             return new DeleteCommand(taskIndex);
         } catch (NumberFormatException e) {
-            throw new InvalidCommandException("    Entry must be an integer!");
+            throw new InvalidCommandException("Entry must be an integer!");
         }
     }
 
     private static Command validateFind(String userInput) throws InvalidCommandException {
         if (!userInput.startsWith("find ") || userInput.equals("find ")) {
-            throw new InvalidCommandException("    Please specify a keyword for matching.");
+            throw new InvalidCommandException("Please specify a keyword for matching.");
         }
         String keyword = userInput.substring(5);
         return new FindCommand(keyword);
