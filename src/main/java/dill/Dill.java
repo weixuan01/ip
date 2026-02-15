@@ -7,9 +7,8 @@ import dill.parser.Parser;
 import dill.quote.QuoteList;
 import dill.storage.Storage;
 import dill.task.TaskList;
-import dill.userinterface.cli.UserInterface;
+import dill.userinterface.textui.UserInterface;
 import dill.userinterface.UiMessages;
-
 
 /**
  * Main class for the Dill chatbot application.

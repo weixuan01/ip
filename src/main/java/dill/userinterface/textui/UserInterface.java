@@ -1,4 +1,4 @@
-package dill.userinterface.cli;
+package dill.userinterface.textui;
 
 import java.util.Scanner;
 
