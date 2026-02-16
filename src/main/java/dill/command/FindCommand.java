@@ -1,5 +1,7 @@
 package dill.command;
 
+import java.util.List;
+
 import dill.quote.QuoteList;
 import dill.storage.Storage;
 import dill.task.TaskList;
@@ -25,6 +27,24 @@ public class FindCommand extends Command {
      * @param quoteList The list of quotes containing motivational messages.
      */
     public String execute(TaskList taskList, Storage storage, QuoteList quoteList) {
-        return String.join("\n", taskList.findTasks(keyword));
+        List<TaskList.MatchingTask> matchingTasks = taskList.findTasks(keyword);
+        StringBuilder output = new StringBuilder();
+        if (matchingTasks.isEmpty()) {
+            output.append("No matching tasks found.");
+            return output.toString();
+        }
+
+        output.append("Here are the matching tasks in your list:\n");
+        for (int i = 0; i < matchingTasks.size(); i++) {
+            if (i > 0) {
+                output.append("\n");
+            }
+            output.append("  ")
+                    .append(matchingTasks.get(i).index + 1)
+                    .append(".")
+                    .append(matchingTasks.get(i).task);
+        }
+
+        return output.toString();
     }
 }

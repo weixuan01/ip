@@ -2,7 +2,11 @@ package dill.command;
 
 import dill.quote.QuoteList;
 import dill.storage.Storage;
+import dill.task.Task;
 import dill.task.TaskList;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Represents a command to list all current tasks in the task list.
@@ -16,6 +20,23 @@ public class ListCommand extends Command {
      * @param quoteList The list of quotes containing motivational messages.
      */
     public String execute(TaskList taskList, Storage storage, QuoteList quoteList) {
-        return String.join("\n", taskList.listTasks());
+        List<Task> tasks = taskList.getTaskList();
+        StringBuilder output = new StringBuilder();
+        if (tasks.isEmpty()) {
+            output.append("There are no tasks in the list!");
+            return output.toString();
+        }
+
+        output.append("Here are the tasks in your list:\n");
+        for (int i = 0; i < tasks.size(); i++) {
+            if (i > 0) {
+                output.append("\n"); // Append new line before every task except the first.
+            }
+            output.append("  ")
+                    .append(i + 1)
+                    .append(".")
+                    .append(tasks.get(i));
+        }
+        return output.toString();
     }
 }

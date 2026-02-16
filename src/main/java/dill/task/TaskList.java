@@ -9,6 +9,16 @@ import java.util.List;
 public class TaskList {
     private List<Task> tasks;
 
+    public static class MatchingTask {
+        public Task task;
+        public int index;
+
+        public MatchingTask(Task task, int index) {
+            this.task = task;
+            this.index = index;
+        }
+    }
+
     /**
      * Creates an instance of TaskList and initializes an empty task list.
      */
@@ -87,20 +97,15 @@ public class TaskList {
      * @param keyword The specified matching keyword.
      * @return A formatted list of strings representing the matching tasks.
      */
-    public List<String> findTasks(String keyword) {
-        List<String> output = new ArrayList<>();
+    public List<MatchingTask> findTasks(String keyword) {
+        List<MatchingTask> matchingTasks = new ArrayList<>();
         for (int i = 0; i < tasks.size(); i++) {
             Task t = tasks.get(i);
             if (t.toString().contains(keyword)) {
-                output.add("  " + (i + 1) + "." + t);
+                matchingTasks.add(new MatchingTask(t, i));
             }
         }
-        if (output.isEmpty()) {
-            output.add("No matching tasks found.");
-        } else {
-            output.addFirst("Here are the matching tasks in your list:");
-        }
-        return output;
+        return matchingTasks;
     }
 
     /**
@@ -108,16 +113,7 @@ public class TaskList {
      *
      * @return A formatted list of strings representing the current tasks in the list.
      */
-    public List<String> listTasks() {
-        List<String> output = new ArrayList<>();
-        if (tasks.isEmpty()) {
-            output.add("There are no tasks in the list!");
-            return output;
-        }
-        output.add("Here are the tasks in your list:");
-        for (int i = 0; i < tasks.size(); i++) {
-            output.add("  " + (i + 1) + "." + tasks.get(i));
-        }
-        return output;
+    public List<Task> getTaskList() {
+        return this.tasks;
     }
 }
