@@ -5,6 +5,7 @@ import dill.exception.StorageException;
 import dill.quote.QuoteList;
 import dill.storage.Storage;
 import dill.task.TaskList;
+import dill.userinterface.UiMessages;
 
 /**
  * Represents a command to mark a task as incomplete.
@@ -34,8 +35,7 @@ public class UnmarkCommand extends Command {
         String message = "";
         try {
             taskList.unmarkTask(taskIndex);
-            message += "OK, I've marked this task as not done yet:\n"
-                    + "  " + taskList.getTask(taskIndex);
+            message += UiMessages.getUnmarkSuccess(taskList.getTask(taskIndex));
             storage.saveTasks(taskList);
         } catch (IndexOutOfBoundsException e) {
             throw new ExecutionException("I cannot unmark an entry that is not in the list!");

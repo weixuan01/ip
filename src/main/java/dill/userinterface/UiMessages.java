@@ -1,14 +1,28 @@
 package dill.userinterface;
 
+import dill.task.Task;
+
 public class UiMessages {
-    private static final String GREETING = "Hello! I'm Dill.\n%s\nWhat shall we do this time?";
     private static final String LOAD_TASKS_SUCCESS = "I found %d saved tasks. Let's pick up where we left off!";
+
     private static final String LOAD_TASKS_SUCCESS_EMPTY = "I could not find any saved tasks. Let's start fresh!";
-    private static final String LOAD_TASKS_ERROR = "%s\nThis session will not be saved.";
+
     private static final String EXIT_MESSAGE = "Bye. Hope to see you again soon!";
+
+    private static final String GREETING =
+            """
+            Hello! I'm Dill.
+            %s
+            What shall we do this time?""";
+
+    private static final String LOAD_TASKS_ERROR =
+            """
+            %s
+            This session will not be saved.""";
+
     private static final String HELP_MESSAGE =
             """
-            Here are the available commands:"
+            Here are the available commands:
             1. list
                Displays the current tasks in the list.
             2. todo <task-name>
@@ -30,12 +44,34 @@ public class UiMessages {
             10. bye
                Terminates the current session.""";
 
+    private static final String TASK_ADD_SUCCESS =
+            """
+            Got it. I've added this task:
+              %s
+            Now you have %d tasks in the list.""";
+
+    private static final String TASK_DELETE_SUCCESS =
+            """
+            Noted. I've removed this task:
+              %s
+            Now you have %d tasks in the list.""";
+
+    private static final String TASK_MARK_SUCCESS =
+            """
+            Nice! I've marked this task as done:
+              %s""";
+
+    private static final String TASK_UNMARK_SUCCESS =
+            """
+            OK, I've marked this task as not done yet:
+              %s""";
+
     public static String getGreeting(String loadMessage) {
         return String.format(GREETING, loadMessage);
     }
 
     public static String getExit() {
-         return EXIT_MESSAGE;
+        return EXIT_MESSAGE;
     }
 
     public static String getLoadTasksSuccess(int n) {
@@ -52,5 +88,21 @@ public class UiMessages {
 
     public static String getHelp() {
         return HELP_MESSAGE;
+    }
+
+    public static String getAddSuccess(Task task, int listSize) {
+        return String.format(TASK_ADD_SUCCESS, task, listSize);
+    }
+
+    public static String getDeleteSuccess(Task task, int listSize) {
+        return String.format(TASK_DELETE_SUCCESS, task, listSize);
+    }
+
+    public static String getMarkSuccess(Task task) {
+        return String.format(TASK_MARK_SUCCESS, task);
+    }
+
+    public static String getUnmarkSuccess(Task task) {
+        return String.format(TASK_UNMARK_SUCCESS, task);
     }
 }

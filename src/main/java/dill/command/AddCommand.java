@@ -5,6 +5,7 @@ import dill.quote.QuoteList;
 import dill.storage.Storage;
 import dill.task.Task;
 import dill.task.TaskList;
+import dill.userinterface.UiMessages;
 
 /**
  * Represents a command to add a new task to the list.
@@ -29,9 +30,7 @@ public class AddCommand extends Command {
      */
     public String execute(TaskList taskList, Storage storage, QuoteList quoteList) {
         taskList.addTask(task);
-        String message = "Got it. I've added this task:\n"
-                + "  " + task + "\n"
-                + "Now you have " + taskList.getSize() + " tasks in the list.";
+        String message = UiMessages.getAddSuccess(task, taskList.getSize());
         try {
             storage.saveTasks(taskList);
         } catch (StorageException e) {

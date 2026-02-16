@@ -6,6 +6,7 @@ import dill.quote.QuoteList;
 import dill.storage.Storage;
 import dill.task.Task;
 import dill.task.TaskList;
+import dill.userinterface.UiMessages;
 
 /**
  * Represents a command to remove a task from the list.
@@ -34,9 +35,7 @@ public class DeleteCommand extends Command {
         String message = "";
         try {
             Task removed = taskList.deleteTask(taskIndex);
-            message += "Noted. I've removed this task:\n"
-                    + "  " + removed + "\n"
-                    + "Now you have " + taskList.getSize() + " tasks in the list.";
+            message += UiMessages.getDeleteSuccess(removed, taskList.getSize());
             storage.saveTasks(taskList);
         } catch (IndexOutOfBoundsException e) {
             throw new ExecutionException("I cannot delete an entry that is not in the list!");

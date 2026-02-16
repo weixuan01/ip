@@ -5,6 +5,7 @@ import dill.exception.StorageException;
 import dill.quote.QuoteList;
 import dill.storage.Storage;
 import dill.task.TaskList;
+import dill.userinterface.UiMessages;
 
 /**
  * Represents a command to mark a task as complete.
@@ -34,8 +35,7 @@ public class MarkCommand extends Command {
         String message = "";
         try {
             taskList.markTask(taskIndex);
-            message += "Nice! I've marked this task as done:\n"
-                    + "  " + taskList.getTask(taskIndex);
+            message += UiMessages.getMarkSuccess(taskList.getTask(taskIndex));
             storage.saveTasks(taskList);
         } catch (IndexOutOfBoundsException e) {
             throw new ExecutionException("I cannot mark an entry that is not in the list!");
