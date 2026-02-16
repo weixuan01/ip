@@ -3,9 +3,9 @@ package dill.userinterface;
 import dill.task.Task;
 
 public class UiMessages {
-    private static final String LOAD_TASKS_SUCCESS = "I found %d saved tasks. Let's pick up where we left off!";
+    private static final String TASKS_LOAD_SUCCESS = "I found %d saved tasks. Let's pick up where we left off!";
 
-    private static final String LOAD_TASKS_SUCCESS_EMPTY = "I could not find any saved tasks. Let's start fresh!";
+    private static final String TASKS_LOAD_SUCCESS_EMPTY = "I could not find any saved tasks. Let's start fresh!";
 
     private static final String EXIT_MESSAGE = "Bye. Hope to see you again soon!";
 
@@ -15,10 +15,32 @@ public class UiMessages {
             %s
             What shall we do this time?""";
 
-    private static final String LOAD_TASKS_ERROR =
+    private static final String TASKS_LOAD_ERROR =
             """
             %s
             This session will not be saved.""";
+
+    private static final String TASK_ADD_SUCCESS =
+            """
+            Got it. I've added this task:
+              %s
+            Now you have %d tasks in the list.""";
+
+    private static final String TASK_DELETE_SUCCESS =
+            """
+            Noted. I've removed this task:
+              %s
+            Now you have %d tasks in the list.""";
+
+    private static final String TASK_MARK_SUCCESS =
+            """
+            Nice! I've marked this task as done:
+              %s""";
+
+    private static final String TASK_UNMARK_SUCCESS =
+            """
+            OK, I've marked this task as not done yet:
+              %s""";
 
     private static final String HELP_MESSAGE =
             """
@@ -44,28 +66,6 @@ public class UiMessages {
             10. bye
                Terminates the current session.""";
 
-    private static final String TASK_ADD_SUCCESS =
-            """
-            Got it. I've added this task:
-              %s
-            Now you have %d tasks in the list.""";
-
-    private static final String TASK_DELETE_SUCCESS =
-            """
-            Noted. I've removed this task:
-              %s
-            Now you have %d tasks in the list.""";
-
-    private static final String TASK_MARK_SUCCESS =
-            """
-            Nice! I've marked this task as done:
-              %s""";
-
-    private static final String TASK_UNMARK_SUCCESS =
-            """
-            OK, I've marked this task as not done yet:
-              %s""";
-
     public static String getGreeting(String loadMessage) {
         return String.format(GREETING, loadMessage);
     }
@@ -76,14 +76,14 @@ public class UiMessages {
 
     public static String getLoadTasksSuccess(int n) {
         if (n > 0) {
-            return String.format(LOAD_TASKS_SUCCESS, n);
+            return String.format(TASKS_LOAD_SUCCESS, n);
         } else {
-            return LOAD_TASKS_SUCCESS_EMPTY;
+            return TASKS_LOAD_SUCCESS_EMPTY;
         }
     }
 
     public static String getLoadTasksError(String errorMessage) {
-        return String.format(LOAD_TASKS_ERROR, errorMessage);
+        return String.format(TASKS_LOAD_ERROR, errorMessage);
     }
 
     public static String getHelp() {
