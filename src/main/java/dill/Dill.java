@@ -1,11 +1,14 @@
 package dill;
 
+import java.util.List;
+
 import dill.command.Command;
 import dill.exception.DillException;
 import dill.exception.StorageException;
 import dill.parser.Parser;
 import dill.quote.QuoteList;
 import dill.storage.Storage;
+import dill.task.Task;
 import dill.task.TaskList;
 import dill.userinterface.textui.UserInterface;
 import dill.userinterface.UiMessages;
@@ -20,31 +23,18 @@ public class Dill {
     private UserInterface textUi;
     private Storage storage;
     private QuoteList quoteList;
-    private String loadMessage = "";
+    private String loadMessage;
 
     /**
      * Creates a new instance of Dill and initializes core components.
      */
     public Dill() {
+        StringBuilder messageBuilder = new StringBuilder();
         this.textUi = new UserInterface();
         this.storage = new Storage(PATH_TASKS, PATH_QUOTES);
-
-        // Load task list
-        try {
-            this.taskList = new TaskList(storage.loadTasks());
-            loadMessage += UiMessages.getLoadSuccess(taskList.getSize());
-        } catch (StorageException e) {
-            this.taskList = new TaskList();
-            loadMessage += UiMessages.getLoadError(e.getMessage());
-        }
-
-        // Load quote list
-        try {
-            this.quoteList = new QuoteList(storage.loadQuotes());
-        } catch (StorageException e) {
-            this.quoteList = new QuoteList();
-            loadMessage += e.getMessage();
-        }
+        this.taskList  = initTaskList(messageBuilder);
+        this.quoteList = initQuoteList(messageBuilder);
+        loadMessage = messageBuilder.toString();
     }
 
     public String getGuiBootMessage() {
@@ -77,6 +67,26 @@ public class Dill {
             } catch (DillException e) {
                 textUi.displayMessage(e.getMessage());
             }
+        }
+    }
+
+    private TaskList initTaskList(StringBuilder messageBuilder) {
+        try {
+            List<Task> tasks = storage.loadTasks();
+            messageBuilder.append(UiMessages.getLoadTasksSuccess(tasks.size()));
+            return new TaskList(tasks);
+        } catch (StorageException e) {
+            messageBuilder.append(UiMessages.getLoadTasksError(e.getMessage()));
+            return new TaskList();
+        }
+    }
+
+    private QuoteList initQuoteList(StringBuilder messageBuilder) {
+        try {
+            return new QuoteList(storage.loadQuotes());
+        } catch (StorageException e) {
+            messageBuilder.append("\n").append(e.getMessage());
+            return new QuoteList();
         }
     }
 
