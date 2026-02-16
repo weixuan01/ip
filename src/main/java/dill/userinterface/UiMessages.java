@@ -9,6 +9,9 @@ public class UiMessages {
 
     private static final String EXIT_MESSAGE = "Bye. Hope to see you again soon!";
 
+    private static final String TASKS_LOAD_CORRUPT = "Oh no!"
+            + " My memory seems to be corrupted. I'm unable to load our previous tasks, let's start fresh shall we?";
+
     private static final String GREETING =
             """
             Hello! I'm Dill.
@@ -104,5 +107,9 @@ public class UiMessages {
 
     public static String getUnmarkSuccess(Task task) {
         return String.format(TASK_UNMARK_SUCCESS, task);
+    }
+
+    public static String getTasksLoadCorrupt() {
+        return TASKS_LOAD_CORRUPT;
     }
 }

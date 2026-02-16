@@ -4,11 +4,13 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.format.DateTimeParseException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import dill.exception.CorruptedFileException;
 import dill.exception.StorageException;
 import dill.quote.QuoteList;
 import dill.task.Deadline;
@@ -46,14 +48,13 @@ public class Storage {
         List<Task> tasks = new ArrayList<>();
         try (Scanner scanner = new Scanner(taskFile)){
             while (scanner.hasNextLine()) {
-                String[] taskVars = scanner.nextLine().split(" \\| ");
+                String[] taskVars = scanner.nextLine().split(" \\| "); // Split by " | "
                 Task task = decodeTask(taskVars);
-                if (task != null) {
-                    if (taskVars[1].equals("1")) {
-                        task.setDone();
-                    }
-                    tasks.add(task);
+                String doneStatus = taskVars[1];
+                if (doneStatus.equals("1")) {
+                    task.setDone();
                 }
+                tasks.add(task);
             }
             isTaskWritable = true;
             return tasks;
@@ -64,7 +65,7 @@ public class Storage {
                 isTaskWritable = true;
                 return tasks;
             } catch (IOException e2) {
-                throw new StorageException("There was an error creating a task storage file.");
+                throw new StorageException("Error creating a task storage file.");
             }
         }
     }
@@ -82,7 +83,10 @@ public class Storage {
         try {
             FileWriter fileWriter = new FileWriter(taskFile);
             for (int i = 0; i < taskList.getSize(); i++) {
-                fileWriter.write(taskList.getTask(i).toFileString() + "\n");
+                fileWriter.write(taskList.getTask(i).toFileString());
+                if (i < taskList.getSize() - 1) {
+                    fileWriter.write("\n");
+                }
             }
             fileWriter.close();
         } catch (IOException e) {
@@ -112,7 +116,7 @@ public class Storage {
             }
             return quotes;
         } catch (FileNotFoundException e) {
-            throw new StorageException("Quote storage file was unexpectedly deleted or moved! Please reboot.");
+            throw new StorageException("Quote storage file was unexpectedly deleted or moved.");
         }
     }
 
@@ -123,7 +127,7 @@ public class Storage {
                 quoteFile.getParentFile().mkdirs(); // Create data folder if it doesn't exist
                 quoteFile.createNewFile();
             } catch (IOException e) {
-                throw new StorageException("There was an error creating a quote storage file.");
+                throw new StorageException("Error creating quote storage file.");
             }
         }
 
@@ -135,22 +139,54 @@ public class Storage {
                 fileWriter.write(quotes.get(i) + "\n");
             }
         } catch (IOException e) {
-            throw new StorageException("There was an error loading the default quotes.");
+            throw new StorageException("Error loading default quotes.");
         }
 
         return quotes;
     }
 
-    private Task decodeTask(String[] taskVars) {
-        switch (taskVars[0]) {
+    public void setTaskWritable(boolean isTaskWritable) {
+        this.isTaskWritable = isTaskWritable;
+    }
+
+    private Task decodeTask(String[] taskVars) throws CorruptedFileException {
+        if (taskVars.length < 3) {
+            throw new CorruptedFileException("");
+        }
+        String taskType = taskVars[0];
+        String doneStatus = taskVars[1];
+        String taskName = taskVars[2];
+
+        if (!doneStatus.equals("0") && !doneStatus.equals("1")) {
+            throw new CorruptedFileException("Done status is not 1 or 0");
+        }
+
+        switch (taskType) {
         case "T":
-            return new ToDo(taskVars[2]);
+            verifyLength(taskVars, 3); // Verify length is not > 3
+            return new ToDo(taskName);
         case "D":
-            return new Deadline(taskVars[2], LocalDate.parse(taskVars[3]));
+            verifyLength(taskVars, 4);
+            return new Deadline(taskName, parseDate(taskVars[3]));
         case "E":
-            return new Event(taskVars[2], LocalDate.parse(taskVars[3]), LocalDate.parse(taskVars[4]));
+            verifyLength(taskVars, 5);
+            return new Event(taskName, parseDate(taskVars[3]), parseDate(taskVars[4]));
         default:
-            return null;
+            throw new CorruptedFileException("Task type is not T, D, or E.");
+        }
+    }
+
+    private void verifyLength(String[] taskVars, int expectedLength) throws CorruptedFileException {
+        if (taskVars.length != expectedLength) {
+            throw new CorruptedFileException("Incomplete task information (< 3 variables).");
+        }
+    }
+
+    private LocalDate parseDate(String date) throws CorruptedFileException {
+        try {
+            return LocalDate.parse(date);
+        } catch (DateTimeParseException e) {
+            throw new CorruptedFileException("Date time format is not yyyy-mm-dd.");
         }
     }
 }

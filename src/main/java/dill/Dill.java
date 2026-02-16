@@ -3,6 +3,7 @@ package dill;
 import java.util.List;
 
 import dill.command.Command;
+import dill.exception.CorruptedFileException;
 import dill.exception.DillException;
 import dill.exception.StorageException;
 import dill.parser.Parser;
@@ -75,6 +76,10 @@ public class Dill {
             List<Task> tasks = storage.loadTasks();
             messageBuilder.append(UiMessages.getLoadTasksSuccess(tasks.size()));
             return new TaskList(tasks);
+        } catch (CorruptedFileException e) {
+            storage.setTaskWritable(true); // Enable write access to overwrite corrupted file
+            messageBuilder.append(UiMessages.getTasksLoadCorrupt());
+            return new TaskList();
         } catch (StorageException e) {
             messageBuilder.append(UiMessages.getLoadTasksError(e.getMessage()));
             return new TaskList();
