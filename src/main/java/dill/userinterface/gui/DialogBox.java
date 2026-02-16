@@ -13,6 +13,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.Node;
+import javafx.scene.shape.Circle;
 
 /**
  * Represents a dialog box consisting of an ImageView to represent the speaker's face
@@ -35,6 +36,8 @@ public class DialogBox extends HBox {
         }
         dialog.setText(text);
         displayPicture.setImage(img);
+        Circle clip = new Circle(49.5, 49.5, 49.5);
+        displayPicture.setClip(clip);
     }
 
     /**
@@ -48,12 +51,26 @@ public class DialogBox extends HBox {
     }
 
     public static DialogBox getUserDialog(String text, Image img) {
-        return new DialogBox(text, img);
+        DialogBox db = new DialogBox(text, img);
+
+        db.dialog.setStyle("-fx-background-color: #6A5ACD; "
+                + "-fx-background-radius: 15; "
+                + "-fx-padding: 10 15 10 15;" // Top, Right, Bottom, Left
+                + "-fx-text-fill: #FFFFFF;"
+                + "-fx-font-family: 'Verdana';"
+                + "-fx-font-size: 12px;");
+        return db;
     }
 
     public static DialogBox getDillDialog(String text, Image img) {
         DialogBox db = new DialogBox(text, img);
         db.flip();
+
+        db.dialog.setStyle("-fx-background-color: #FFFFFF; "
+                + "-fx-background-radius: 15; "
+                + "-fx-padding: 10 15 10 15;" // Top, Right, Bottom, Left
+                + "-fx-font-family: 'Verdana';"
+                + "-fx-font-size: 12px;");
         return db;
     }
 }
