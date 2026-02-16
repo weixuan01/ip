@@ -10,6 +10,17 @@ import java.util.Random;
 public class QuoteList {
     private List<String> quotes;
     private Random random;
+    private static final List<String> DEFAULT_QUOTES = List.of(
+            "Mastery is a journey, not a destination.",
+            "Every bug you fix makes you a better programmer.",
+            "The code you write today is the legacy you leave tomorrow.",
+            "Confusion is part of programming; embrace it.",
+            "Refactoring is a sign of growth.",
+            "Think twice, code once.",
+            "The expert in anything was once a beginner.",
+            "Believe you can and you are halfway there",
+            "A comfort zone is a beautiful place, but nothing ever grows there."
+    );
 
     /**
      * Creates an instance of QuoteList and initializes an empty quote list.
@@ -37,5 +48,9 @@ public class QuoteList {
         }
         int randIndex = random.nextInt(quotes.size()); // generate random index
         return quotes.get(randIndex);
+    }
+
+    public static List<String> getDefaultQuotes() {
+        return DEFAULT_QUOTES;
     }
 }

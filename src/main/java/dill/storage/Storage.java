@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import dill.exception.StorageException;
+import dill.quote.QuoteList;
 import dill.task.Deadline;
 import dill.task.Event;
 import dill.task.Task;
@@ -97,22 +98,47 @@ public class Storage {
      * @throws StorageException If the file path does not exist or the file is unreadable.
      */
     public List<String> loadQuotes() throws StorageException {
+        if (!quoteFile.exists() || quoteFile.length() == 0) {
+            return loadDefaultQuotes();
+        }
+
         List<String> quotes = new ArrayList<>();
-        try {
-            Scanner scanner = new Scanner(quoteFile);
+        try (Scanner scanner = new Scanner(quoteFile)) {
             while (scanner.hasNextLine()) {
-                quotes.add(scanner.nextLine());
+                String quote = scanner.nextLine();
+                if (!quote.isBlank()){
+                    quotes.add(quote);
+                }
             }
             return quotes;
-        } catch (FileNotFoundException e1) {
+        } catch (FileNotFoundException e) {
+            throw new StorageException("Quote storage file was unexpectedly deleted or moved! Please reboot.");
+        }
+    }
+
+    private List<String> loadDefaultQuotes() throws StorageException {
+        // Create quote storage file if it doesn't exist
+        if (!quoteFile.exists()) {
             try {
-                quoteFile.getParentFile().mkdirs(); // create data folder if it doesn't exist
+                quoteFile.getParentFile().mkdirs(); // Create data folder if it doesn't exist
                 quoteFile.createNewFile();
-                return quotes;
-            } catch (IOException e2) {
+            } catch (IOException e) {
                 throw new StorageException("There was an error creating a quote storage file.");
             }
         }
+
+        List<String> quotes = QuoteList.getDefaultQuotes();
+
+        // Write default quotes to storage file.
+        try (FileWriter fileWriter = new FileWriter(quoteFile)) {
+            for (int i = 0; i < quotes.size(); i++) {
+                fileWriter.write(quotes.get(i) + "\n");
+            }
+        } catch (IOException e) {
+            throw new StorageException("There was an error loading the default quotes.");
+        }
+
+        return quotes;
     }
 
     private Task decodeTask(String[] taskVars) {
