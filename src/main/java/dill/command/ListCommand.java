@@ -29,13 +29,13 @@ public class ListCommand extends Command {
 
         output.append("Here are the tasks in your list:\n");
         for (int i = 0; i < tasks.size(); i++) {
-            if (i > 0) {
-                output.append("\n"); // Append new line before every task except the first.
-            }
             output.append("  ")
                     .append(i + 1)
                     .append(".")
                     .append(tasks.get(i));
+            if (i < tasks.size() - 1) {
+                output.append("\n");
+            }
         }
         return output.toString();
     }
