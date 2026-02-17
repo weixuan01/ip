@@ -46,6 +46,8 @@ public class Dill {
         try {
             Command cmd = Parser.parse(userInput);
             return cmd.execute(taskList, storage, quoteList);
+        } catch (StorageException e) {
+            return UiMessages.getTasksSaveError();
         } catch (DillException e) {
             return e.getMessage();
         }
@@ -65,6 +67,8 @@ public class Dill {
                 String output = cmd.execute(taskList, storage, quoteList);
                 textUi.displayMessage(output);
                 isExit = cmd.isExit();
+            } catch (StorageException e) {
+                textUi.displayMessage(UiMessages.getTasksSaveError());
             } catch (DillException e) {
                 textUi.displayMessage(e.getMessage());
             }
@@ -81,7 +85,7 @@ public class Dill {
             messageBuilder.append(UiMessages.getTasksLoadCorrupt());
             return new TaskList();
         } catch (StorageException e) {
-            messageBuilder.append(UiMessages.getLoadTasksError(e.getMessage()));
+            messageBuilder.append(UiMessages.getLoadTasksError());
             return new TaskList();
         }
     }

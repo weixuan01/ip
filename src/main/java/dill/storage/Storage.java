@@ -42,7 +42,8 @@ public class Storage {
      * Loads task from the data storage file
      *
      * @return A list of tasks loaded from storage.
-     * @throws StorageException If the file path does not exist or the file is unreadable.
+     * @throws StorageException If the file path does not exist, the file path is invalid
+     * (contains special characters e.g., "|", "*", "/"), or the file is unreadable
      */
     public List<Task> loadTasks() throws StorageException {
         List<Task> tasks = new ArrayList<>();
@@ -91,8 +92,7 @@ public class Storage {
             fileWriter.close();
         } catch (IOException e) {
             isTaskWritable = false;
-            throw new StorageException("There was an expected error saving to disk, "
-                    + "disabling auto save for the rest of this session.");
+            throw new StorageException("Error saving to disk");
         }
     }
 
@@ -116,7 +116,7 @@ public class Storage {
             }
             return quotes;
         } catch (FileNotFoundException e) {
-            throw new StorageException("Quote storage file was unexpectedly deleted or moved.");
+            throw new StorageException("Quote storage file deleted or moved.");
         }
     }
 
@@ -163,20 +163,20 @@ public class Storage {
 
         switch (taskType) {
         case "T":
-            verifyLength(taskVars, 3); // Verify length is not > 3
+            validateLength(taskVars, 3); // Verify length is not > 3
             return new ToDo(taskName);
         case "D":
-            verifyLength(taskVars, 4);
+            validateLength(taskVars, 4);
             return new Deadline(taskName, parseDate(taskVars[3]));
         case "E":
-            verifyLength(taskVars, 5);
+            validateLength(taskVars, 5);
             return new Event(taskName, parseDate(taskVars[3]), parseDate(taskVars[4]));
         default:
             throw new CorruptedFileException("Task type is not T, D, or E.");
         }
     }
 
-    private void verifyLength(String[] taskVars, int expectedLength) throws CorruptedFileException {
+    private void validateLength(String[] taskVars, int expectedLength) throws CorruptedFileException {
         if (taskVars.length != expectedLength) {
             throw new CorruptedFileException("Incomplete task information (< 3 variables).");
         }

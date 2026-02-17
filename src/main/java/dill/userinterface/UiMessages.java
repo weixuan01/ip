@@ -7,21 +7,22 @@ public class UiMessages {
 
     private static final String TASKS_LOAD_SUCCESS_EMPTY = "I could not find any saved tasks. Let's start fresh!";
 
-    private static final String EXIT_MESSAGE = "Bye. Hope to see you again soon!";
-
     private static final String TASKS_LOAD_CORRUPT = "Oh no!"
             + " My memory seems to be corrupted. I'm unable to load our previous tasks, let's start fresh shall we?";
+
+    private static final String TASKS_LOAD_ERROR = "Uh oh. I'm having some troubles with my memory."
+            + " Don't worry! I can still help you but I won't be able to save our progress this time.";
+
+    private static final String TASKS_SAVE_ERROR = "Oops! I encountered an issue while saving your tasks."
+            + " I'll pause saving for the rest of this session while I work on a fix.";
+
+    private static final String EXIT_MESSAGE = "Bye. Hope to see you again soon!";
 
     private static final String GREETING =
             """
             Hello! I'm Dill.
             %s
             What shall we do this time?""";
-
-    private static final String TASKS_LOAD_ERROR =
-            """
-            %s
-            This session will not be saved.""";
 
     private static final String TASK_ADD_SUCCESS =
             """
@@ -85,8 +86,8 @@ public class UiMessages {
         }
     }
 
-    public static String getLoadTasksError(String errorMessage) {
-        return String.format(TASKS_LOAD_ERROR, errorMessage);
+    public static String getLoadTasksError() {
+        return TASKS_LOAD_ERROR;
     }
 
     public static String getHelp() {
@@ -111,5 +112,9 @@ public class UiMessages {
 
     public static String getTasksLoadCorrupt() {
         return TASKS_LOAD_CORRUPT;
+    }
+
+    public static String getTasksSaveError() {
+        return TASKS_SAVE_ERROR;
     }
 }
