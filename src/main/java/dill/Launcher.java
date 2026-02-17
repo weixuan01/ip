@@ -1,8 +1,7 @@
 package dill;
 
-import javafx.application.Application;
-
 import dill.userinterface.gui.Main;
+import javafx.application.Application;
 
 /**
  * A Launcher class to workaround classpath issues.

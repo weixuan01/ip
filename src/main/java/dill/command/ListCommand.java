@@ -1,12 +1,11 @@
 package dill.command;
 
+import java.util.List;
+
 import dill.quote.QuoteList;
 import dill.storage.Storage;
 import dill.task.Task;
 import dill.task.TaskList;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Represents a command to list all current tasks in the task list.

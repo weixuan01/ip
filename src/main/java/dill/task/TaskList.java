@@ -10,12 +10,20 @@ public class TaskList {
     private List<Task> tasks;
 
     public static class MatchingTask {
-        public Task task;
-        public int index;
+        private Task task;
+        private int index;
 
         public MatchingTask(Task task, int index) {
             this.task = task;
             this.index = index;
+        }
+
+        public Task getTask() {
+            return this.task;
+        }
+
+        public int getIndex() {
+            return this.index;
         }
     }
 

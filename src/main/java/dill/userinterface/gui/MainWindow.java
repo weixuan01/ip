@@ -1,5 +1,6 @@
 package dill.userinterface.gui;
 
+import dill.Dill;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
@@ -7,8 +8,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-
-import dill.Dill;
 
 /**
  * Controller for the main GUI.
@@ -53,7 +52,8 @@ public class MainWindow extends AnchorPane {
                 DialogBox.getDillDialog(response, dillImage)
         );
         if (input.equals("bye")) {
-            javafx.animation.PauseTransition delay = new javafx.animation.PauseTransition(javafx.util.Duration.seconds(3));
+            javafx.animation.PauseTransition delay = new javafx.animation.PauseTransition(
+                    javafx.util.Duration.seconds(3));
             delay.setOnFinished(event -> javafx.application.Platform.exit());
             delay.play();
         }

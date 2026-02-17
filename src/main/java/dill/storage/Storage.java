@@ -4,8 +4,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.time.format.DateTimeParseException;
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -42,12 +42,11 @@ public class Storage {
      * Loads task from the data storage file
      *
      * @return A list of tasks loaded from storage.
-     * @throws StorageException If the file path does not exist, the file path is invalid
-     * (contains special characters e.g., "|", "*", "/"), or the file is unreadable
+     * @throws StorageException If the file path does not exist, the file path is invalid, or the file is unreadable
      */
     public List<Task> loadTasks() throws StorageException {
         List<Task> tasks = new ArrayList<>();
-        try (Scanner scanner = new Scanner(taskFile)){
+        try (Scanner scanner = new Scanner(taskFile)) {
             while (scanner.hasNextLine()) {
                 String[] taskVars = scanner.nextLine().split(" \\| "); // Split by " | "
                 Task task = decodeTask(taskVars);
@@ -110,7 +109,7 @@ public class Storage {
         try (Scanner scanner = new Scanner(quoteFile)) {
             while (scanner.hasNextLine()) {
                 String quote = scanner.nextLine();
-                if (!quote.isBlank()){
+                if (!quote.isBlank()) {
                     quotes.add(quote);
                 }
             }

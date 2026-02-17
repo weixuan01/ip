@@ -8,8 +8,6 @@ import java.util.Random;
  * Represents the list of motivational quotes stored by Dill.
  */
 public class QuoteList {
-    private List<String> quotes;
-    private Random random;
     private static final List<String> DEFAULT_QUOTES = List.of(
             "Mastery is a journey, not a destination.",
             "Every bug you fix makes you a better programmer.",
@@ -21,6 +19,9 @@ public class QuoteList {
             "Believe you can and you are halfway there",
             "A comfort zone is a beautiful place, but nothing ever grows there."
     );
+
+    private List<String> quotes;
+    private Random random;
 
     /**
      * Creates an instance of QuoteList and initializes an empty quote list.

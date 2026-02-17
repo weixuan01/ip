@@ -11,8 +11,8 @@ import dill.quote.QuoteList;
 import dill.storage.Storage;
 import dill.task.Task;
 import dill.task.TaskList;
-import dill.userinterface.textui.UserInterface;
 import dill.userinterface.UiMessages;
+import dill.userinterface.textui.UserInterface;
 
 /**
  * Main class for the Dill chatbot application.
@@ -33,7 +33,7 @@ public class Dill {
         StringBuilder messageBuilder = new StringBuilder();
         this.textUi = new UserInterface();
         this.storage = new Storage(PATH_TASKS, PATH_QUOTES);
-        this.taskList  = initTaskList(messageBuilder);
+        this.taskList = initTaskList(messageBuilder);
         this.quoteList = initQuoteList(messageBuilder);
         loadMessage = messageBuilder.toString();
     }
