@@ -2,6 +2,8 @@ package dill.parser;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import dill.command.AddCommand;
 import dill.command.CheerCommand;
@@ -22,6 +24,9 @@ import dill.task.ToDo;
  * Represents the user input interpreter of Dill.
  */
 public class Parser {
+    private static final Pattern DEADLINE_ARGS_FORMAT = Pattern.compile("(.+)\\s+/by\\s+(.+)");
+    private static final Pattern EVENT_ARGS_FORMAT = Pattern.compile("(.+)\\s+/start\\s+(.+?)\\s+/end\\s+(.+)");
+
     /**
      * Creates an instance of Parser.
      */
@@ -36,86 +41,91 @@ public class Parser {
      * @throws InvalidCommandException If the input is unrecognizable or missing parameters.
      */
     public static Command parse(String userInput) throws InvalidCommandException {
-        if (userInput.equals("bye")) {
+        String[] inputParts = userInput.trim().split("\\s+", 2); // Split into command and arguments
+        String cmd = inputParts[0];
+        String args = inputParts.length == 2 ? inputParts[1] : ""; // Input args could be empty
+
+        switch (cmd) {
+        case "bye":
             return new ExitCommand();
-        }
-        if (userInput.equals("list")) {
+        case "list":
             return new ListCommand();
-        }
-        if (userInput.equals("help")) {
+        case "help":
             return new HelpCommand();
-        }
-        if (userInput.equals("cheer")) {
+        case "cheer":
             return new CheerCommand();
+        case "mark":
+            return validateMark(args);
+        case "unmark":
+            return validateUnmark(args);
+        case "delete":
+            return validateDelete(args);
+        case "todo":
+            return validateToDo(args);
+        case "deadline":
+            return validateDeadline(args);
+        case "event":
+            return validateEvent(args);
+        case "find":
+            return validateFind(args);
+        default:
+            throw new InvalidCommandException("I'm not quite sure what you meant.\n"
+                    + "Type \"help\" if you wish to view a list of available commands.");
         }
-        if (userInput.startsWith("mark")) {
-            return validateMark(userInput);
-        }
-        if (userInput.startsWith("unmark")) {
-            return validateUnmark(userInput);
-        }
-        if (userInput.startsWith("todo")) {
-            return validateToDo(userInput);
-        }
-        if (userInput.startsWith("deadline")) {
-            return validateDeadline(userInput);
-        }
-        if (userInput.startsWith("event")) {
-            return validateEvent(userInput);
-        }
-        if (userInput.startsWith("delete")) {
-            return validateDelete(userInput);
-        }
-        if (userInput.startsWith("find")) {
-            return validateFind(userInput);
-        }
-        throw new InvalidCommandException("I'm not quite sure what you meant.\n"
-                + "Type \"help\" if you wish to view a list of available commands.");
     }
 
-    private static Command validateMark(String userInput) throws InvalidCommandException {
-        if (!userInput.startsWith("mark ") || userInput.equals("mark ")) {
+    private static Command validateMark(String args) throws InvalidCommandException {
+        if (args.isEmpty()) {
             throw new InvalidCommandException("Please specify an entry to mark.");
         }
         try {
-            int taskIndex = Integer.parseInt(userInput.substring(5)) - 1;
+            int taskIndex = Integer.parseInt(args) - 1;
             return new MarkCommand(taskIndex);
         } catch (NumberFormatException e) {
-            throw new InvalidCommandException("Entry must be an integer!");
+            throw new InvalidCommandException("Entry number must be an integer!");
         }
     }
 
-    private static Command validateUnmark(String userInput) throws InvalidCommandException {
-        if (!userInput.startsWith("unmark ") || userInput.equals("unmark ")) {
+    private static Command validateUnmark(String args) throws InvalidCommandException {
+        if (args.isEmpty()) {
             throw new InvalidCommandException("Please specify an entry to unmark.");
         }
         try {
-            int taskIndex = Integer.parseInt(userInput.substring(7)) - 1;
+            int taskIndex = Integer.parseInt(args) - 1;
             return new UnmarkCommand(taskIndex);
         } catch (NumberFormatException e) {
-            throw new InvalidCommandException("Entry must be an integer!");
+            throw new InvalidCommandException("Entry number must be an integer!");
         }
     }
 
-    private static Command validateToDo(String userInput) throws InvalidCommandException {
-        if (!userInput.startsWith("todo ") || userInput.equals("todo ")) {
-            throw new InvalidCommandException("Please specify todo task name.");
-        }
-        String taskName = userInput.substring(5);
-        return new AddCommand(new ToDo(taskName));
-    }
-
-    private static Command validateDeadline(String userInput) throws InvalidCommandException {
-        int byIndex = userInput.indexOf("/by ");
-        if (!userInput.startsWith("deadline ") || userInput.equals("deadline ") || byIndex == 9) {
-            throw new InvalidCommandException("Please specify deadline task name.");
-        }
-        if (byIndex < 0) {
-            throw new InvalidCommandException("Please specify a deadline.");
+    private static Command validateDelete(String args) throws InvalidCommandException {
+        if (args.isEmpty()) {
+            throw new InvalidCommandException("Please specify an entry to delete.");
         }
         try {
-            String taskName = userInput.substring(9, byIndex - 1);
-            String rawDate = userInput.substring(byIndex + 4);
+            int taskIndex = Integer.parseInt(args) - 1;
+            return new DeleteCommand(taskIndex);
+        } catch (NumberFormatException e) {
+            throw new InvalidCommandException("Entry number must be an integer!");
+        }
+    }
+
+    private static Command validateToDo(String args) throws InvalidCommandException {
+        if (args.isEmpty()) {
+            throw new InvalidCommandException("Please specify a todo task in the format todo <task-name>");
+        }
+        return new AddCommand(new ToDo(args));
+    }
+
+    private static Command validateDeadline(String args) throws InvalidCommandException {
+        Matcher matcher = DEADLINE_ARGS_FORMAT.matcher(args);
+        if (!matcher.matches()) {
+            throw new InvalidCommandException("Please specify a deadline task in the format "
+                    + "deadline <task-name> /by <yyyy-mm-dd>");
+        }
+        try {
+            String taskName = matcher.group(1);
+            String rawDate = matcher.group(2);
             LocalDate date = LocalDate.parse(rawDate);
             return new AddCommand(new Deadline(taskName, date));
         } catch (DateTimeParseException e) {
@@ -123,50 +133,31 @@ public class Parser {
         }
     }
 
-    private static Command validateEvent(String userInput) throws InvalidCommandException {
-        int startIndex = userInput.indexOf("/start ");
-        int endIndex = userInput.indexOf("/end ");
-        if (!userInput.startsWith("event ") || userInput.equals("event ") || startIndex == 6 || endIndex == 6) {
-            throw new InvalidCommandException("Please specify event task name.");
-        }
-        if (startIndex < 0) {
-            throw new InvalidCommandException("Please specify a start time.");
-        }
-        if (endIndex < 0) {
-            throw new InvalidCommandException("Please specify an end time.");
-        }
-        if (endIndex < startIndex) {
-            throw new InvalidCommandException("Please specify start time followed by end time, in that order.");
+    private static Command validateEvent(String args) throws InvalidCommandException {
+        Matcher matcher = EVENT_ARGS_FORMAT.matcher(args);
+        if (!matcher.matches()) {
+            throw new InvalidCommandException("Please specify an event task in the format "
+                    + "event <task-name> /start <yyyy-mm-dd> /end <yyyy-mm-dd>");
         }
         try {
-            String taskName = userInput.substring(6, userInput.indexOf("/start") - 1);
-            String rawStartDate = userInput.substring(userInput.indexOf("/start") + 7, userInput.indexOf("/end") - 1);
-            String rawEndDate = userInput.substring(userInput.indexOf("/end") + 5);
+            String taskName = matcher.group(1);
+            String rawStartDate = matcher.group(2);
+            String rawEndDate = matcher.group(3);
             LocalDate startDate = LocalDate.parse(rawStartDate);
             LocalDate endDate = LocalDate.parse(rawEndDate);
+            if (startDate.isAfter(endDate)) {
+                throw new InvalidCommandException("Start date cannot be after the end date!");
+            }
             return new AddCommand(new Event(taskName, startDate, endDate));
         } catch (DateTimeParseException e) {
             throw new InvalidCommandException("Please enter dates in the format yyyy-mm-dd.");
         }
     }
 
-    private static Command validateDelete(String userInput) throws InvalidCommandException {
-        if (!userInput.startsWith("delete ") || userInput.equals("delete ")) {
-            throw new InvalidCommandException("Please specify an entry to delete.");
-        }
-        try {
-            int taskIndex = Integer.parseInt(userInput.substring(7)) - 1;
-            return new DeleteCommand(taskIndex);
-        } catch (NumberFormatException e) {
-            throw new InvalidCommandException("Entry must be an integer!");
-        }
-    }
-
-    private static Command validateFind(String userInput) throws InvalidCommandException {
-        if (!userInput.startsWith("find ") || userInput.equals("find ")) {
+    private static Command validateFind(String args) throws InvalidCommandException {
+        if (args.isEmpty()) {
             throw new InvalidCommandException("Please specify a keyword for matching.");
         }
-        String keyword = userInput.substring(5);
-        return new FindCommand(keyword);
+        return new FindCommand(args);
     }
 }
