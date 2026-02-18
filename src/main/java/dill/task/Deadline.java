@@ -20,6 +20,10 @@ public class Deadline extends Task {
         this.date = date;
     }
 
+    public boolean isOccuringOn(LocalDate date) {
+        return this.date.equals(date);
+    }
+
     /**
      * Returns a string representation of the task for displaying in the user interface.
      *

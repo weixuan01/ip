@@ -15,6 +15,7 @@ import dill.command.HelpCommand;
 import dill.command.ListCommand;
 import dill.command.MarkCommand;
 import dill.command.UnmarkCommand;
+import dill.command.ViewCommand;
 import dill.exception.InvalidCommandException;
 import dill.task.Deadline;
 import dill.task.Event;
@@ -68,6 +69,8 @@ public class Parser {
             return validateEvent(args);
         case "find":
             return validateFind(args);
+        case "view":
+            return validateView(args);
         default:
             throw new InvalidCommandException("I'm not quite sure what you meant.\n"
                     + "Type \"help\" if you wish to view a list of available commands.");
@@ -159,5 +162,17 @@ public class Parser {
             throw new InvalidCommandException("Please specify a keyword for matching.");
         }
         return new FindCommand(args);
+    }
+
+    private static Command validateView(String args) throws InvalidCommandException {
+        if (args.isEmpty()) {
+            throw new InvalidCommandException("Please specify a date to view.");
+        }
+        try {
+            LocalDate date = LocalDate.parse(args);
+            return new ViewCommand(date);
+        } catch (DateTimeParseException e) {
+            throw new InvalidCommandException("Please specify dates in the format yyyy-mm-dd.");
+        }
     }
 }

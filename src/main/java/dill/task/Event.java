@@ -23,6 +23,12 @@ public class Event extends Task {
         this.endDate = endDate;
     }
 
+    public boolean isOccuringOn(LocalDate date) {
+        boolean isBeforeStart = date.isBefore(startDate);
+        boolean isAfterEnd = date.isAfter(endDate);
+        return !isBeforeStart && !isAfterEnd;
+    }
+
     /**
      * Returns a string representation of the task for displaying in the user interface.
      *

@@ -50,25 +50,27 @@ public class UiMessages {
             """
             Here are the available commands:
             1. list
-               Displays the current tasks in the list.
+                  Displays the current tasks in the list.
             2. todo <task-name>
-               Adds a to-do task to the list.
+                  Adds a to-do task to the list.
             3. deadline <task-name> /by <yyyy-mm-dd>
-               Adds a deadline task to your list.
+                  Adds a deadline task to your list.
             4. event <task-name> /start <yyyy-mm-dd> /end <yyyy-mm-dd>
-               Adds an event task to the list.
+                  Adds an event task to the list.
             5. mark <entry-number>
-               Marks the task at specified entry as complete.
+                  Marks the task at specified entry as complete.
             6. unmark <entry-number>
-               Marks the task at specified entry as incomplete.
+                  Marks the task at specified entry as incomplete.
             7. delete <entry-number>
-               Removes the task at specified entry from the list.
+                  Removes the task at specified entry from the list.
             8. find <keyword>
-               Displays all tasks matching the specified keyword.
-            9. cheer
-               Displays a random motivational message.
-            10. bye
-               Terminates the current session.""";
+                  Displays all tasks matching the specified keyword.
+            9. view <yyyy-mm-dd>
+                  Displays all tasks occurring on the specified date.
+            10. cheer
+                  Displays a random motivational message.
+            11. bye
+                  Terminates the current session.""";
 
     public static String getGreeting(String loadMessage) {
         return String.format(GREETING, loadMessage);

@@ -1,5 +1,6 @@
 package dill.task;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,6 +64,15 @@ public class TaskList {
     }
 
     /**
+     * Lists the tasks in the current task list.
+     *
+     * @return A formatted list of strings representing the current tasks in the list.
+     */
+    public List<Task> getTaskList() {
+        return this.tasks;
+    }
+
+    /**
      * Adds a task to the end of the list.
      *
      * @param task The task to be added.
@@ -100,28 +110,30 @@ public class TaskList {
     }
 
     /**
-     * Search for tasks in the list containing the specified keyword.
+     * Search for tasks in the list with names containing the specified keyword.
      *
      * @param keyword The specified matching keyword.
      * @return A formatted list of strings representing the matching tasks.
      */
-    public List<MatchingTask> findTasks(String keyword) {
+    public List<MatchingTask> filterByName(String keyword) {
         List<MatchingTask> matchingTasks = new ArrayList<>();
         for (int i = 0; i < tasks.size(); i++) {
             Task t = tasks.get(i);
-            if (t.toString().contains(keyword)) {
+            if (t.getTaskName().contains(keyword)) {
                 matchingTasks.add(new MatchingTask(t, i));
             }
         }
         return matchingTasks;
     }
 
-    /**
-     * Lists the tasks in the current task list.
-     *
-     * @return A formatted list of strings representing the current tasks in the list.
-     */
-    public List<Task> getTaskList() {
-        return this.tasks;
+    public List<MatchingTask> filterByDate(LocalDate date) {
+        List<MatchingTask> matchingTasks = new ArrayList<>();
+        for (int i = 0; i < tasks.size(); i++) {
+            Task t = tasks.get(i);
+            if (t.isOccuringOn(date)) {
+                matchingTasks.add(new MatchingTask(t, i));
+            }
+        }
+        return matchingTasks;
     }
 }

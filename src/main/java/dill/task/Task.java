@@ -1,5 +1,7 @@
 package dill.task;
 
+import java.time.LocalDate;
+
 /**
  * Represents a generic task that provides the foundation for specific task types.
  */
@@ -14,7 +16,7 @@ public abstract class Task {
      */
     public Task(String taskName) {
         this.taskName = taskName;
-        isDone = false;
+        this.isDone = false;
     }
 
     /**
@@ -29,6 +31,14 @@ public abstract class Task {
      */
     public void setUndone() {
         isDone = false;
+    }
+
+    public String getTaskName() {
+        return taskName;
+    }
+
+    public boolean isOccuringOn(LocalDate date) {
+        return false; // Returns false by default for a todo task
     }
 
     /**

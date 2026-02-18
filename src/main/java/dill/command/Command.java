@@ -1,5 +1,7 @@
 package dill.command;
 
+import java.util.List;
+
 import dill.exception.DillException;
 import dill.quote.QuoteList;
 import dill.storage.Storage;
@@ -28,5 +30,19 @@ public abstract class Command {
      */
     public boolean isExit() {
         return false;
+    }
+
+    protected String formatMatchingTasks(List<TaskList.MatchingTask> matchingTasks) {
+        StringBuilder output = new StringBuilder();
+        for (int i = 0; i < matchingTasks.size(); i++) {
+            output.append("  ")
+                    .append(matchingTasks.get(i).getIndex() + 1)
+                    .append(".")
+                    .append(matchingTasks.get(i).getTask());
+            if (i < matchingTasks.size() - 1) {
+                output.append("\n");
+            }
+        }
+        return output.toString();
     }
 }

@@ -27,24 +27,15 @@ public class FindCommand extends Command {
      * @param quoteList The list of quotes containing motivational messages.
      */
     public String execute(TaskList taskList, Storage storage, QuoteList quoteList) {
-        List<TaskList.MatchingTask> matchingTasks = taskList.findTasks(keyword);
+        List<TaskList.MatchingTask> matchingTasks = taskList.filterByName(keyword);
         StringBuilder output = new StringBuilder();
         if (matchingTasks.isEmpty()) {
             output.append("No matching tasks found.");
             return output.toString();
         }
 
-        output.append("Here are the matching tasks in your list:\n");
-        for (int i = 0; i < matchingTasks.size(); i++) {
-            output.append("  ")
-                    .append(matchingTasks.get(i).getIndex() + 1)
-                    .append(".")
-                    .append(matchingTasks.get(i).getTask());
-            if (i < matchingTasks.size() - 1) {
-                output.append("\n");
-            }
-        }
-
+        output.append("Here are the matching tasks in your list:\n")
+                .append(formatMatchingTasks(matchingTasks));
         return output.toString();
     }
 }
