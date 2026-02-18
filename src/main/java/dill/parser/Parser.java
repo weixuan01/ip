@@ -42,10 +42,10 @@ public class Parser {
      * @throws InvalidCommandException If the input is unrecognizable or missing parameters.
      */
     public static Command parse(String userInput) throws InvalidCommandException {
+        assert userInput != null : "User input should not be null";
         String[] inputParts = userInput.trim().split("\\s+", 2); // Split into command and arguments
         String cmd = inputParts[0];
         String args = inputParts.length == 2 ? inputParts[1] : ""; // Input args could be empty
-
         switch (cmd) {
         case "bye":
             return new ExitCommand();
@@ -127,6 +127,7 @@ public class Parser {
                     + "deadline <task-name> /by <yyyy-mm-dd>");
         }
         try {
+            assert matcher.groupCount() == 3 : "Matcher should have 2 groups";
             String taskName = matcher.group(1);
             String rawDate = matcher.group(2);
             LocalDate date = LocalDate.parse(rawDate);
@@ -143,6 +144,7 @@ public class Parser {
                     + "event <task-name> /start <yyyy-mm-dd> /end <yyyy-mm-dd>");
         }
         try {
+            assert matcher.groupCount() == 3 : "Matcher should have 3 groups";
             String taskName = matcher.group(1);
             String rawStartDate = matcher.group(2);
             String rawEndDate = matcher.group(3);
