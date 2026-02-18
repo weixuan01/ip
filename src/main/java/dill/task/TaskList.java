@@ -41,6 +41,7 @@ public class TaskList {
      * @param tasks The list of tasks to be managed.
      */
     public TaskList(List<Task> tasks) {
+        assert tasks != null : "input list should not be null";
         this.tasks = tasks;
     }
 
@@ -78,6 +79,7 @@ public class TaskList {
      * @param task The task to be added.
      */
     public void addTask(Task task) {
+        assert task != null : "task should never be null";
         tasks.add(task);
     }
 
@@ -87,6 +89,7 @@ public class TaskList {
      * @param taskIndex The index of the task in the list.
      */
     public void markTask(int taskIndex) {
+        assert (taskIndex < tasks.size() && taskIndex >= 0) : "Index should be within valid range";
         tasks.get(taskIndex).setDone();
     }
 
@@ -96,6 +99,7 @@ public class TaskList {
      * @param taskIndex The index of the task in the list.
      */
     public void unmarkTask(int taskIndex) {
+        assert (taskIndex < tasks.size() && taskIndex >= 0) : "Index should be within valid range";
         tasks.get(taskIndex).setUndone();
     }
 
@@ -106,6 +110,7 @@ public class TaskList {
      * @return The removed task.
      */
     public Task deleteTask(int taskIndex) {
+        assert (taskIndex < tasks.size() && taskIndex >= 0) : "Index should be within valid range";
         return tasks.remove(taskIndex);
     }
 
@@ -130,7 +135,7 @@ public class TaskList {
         List<MatchingTask> matchingTasks = new ArrayList<>();
         for (int i = 0; i < tasks.size(); i++) {
             Task t = tasks.get(i);
-            if (t.isOccuringOn(date)) {
+            if (t.isOccurringOn(date)) {
                 matchingTasks.add(new MatchingTask(t, i));
             }
         }
