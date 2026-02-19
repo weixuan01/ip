@@ -23,7 +23,7 @@ public class MarkCommand extends Command {
     }
 
     /**
-     * Executes the mark command by marking the task at the specified index in the list as complete.
+     * Executes the mark command by marking the task at the specified index as complete.
      *
      * @param taskList The list of tasks to be executed on.
      * @param storage The data storage handler for saving and loading tasks.

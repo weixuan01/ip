@@ -23,7 +23,7 @@ public class UnmarkCommand extends Command {
     }
 
     /**
-     * Executes the unmark command by marking the task at the specified index in the list as complete.
+     * Executes the unmark command by marking the task at the specified index as incomplete.
      *
      * @param taskList The list of tasks to be executed on.
      * @param storage The data storage handler for saving and loading tasks.
