@@ -36,6 +36,11 @@ public class Dill {
         this.taskList = initTaskList(messageBuilder);
         this.quoteList = initQuoteList(messageBuilder);
         loadMessage = messageBuilder.toString();
+
+        assert textUi != null : "textUi must be initialized";
+        assert storage != null : "storage must be initialized";
+        assert taskList != null : "taskList must be initialized";
+        assert quoteList != null : "quoteList must be initialized";
     }
 
     public String getGuiBootMessage() {
@@ -43,6 +48,7 @@ public class Dill {
     }
 
     public String getResponse(String userInput) {
+        assert userInput != null : "User input should not be null";
         try {
             Command cmd = Parser.parse(userInput);
             return cmd.execute(taskList, storage, quoteList);

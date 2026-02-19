@@ -30,6 +30,7 @@ public class Deadline extends Task {
     }
 
     public boolean isOccurringOn(LocalDate date) {
+        assert date != null : "LocalDate object should not be null";
         return this.date.equals(date);
     }
 
