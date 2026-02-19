@@ -40,6 +40,7 @@ public class Deadline extends Task {
      * @return A formatted string representation of the task.
      */
     public String toString() {
-        return "[" + TASK_TYPE + "]" + super.toString() + " (by: " + date.format(DateTimeFormatter.ofPattern("dd MMM yyyy")) + ")";
+        return "[" + TASK_TYPE + "]" + super.toString()
+                + " (by: " + date.format(DateTimeFormatter.ofPattern("dd MMM yyyy")) + ")";
     }
 }
