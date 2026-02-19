@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.util.stream.IntStream;
 /**
  * Represents the list of tasks stored by Dill.
  */
@@ -121,14 +122,10 @@ public class TaskList {
      * @return A formatted list of strings representing the matching tasks.
      */
     public List<MatchingTask> filterByName(String keyword) {
-        List<MatchingTask> matchingTasks = new ArrayList<>();
-        for (int i = 0; i < tasks.size(); i++) {
-            Task t = tasks.get(i);
-            if (t.getTaskName().contains(keyword)) {
-                matchingTasks.add(new MatchingTask(t, i));
-            }
-        }
-        return matchingTasks;
+        return IntStream.range(0, tasks.size())
+                .filter(i -> tasks.get(i).getTaskName().contains(keyword))
+                .mapToObj(i -> new MatchingTask(tasks.get(i), i))
+                .toList();
     }
 
     public List<MatchingTask> filterByDate(LocalDate date) {
