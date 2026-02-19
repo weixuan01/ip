@@ -27,6 +27,9 @@ import dill.task.ToDo;
 public class Parser {
     private static final Pattern DEADLINE_ARGS_FORMAT = Pattern.compile("(.+)\\s+/by\\s+(.+)");
     private static final Pattern EVENT_ARGS_FORMAT = Pattern.compile("(.+)\\s+/start\\s+(.+?)\\s+/end\\s+(.+)");
+    private static final int INDEX_COMMAND = 0;
+    private static final int INDEX_ARGS = 1;
+    private static final int MAX_PARTS = 2;
 
     /**
      * Creates an instance of Parser.
@@ -42,9 +45,9 @@ public class Parser {
      * @throws InvalidCommandException If the input is unrecognizable or missing parameters.
      */
     public static Command parse(String userInput) throws InvalidCommandException {
-        String[] inputParts = userInput.trim().split("\\s+", 2); // Split into command and arguments
-        String cmd = inputParts[0];
-        String args = inputParts.length == 2 ? inputParts[1] : ""; // Input args could be empty
+        String[] inputParts = userInput.trim().split("\\s+", MAX_PARTS); // Split into command and arguments
+        String cmd = inputParts[INDEX_COMMAND];
+        String args = inputParts.length == MAX_PARTS ? inputParts[INDEX_ARGS] : ""; // Input args could be empty
 
         switch (cmd) {
         case "bye":

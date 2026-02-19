@@ -19,25 +19,28 @@ public abstract class Task {
         this.isDone = false;
     }
 
+    public abstract String getTaskType();
+
+    public String[] getDates() {
+        return new String[0]; // Return empty array by default for a todo task
+    }
+
     /**
      * Marks the task as completed.
      */
-    public void setDone() {
-        isDone = true;
+    public void setIsDone(boolean isDone) {
+        this.isDone = isDone;
     }
 
-    /**
-     * Marks the task as incomplete.
-     */
-    public void setUndone() {
-        isDone = false;
+    public boolean getIsDone() {
+        return this.isDone;
     }
 
     public String getTaskName() {
-        return taskName;
+        return this.taskName;
     }
 
-    public boolean isOccuringOn(LocalDate date) {
+    public boolean isOccurringOn(LocalDate date) {
         return false; // Returns false by default for a todo task
     }
 
@@ -51,17 +54,5 @@ public abstract class Task {
             return "[X] " + taskName;
         }
         return "[ ] " + taskName;
-    }
-
-    /**
-     * Returns a string representation of the task for saving to storage.
-     *
-     * @return A formatted string representation of the task.
-     */
-    public String toFileString() {
-        if (isDone) {
-            return "1 | " + taskName;
-        }
-        return "0 | " + taskName;
     }
 }

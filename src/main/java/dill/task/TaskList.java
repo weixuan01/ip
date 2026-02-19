@@ -87,7 +87,7 @@ public class TaskList {
      * @param taskIndex The index of the task in the list.
      */
     public void markTask(int taskIndex) {
-        tasks.get(taskIndex).setDone();
+        tasks.get(taskIndex).setIsDone(true);
     }
 
     /**
@@ -96,7 +96,7 @@ public class TaskList {
      * @param taskIndex The index of the task in the list.
      */
     public void unmarkTask(int taskIndex) {
-        tasks.get(taskIndex).setUndone();
+        tasks.get(taskIndex).setIsDone(false);
     }
 
     /**
@@ -130,7 +130,7 @@ public class TaskList {
         List<MatchingTask> matchingTasks = new ArrayList<>();
         for (int i = 0; i < tasks.size(); i++) {
             Task t = tasks.get(i);
-            if (t.isOccuringOn(date)) {
+            if (t.isOccurringOn(date)) {
                 matchingTasks.add(new MatchingTask(t, i));
             }
         }
