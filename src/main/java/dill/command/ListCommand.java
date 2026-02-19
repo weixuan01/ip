@@ -30,7 +30,7 @@ public class ListCommand extends Command {
         for (int i = 0; i < tasks.size(); i++) {
             output.append("  ")
                     .append(i + 1)
-                    .append(".")
+                    .append(". ")
                     .append(tasks.get(i));
             if (i < tasks.size() - 1) {
                 output.append("\n");

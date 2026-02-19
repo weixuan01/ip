@@ -37,7 +37,7 @@ public abstract class Command {
         for (int i = 0; i < matchingTasks.size(); i++) {
             output.append("  ")
                     .append(matchingTasks.get(i).getIndex() + 1)
-                    .append(".")
+                    .append(". ")
                     .append(matchingTasks.get(i).getTask());
             if (i < matchingTasks.size() - 1) {
                 output.append("\n");

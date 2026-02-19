@@ -90,7 +90,7 @@ public class TaskList {
      */
     public void markTask(int taskIndex) {
         assert (taskIndex < tasks.size() && taskIndex >= 0) : "Index should be within valid range";
-        tasks.get(taskIndex).setDone();
+        tasks.get(taskIndex).setIsDone(true);
     }
 
     /**
@@ -100,7 +100,7 @@ public class TaskList {
      */
     public void unmarkTask(int taskIndex) {
         assert (taskIndex < tasks.size() && taskIndex >= 0) : "Index should be within valid range";
-        tasks.get(taskIndex).setUndone();
+        tasks.get(taskIndex).setIsDone(false);
     }
 
     /**
