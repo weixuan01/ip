@@ -34,6 +34,8 @@ public class Storage {
      * @param quotePath The relative path of the quote storage file.
      */
     public Storage(String taskPath, String quotePath) {
+        assert taskPath != null : "task storage file path should not be null";
+        assert quotePath != null : "quote storage file path should not be null";
         this.taskFile = new File(taskPath);
         this.quoteFile = new File(quotePath);
     }
@@ -61,7 +63,9 @@ public class Storage {
         } catch (FileNotFoundException e1) {
             try {
                 taskFile.getParentFile().mkdirs(); // create data folder if it doesn't exist
+                assert taskFile.getParentFile().exists() : "Parent directory should have been created";
                 taskFile.createNewFile();
+                assert taskFile.exists() : "Task file should have been created";
                 isTaskWritable = true;
                 return tasks;
             } catch (IOException e2) {
@@ -124,13 +128,16 @@ public class Storage {
         if (!quoteFile.exists()) {
             try {
                 quoteFile.getParentFile().mkdirs(); // Create data folder if it doesn't exist
+                assert quoteFile.getParentFile().exists() : "Parent directory should have been created";
                 quoteFile.createNewFile();
+                assert quoteFile.exists() : "Quote file should have been created";
             } catch (IOException e) {
                 throw new StorageException("Error creating quote storage file.");
             }
         }
 
         List<String> quotes = QuoteList.getDefaultQuotes();
+        assert !quotes.isEmpty() : "Quote list should not be empty after loading default quotes";
 
         // Write default quotes to storage file.
         try (FileWriter fileWriter = new FileWriter(quoteFile)) {

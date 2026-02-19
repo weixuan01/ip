@@ -24,6 +24,7 @@ public class Event extends Task {
     }
 
     public boolean isOccuringOn(LocalDate date) {
+        assert date != null : "LocalDate object should not be null";
         boolean isBeforeStart = date.isBefore(startDate);
         boolean isAfterEnd = date.isAfter(endDate);
         return !isBeforeStart && !isAfterEnd;

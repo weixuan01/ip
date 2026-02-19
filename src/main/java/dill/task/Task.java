@@ -37,7 +37,7 @@ public abstract class Task {
         return taskName;
     }
 
-    public boolean isOccuringOn(LocalDate date) {
+    public boolean isOccurringOn(LocalDate date) {
         return false; // Returns false by default for a todo task
     }
 
