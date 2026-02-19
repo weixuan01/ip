@@ -7,6 +7,7 @@ import java.time.format.DateTimeFormatter;
  * Represents a named task with a specified given start and end date.
  */
 public class Event extends Task {
+    private static final String TASK_TYPE = "E";
     private LocalDate startDate;
     private LocalDate endDate;
 
@@ -23,8 +24,17 @@ public class Event extends Task {
         this.endDate = endDate;
     }
 
-    public boolean isOccuringOn(LocalDate date) {
+    public String getTaskType() {
+        return TASK_TYPE;
+    }
+
+    public String[] getDates() {
+        return new String[]{startDate.toString(), endDate.toString()};
+    }
+
+    public boolean isOccurringOn(LocalDate date) {
         assert date != null : "LocalDate object should not be null";
+
         boolean isBeforeStart = date.isBefore(startDate);
         boolean isAfterEnd = date.isAfter(endDate);
         return !isBeforeStart && !isAfterEnd;
@@ -36,16 +46,7 @@ public class Event extends Task {
      * @return A formatted string representation of the task.
      */
     public String toString() {
-        return "[E]" + super.toString() + " (start: " + startDate.format(DateTimeFormatter.ofPattern("dd MMM yyyy"))
+        return "[" + TASK_TYPE + "]" + super.toString() + " (start: " + startDate.format(DateTimeFormatter.ofPattern("dd MMM yyyy"))
                 + ", end: " + endDate.format(DateTimeFormatter.ofPattern("dd MMM yyyy")) + ")";
-    }
-
-    /**
-     * Returns a string representation of the task for saving to storage.
-     *
-     * @return A formatted string representation of the task.
-     */
-    public String toFileString() {
-        return "E | " + super.toFileString() + " | " + startDate + " | " + endDate;
     }
 }

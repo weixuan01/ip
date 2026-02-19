@@ -7,6 +7,7 @@ import java.time.format.DateTimeFormatter;
  * Represents a named task with a specified deadline.
  */
 public class Deadline extends Task {
+    private static final String TASK_TYPE = "D";
     private LocalDate date;
 
     /**
@@ -20,7 +21,15 @@ public class Deadline extends Task {
         this.date = date;
     }
 
-    public boolean isOccuringOn(LocalDate date) {
+    public String getTaskType() {
+        return TASK_TYPE;
+    }
+
+    public String[] getDates() {
+        return new String[]{date.toString()};
+    }
+
+    public boolean isOccurringOn(LocalDate date) {
         assert date != null : "LocalDate object should not be null";
         return this.date.equals(date);
     }
@@ -31,15 +40,6 @@ public class Deadline extends Task {
      * @return A formatted string representation of the task.
      */
     public String toString() {
-        return "[D]" + super.toString() + " (by: " + date.format(DateTimeFormatter.ofPattern("dd MMM yyyy")) + ")";
-    }
-
-    /**
-     * Returns a string representation of the task for saving to storage.
-     *
-     * @return A formatted string representation of the task.
-     */
-    public String toFileString() {
-        return "D | " + super.toFileString() + " | " + date;
+        return "[" + TASK_TYPE + "]" + super.toString() + " (by: " + date.format(DateTimeFormatter.ofPattern("dd MMM yyyy")) + ")";
     }
 }

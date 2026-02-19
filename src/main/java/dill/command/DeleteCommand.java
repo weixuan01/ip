@@ -37,11 +37,11 @@ public class DeleteCommand extends Command {
             Task removed = taskList.deleteTask(taskIndex);
             message += UiMessages.getDeleteSuccess(removed, taskList.getSize());
             storage.saveTasks(taskList);
+            return message;
         } catch (IndexOutOfBoundsException e) {
             throw new ExecutionException("I cannot delete an entry that is not in the list!");
         } catch (StorageException e) {
-            message += "\n" + e.getMessage();
+            return message + "\n" + e.getMessage();
         }
-        return message;
     }
 }

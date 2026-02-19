@@ -9,6 +9,7 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 import dill.exception.CorruptedFileException;
 import dill.exception.StorageException;
@@ -23,6 +24,18 @@ import dill.task.ToDo;
  * Represents the data storage management component of Dill.
  */
 public class Storage {
+    private static final String TASK_FILE_DELIMITER = " | ";
+    private static final String ENCODE_DONE = "1";
+    private static final String ENCODE_UNDONE = "0";
+    private static final int INDEX_TASK_TYPE = 0;
+    private static final int INDEX_DONE_STATUS = 1;
+    private static final int INDEX_TASK_NAME = 2;
+    private static final int INDEX_DEADLINE_DATE = 3;
+    private static final int INDEX_EVENT_START_DATE = 3;
+    private static final int INDEX_EVENT_END_DATE = 4;
+    private static final int LENGTH_TODO = 3;
+    private static final int LENGTH_DEADLINE = 4;
+    private static final int LENGTH_EVENT = 5;
     private File taskFile;
     private File quoteFile;
     private boolean isTaskWritable = false;
@@ -50,11 +63,11 @@ public class Storage {
         List<Task> tasks = new ArrayList<>();
         try (Scanner scanner = new Scanner(taskFile)) {
             while (scanner.hasNextLine()) {
-                String[] taskVars = scanner.nextLine().split(" \\| "); // Split by " | "
+                String[] taskVars = scanner.nextLine().split(Pattern.quote(TASK_FILE_DELIMITER)); // Split by " | "
                 Task task = decodeTask(taskVars);
-                String doneStatus = taskVars[1];
-                if (doneStatus.equals("1")) {
-                    task.setDone();
+                String doneStatus = taskVars[INDEX_DONE_STATUS];
+                if (doneStatus.equals(ENCODE_DONE)) {
+                    task.setIsDone(true);
                 }
                 tasks.add(task);
             }
@@ -87,7 +100,8 @@ public class Storage {
         try {
             FileWriter fileWriter = new FileWriter(taskFile);
             for (int i = 0; i < taskList.getSize(); i++) {
-                fileWriter.write(taskList.getTask(i).toFileString());
+                String encodedTaskString = encodeTask(taskList.getTask(i));
+                fileWriter.write(encodedTaskString);
                 if (i < taskList.getSize() - 1) {
                     fileWriter.write("\n");
                 }
@@ -155,28 +169,48 @@ public class Storage {
         this.isTaskWritable = isTaskWritable;
     }
 
-    private Task decodeTask(String[] taskVars) throws CorruptedFileException {
-        if (taskVars.length < 3) {
-            throw new CorruptedFileException("");
-        }
-        String taskType = taskVars[0];
-        String doneStatus = taskVars[1];
-        String taskName = taskVars[2];
+    private String encodeTask(Task task) {
+        StringBuilder encodedTaskString = new StringBuilder();
+        String doneStatus = task.getIsDone() ? ENCODE_DONE : ENCODE_UNDONE;
+        String taskDates = String.join(TASK_FILE_DELIMITER, task.getDates());
 
-        if (!doneStatus.equals("0") && !doneStatus.equals("1")) {
+        encodedTaskString.append(task.getTaskType())
+                .append(TASK_FILE_DELIMITER)
+                .append(doneStatus)
+                .append(TASK_FILE_DELIMITER)
+                .append(task.getTaskName());
+
+        if (!taskDates.isEmpty()) {
+            encodedTaskString.append(TASK_FILE_DELIMITER)
+                    .append(taskDates);
+        }
+
+        return encodedTaskString.toString();
+    }
+
+    private Task decodeTask(String[] taskVars) throws CorruptedFileException {
+        if (taskVars.length < LENGTH_TODO) {
+            throw new CorruptedFileException("Missing task data fields");
+        }
+        String taskType = taskVars[INDEX_TASK_TYPE];
+        String doneStatus = taskVars[INDEX_DONE_STATUS];
+        String taskName = taskVars[INDEX_TASK_NAME];
+
+        if (!doneStatus.equals(ENCODE_DONE) && !doneStatus.equals(ENCODE_UNDONE)) {
             throw new CorruptedFileException("Done status is not 1 or 0");
         }
 
         switch (taskType) {
         case "T":
-            validateLength(taskVars, 3); // Verify length is not > 3
+            validateLength(taskVars, LENGTH_TODO); // Verify length is not > 3
             return new ToDo(taskName);
         case "D":
-            validateLength(taskVars, 4);
-            return new Deadline(taskName, parseDate(taskVars[3]));
+            validateLength(taskVars, LENGTH_DEADLINE);
+            return new Deadline(taskName, parseDate(taskVars[INDEX_DEADLINE_DATE]));
         case "E":
-            validateLength(taskVars, 5);
-            return new Event(taskName, parseDate(taskVars[3]), parseDate(taskVars[4]));
+            validateLength(taskVars, LENGTH_EVENT);
+            return new Event(taskName, parseDate(
+                    taskVars[INDEX_EVENT_START_DATE]), parseDate(taskVars[INDEX_EVENT_END_DATE]));
         default:
             throw new CorruptedFileException("Task type is not T, D, or E.");
         }

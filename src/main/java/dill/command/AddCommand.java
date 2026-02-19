@@ -33,10 +33,10 @@ public class AddCommand extends Command {
         String message = UiMessages.getAddSuccess(task, taskList.getSize());
         try {
             storage.saveTasks(taskList);
+            return message;
         } catch (StorageException e) {
-            message += "\n" + e.getMessage();
+            return message + "\n" + e.getMessage();
         }
-        return message;
     }
 }
 
