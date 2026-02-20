@@ -19,7 +19,7 @@ public class Main extends Application {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/view/MainWindow.fxml"));
             AnchorPane ap = fxmlLoader.load();
-            Scene scene = new Scene(ap);
+            Scene scene = new Scene(ap, 580, 600);
             stage.setTitle("Dill");
             stage.setScene(scene);
             fxmlLoader.<MainWindow>getController().setDill(dill); // inject the Dill instance
