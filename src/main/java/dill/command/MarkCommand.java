@@ -38,7 +38,7 @@ public class MarkCommand extends Command {
             message += UiMessages.getMarkSuccess(taskList.getTask(taskIndex));
             storage.saveTasks(taskList);
         } catch (IndexOutOfBoundsException e) {
-            throw new ExecutionException("I cannot mark an entry that is not in the list!");
+            throw new ExecutionException("I cannot mark a task that is not in the list!");
         } catch (StorageException e) {
             message += "\n" + e.getMessage();
         }

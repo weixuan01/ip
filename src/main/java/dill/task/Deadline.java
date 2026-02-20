@@ -8,17 +8,17 @@ import java.time.format.DateTimeFormatter;
  */
 public class Deadline extends Task {
     private static final String TASK_TYPE = "D";
-    private LocalDate date;
+    private LocalDate byDate;
 
     /**
      * Creates an instance of Deadline, and initializes its name and deadline.
      *
      * @param taskName The description of the task.
-     * @param date The deadline of the task.
+     * @param byDate The deadline of the task.
      */
-    public Deadline(String taskName, LocalDate date) {
+    public Deadline(String taskName, LocalDate byDate) {
         super(taskName);
-        this.date = date;
+        this.byDate = byDate;
     }
 
     public String getTaskType() {
@@ -26,12 +26,28 @@ public class Deadline extends Task {
     }
 
     public String[] getDates() {
-        return new String[]{date.toString()};
+        return new String[]{byDate.toString()};
     }
 
     public boolean isOccurringOn(LocalDate date) {
         assert date != null : "LocalDate object should not be null";
-        return this.date.equals(date);
+        return this.byDate.equals(date);
+    }
+
+    public void updateTask(String taskName, LocalDate byDate, LocalDate startDate, LocalDate endDate) {
+        if (startDate != null || endDate != null) {
+            throw new IllegalArgumentException("A deadline task does not have start and end dates!");
+        }
+        if (taskName != null) {
+            setTaskName(taskName);
+        }
+        if (byDate != null) {
+            this.byDate = byDate;
+        }
+    }
+
+    public Task cloneTask() {
+        return new Deadline(this.getTaskName(), this.byDate);
     }
 
     /**
@@ -41,6 +57,6 @@ public class Deadline extends Task {
      */
     public String toString() {
         return "[" + TASK_TYPE + "]" + super.toString()
-                + " (by: " + date.format(DateTimeFormatter.ofPattern("dd MMM yyyy")) + ")";
+                + " (by: " + byDate.format(DateTimeFormatter.ofPattern("dd MMM yyyy")) + ")";
     }
 }

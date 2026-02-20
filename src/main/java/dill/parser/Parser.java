@@ -7,6 +7,7 @@ import java.util.regex.Pattern;
 
 import dill.command.AddCommand;
 import dill.command.CheerCommand;
+import dill.command.CloneCommand;
 import dill.command.Command;
 import dill.command.DeleteCommand;
 import dill.command.ExitCommand;
@@ -15,6 +16,7 @@ import dill.command.HelpCommand;
 import dill.command.ListCommand;
 import dill.command.MarkCommand;
 import dill.command.UnmarkCommand;
+import dill.command.UpdateCommand;
 import dill.command.ViewCommand;
 import dill.exception.InvalidCommandException;
 import dill.task.Deadline;
@@ -25,11 +27,16 @@ import dill.task.ToDo;
  * Represents the user input interpreter of Dill.
  */
 public class Parser {
-    private static final Pattern DEADLINE_ARGS_FORMAT = Pattern.compile("(.+)\\s+/by\\s+(.+)");
-    private static final Pattern EVENT_ARGS_FORMAT = Pattern.compile("(.+)\\s+/start\\s+(.+?)\\s+/end\\s+(.+)");
+    private static final Pattern DEADLINE_ARGS_FORMAT = Pattern.compile("(.+?)\\s+/by\\s+(.+)");
+    private static final Pattern EVENT_ARGS_FORMAT = Pattern.compile("(.+?)\\s+/start\\s+(.+?)\\s+/end\\s+(.+)");
+    private static final Pattern UPDATE_ARGS_FORMAT = Pattern.compile("(/.+?)\\s+(.+?)(?=\\s+(/.+?)\\s+(.+?)|$)");
     private static final int INDEX_COMMAND = 0;
     private static final int INDEX_ARGS = 1;
-    private static final int MAX_PARTS = 2;
+    private static final int PARSE_MAX_PARTS = 2;
+    private static final int UPDATE_MAX_PARTS = 2;
+    private static final int UPDATE_INDEX_TASKINDEX = 0;
+    private static final int UPDATE_INDEX_ARGS = 1;
+
 
     /**
      * Creates an instance of Parser.
@@ -46,9 +53,9 @@ public class Parser {
      */
     public static Command parse(String userInput) throws InvalidCommandException {
         assert userInput != null : "User input should not be null";
-        String[] inputParts = userInput.trim().split("\\s+", MAX_PARTS); // Split into command and arguments
+        String[] inputParts = userInput.trim().split("\\s+", PARSE_MAX_PARTS); // Split into command and arguments
         String cmd = inputParts[INDEX_COMMAND];
-        String args = inputParts.length == MAX_PARTS ? inputParts[INDEX_ARGS] : ""; // Input args could be empty
+        String args = inputParts.length == PARSE_MAX_PARTS ? inputParts[INDEX_ARGS] : ""; // Input args could be empty
 
         switch (cmd) {
         case "bye":
@@ -75,6 +82,10 @@ public class Parser {
             return validateFind(args);
         case "view":
             return validateView(args);
+        case "update":
+            return validateUpdate(args);
+        case "clone":
+            return validateClone(args);
         default:
             throw new InvalidCommandException("I'm not quite sure what you meant.\n"
                     + "Type \"help\" if you wish to view a list of available commands.");
@@ -83,37 +94,37 @@ public class Parser {
 
     private static Command validateMark(String args) throws InvalidCommandException {
         if (args.isEmpty()) {
-            throw new InvalidCommandException("Please specify an entry to mark.");
+            throw new InvalidCommandException("Please specify a task id to mark.");
         }
         try {
             int taskIndex = Integer.parseInt(args) - 1;
             return new MarkCommand(taskIndex);
         } catch (NumberFormatException e) {
-            throw new InvalidCommandException("Entry number must be an integer!");
+            throw new InvalidCommandException("Task id must be an integer!");
         }
     }
 
     private static Command validateUnmark(String args) throws InvalidCommandException {
         if (args.isEmpty()) {
-            throw new InvalidCommandException("Please specify an entry to unmark.");
+            throw new InvalidCommandException("Please specify a task id to unmark.");
         }
         try {
             int taskIndex = Integer.parseInt(args) - 1;
             return new UnmarkCommand(taskIndex);
         } catch (NumberFormatException e) {
-            throw new InvalidCommandException("Entry number must be an integer!");
+            throw new InvalidCommandException("Task id must be an integer!");
         }
     }
 
     private static Command validateDelete(String args) throws InvalidCommandException {
         if (args.isEmpty()) {
-            throw new InvalidCommandException("Please specify an entry to delete.");
+            throw new InvalidCommandException("Please specify a task id to delete.");
         }
         try {
             int taskIndex = Integer.parseInt(args) - 1;
             return new DeleteCommand(taskIndex);
         } catch (NumberFormatException e) {
-            throw new InvalidCommandException("Entry number must be an integer!");
+            throw new InvalidCommandException("Task id must be an integer!");
         }
     }
 
@@ -179,6 +190,82 @@ public class Parser {
             return new ViewCommand(date);
         } catch (DateTimeParseException e) {
             throw new InvalidCommandException("Please specify dates in the format yyyy-mm-dd.");
+        }
+    }
+
+    private static Command validateUpdate(String args) throws InvalidCommandException {
+        if (args.isEmpty()) {
+            throw new InvalidCommandException("Please specify a task id to update.");
+        }
+
+        int taskIndex;
+        String taskName = null;
+        LocalDate byDate = null;
+        LocalDate startDate = null;
+        LocalDate endDate = null;
+
+        String[] updateParts = args.split("\\s+", UPDATE_MAX_PARTS);
+        if (updateParts.length == 1) {
+            throw new InvalidCommandException("Please specify the task field to update using a flag e.g., /by");
+        }
+
+        try {
+             taskIndex = Integer.parseInt(updateParts[UPDATE_INDEX_TASKINDEX]) - 1;
+        } catch (NumberFormatException e) {
+            throw new InvalidCommandException("Task id must be an integer!");
+        }
+
+        String updateArgs = updateParts[UPDATE_INDEX_ARGS];
+        Matcher matcher = UPDATE_ARGS_FORMAT.matcher(updateArgs);
+        while (matcher.find()) {
+            String fieldFlag = matcher.group(1);
+            String value = matcher.group(2);
+            switch (fieldFlag) {
+            case "/name":
+                taskName = value;
+                break;
+            case "/by":
+                try {
+                    byDate = LocalDate.parse(value);
+                    break;
+                } catch (DateTimeParseException e) {
+                    throw new InvalidCommandException("Please specify dates in the format yyyy-mm-dd.");
+                }
+            case "/start":
+                try {
+                    startDate = LocalDate.parse(value);
+                    break;
+                } catch (DateTimeParseException e) {
+                    throw new InvalidCommandException("Please specify dates in the format yyyy-mm-dd.");
+                }
+            case "/end":
+                try {
+                    endDate = LocalDate.parse(value);
+                    break;
+                } catch (DateTimeParseException e) {
+                    throw new InvalidCommandException("Please specify dates in the format yyyy-mm-dd.");
+                }
+            default:
+                throw new InvalidCommandException("Only the following flags are currently supported:\n"
+                        + "  /name, /by, /start, /end");
+            }
+        }
+        if (taskName == null && byDate == null && startDate == null && endDate == null) {
+            throw new InvalidCommandException(
+                    "Please specify the task field followed by a value e.g., /by 2026-03-14");
+        }
+        return new UpdateCommand(taskIndex, taskName, byDate, startDate, endDate);
+    }
+
+    private static Command validateClone(String args) throws InvalidCommandException {
+        if (args.isEmpty()) {
+            throw new InvalidCommandException("Please specify a task id to clone.");
+        }
+        try {
+            int taskIndex = Integer.parseInt(args) - 1;
+            return new CloneCommand(taskIndex);
+        } catch (NumberFormatException e) {
+            throw new InvalidCommandException("Task id must be an integer!");
         }
     }
 }

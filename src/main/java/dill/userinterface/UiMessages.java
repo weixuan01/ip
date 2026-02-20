@@ -16,7 +16,7 @@ public class UiMessages {
     private static final String TASKS_SAVE_ERROR = "Oops! I encountered an issue while saving your tasks."
             + " I'll pause saving for the rest of this session while I work on a fix.";
 
-    private static final String EXIT_MESSAGE = "Bye. Hope to see you again soon!";
+    private static final String MESSAGE_EXIT = "Bye. Hope to see you again soon!";
 
     private static final String GREETING =
             """
@@ -46,9 +46,23 @@ public class UiMessages {
             OK, I've marked this task as not done yet:
               %s""";
 
-    private static final String HELP_MESSAGE =
+    private static final String TASK_UPDATE_SUCCESS =
+            """
+            Got it! I have updated this task:
+              From: %s
+              To    : %s""";
+
+    private static final String TASK_CLONE_SUCCESS =
+            """
+            Got it! I have cloned this task:
+              %s
+            Now you have %d tasks in the list.""";
+
+    private static final String MESSAGE_HELP =
             """
             Here are the available commands:
+            
+            Managing Tasks:
             1. list
                 Displays the current tasks in the list.
             2. todo <task-name>
@@ -57,19 +71,27 @@ public class UiMessages {
                 Adds a deadline task to your list.
             4. event <task-name> /start <yyyy-mm-dd> /end <yyyy-mm-dd>
                 Adds an event task to the list.
-            5. mark <entry-number>
-                Marks the task at specified entry as complete.
-            6. unmark <entry-number>
-                Marks the task at specified entry as incomplete.
-            7. delete <entry-number>
-                Removes the task at specified entry from the list.
-            8. find <keyword>
+            5. mark <task-id>
+                Marks the task with specified task id as complete.
+            6. unmark <task-id>
+                Marks the task with specified task id as incomplete.
+            7. delete <task-id>
+                Removes the task with specified task id from the list.
+            8. update <task-id> <flag> <value> ...
+                Modifies one or more fields of the task with specified task id.
+                Supported flags: /name, /by, /start, /end
+                e.g., update 3 /name myTask /end 2026-03-14
+            9. clone <task-id>
+                Duplicates the task with the specified task id.
+            
+            Quick Tools:
+            1. find <keyword>
                 Displays all tasks matching the specified keyword.
-            9. view <yyyy-mm-dd>
+            2. view <yyyy-mm-dd>
                 Displays all tasks occurring on the specified date.
-            10. cheer
+            3. cheer
                 Displays a random motivational message.
-            11. bye
+            4. bye
                 Terminates the current session.""";
 
     public static String getGreeting(String loadMessage) {
@@ -77,7 +99,7 @@ public class UiMessages {
     }
 
     public static String getExit() {
-        return EXIT_MESSAGE;
+        return MESSAGE_EXIT;
     }
 
     public static String getLoadTasksSuccess(int n) {
@@ -93,7 +115,7 @@ public class UiMessages {
     }
 
     public static String getHelp() {
-        return HELP_MESSAGE;
+        return MESSAGE_HELP;
     }
 
     public static String getAddSuccess(Task task, int listSize) {
@@ -118,5 +140,13 @@ public class UiMessages {
 
     public static String getTasksSaveError() {
         return TASKS_SAVE_ERROR;
+    }
+
+    public static String getTaskUpdateSuccess(String taskBefore, Task taskAfter) {
+        return String.format(TASK_UPDATE_SUCCESS, taskBefore, taskAfter);
+    }
+
+    public static String getCloneSuccess(Task clonedTask, int listSize) {
+        return String.format(TASK_CLONE_SUCCESS, clonedTask, listSize);
     }
 }
