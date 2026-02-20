@@ -21,6 +21,8 @@ public abstract class Task {
 
     public abstract String getTaskType();
 
+    public abstract void updateTask(String taskName, LocalDate byDate, LocalDate startDate, LocalDate endDate);
+
     public String[] getDates() {
         return new String[0]; // Return empty array by default for a todo task
     }
@@ -38,6 +40,11 @@ public abstract class Task {
 
     public String getTaskName() {
         return this.taskName;
+    }
+
+    public void setTaskName(String taskName) {
+        assert taskName != null : "task name should not be null";
+        this.taskName = taskName;
     }
 
     public boolean isOccurringOn(LocalDate date) {

@@ -1,5 +1,7 @@
 package dill.task;
 
+import java.time.LocalDate;
+
 /**
  * Represents a task with a given name, the most basic task type.
  */
@@ -18,6 +20,16 @@ public class ToDo extends Task {
     public String getTaskType() {
         return TASK_TYPE;
     }
+
+    public void updateTask(String taskName, LocalDate byDate, LocalDate startDate, LocalDate endDate) {
+        if (byDate != null || startDate != null || endDate != null) {
+            throw new IllegalArgumentException("A todo task does not have a date!");
+        }
+        if (taskName != null) {
+            setTaskName(taskName);
+        }
+    }
+
 
     /**
      * Returns a string representation of the task for displaying in the user interface.
