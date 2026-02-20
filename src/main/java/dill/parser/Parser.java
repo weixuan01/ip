@@ -7,6 +7,7 @@ import java.util.regex.Pattern;
 
 import dill.command.AddCommand;
 import dill.command.CheerCommand;
+import dill.command.CloneCommand;
 import dill.command.Command;
 import dill.command.DeleteCommand;
 import dill.command.ExitCommand;
@@ -83,6 +84,8 @@ public class Parser {
             return validateView(args);
         case "update":
             return validateUpdate(args);
+        case "clone":
+            return validateClone(args);
         default:
             throw new InvalidCommandException("I'm not quite sure what you meant.\n"
                     + "Type \"help\" if you wish to view a list of available commands.");
@@ -91,7 +94,7 @@ public class Parser {
 
     private static Command validateMark(String args) throws InvalidCommandException {
         if (args.isEmpty()) {
-            throw new InvalidCommandException("Please specify an entry to mark.");
+            throw new InvalidCommandException("Please specify a task id to mark.");
         }
         try {
             int taskIndex = Integer.parseInt(args) - 1;
@@ -252,5 +255,17 @@ public class Parser {
                     "Please specify the task field followed by a value e.g., /by 2026-03-14");
         }
         return new UpdateCommand(taskIndex, taskName, byDate, startDate, endDate);
+    }
+
+    private static Command validateClone(String args) throws InvalidCommandException {
+        if (args.isEmpty()) {
+            throw new InvalidCommandException("Please specify a task id to clone.");
+        }
+        try {
+            int taskIndex = Integer.parseInt(args) - 1;
+            return new CloneCommand(taskIndex);
+        } catch (NumberFormatException e) {
+            throw new InvalidCommandException("Task id must be an integer!");
+        }
     }
 }

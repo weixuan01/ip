@@ -46,6 +46,10 @@ public class Deadline extends Task {
         }
     }
 
+    public Task cloneTask() {
+        return new Deadline(this.getTaskName(), this.byDate);
+    }
+
     /**
      * Returns a string representation of the task for displaying in the user interface.
      *

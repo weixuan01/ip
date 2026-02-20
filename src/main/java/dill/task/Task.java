@@ -23,6 +23,8 @@ public abstract class Task {
 
     public abstract void updateTask(String taskName, LocalDate byDate, LocalDate startDate, LocalDate endDate);
 
+    public abstract Task cloneTask();
+
     public String[] getDates() {
         return new String[0]; // Return empty array by default for a todo task
     }

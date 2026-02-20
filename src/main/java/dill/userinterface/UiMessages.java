@@ -48,9 +48,15 @@ public class UiMessages {
 
     private static final String TASK_UPDATE_SUCCESS =
             """
-            Got it! I have updated the task:
+            Got it! I have updated this task:
               From: %s
               To    : %s""";
+
+    private static final String TASK_CLONE_SUCCESS =
+            """
+            Got it! I have cloned this task:
+              %s
+            Now you have %d tasks in the list.""";
 
     private static final String MESSAGE_HELP =
             """
@@ -66,15 +72,17 @@ public class UiMessages {
             4. event <task-name> /start <yyyy-mm-dd> /end <yyyy-mm-dd>
                 Adds an event task to the list.
             5. mark <task-id>
-                Marks the task at specified entry as complete.
+                Marks the task with specified task id as complete.
             6. unmark <task-id>
-                Marks the task at specified entry as incomplete.
+                Marks the task with specified task id as incomplete.
             7. delete <task-id>
-                Removes the task at specified entry from the list.
+                Removes the task with specified task id from the list.
             8. update <task-id> <flag> <value> ...
-                Modifies one or more fields of a task.
+                Modifies one or more fields of the task with specified task id.
                 Supported flags: /name, /by, /start, /end
                 e.g., update 3 /name myTask /end 2026-03-14
+            9. clone <task-id>
+                Duplicates the task with the specified task id.
             
             Quick Tools:
             1. find <keyword>
@@ -136,5 +144,9 @@ public class UiMessages {
 
     public static String getTaskUpdateSuccess(String taskBefore, Task taskAfter) {
         return String.format(TASK_UPDATE_SUCCESS, taskBefore, taskAfter);
+    }
+
+    public static String getCloneSuccess(Task clonedTask, int listSize) {
+        return String.format(TASK_CLONE_SUCCESS, clonedTask, listSize);
     }
 }

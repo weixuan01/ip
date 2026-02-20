@@ -58,6 +58,10 @@ public class Event extends Task {
         }
     }
 
+    public Task cloneTask() {
+        return new Event(this.getTaskName(), this.startDate, this.endDate);
+    }
+
     /**
      * Returns a string representation of the task for displaying in the user interface.
      *

@@ -30,6 +30,9 @@ public class ToDo extends Task {
         }
     }
 
+    public Task cloneTask() {
+        return new ToDo(this.getTaskName());
+    }
 
     /**
      * Returns a string representation of the task for displaying in the user interface.
