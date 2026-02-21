@@ -34,15 +34,19 @@ public class Deadline extends Task {
         return this.byDate.equals(date);
     }
 
-    public void updateTask(String taskName, LocalDate byDate, LocalDate startDate, LocalDate endDate) {
-        if (startDate != null || endDate != null) {
+    public void updateTask(UpdateFields updateFields) {
+        if (updateFields.getStartDate() != null || updateFields.getEndDate() != null) {
             throw new IllegalArgumentException("A deadline task does not have start and end dates!");
         }
-        if (taskName != null) {
-            setTaskName(taskName);
+
+        String newTaskName = updateFields.getTaskName();
+        if (newTaskName != null) {
+            setTaskName(newTaskName);
         }
-        if (byDate != null) {
-            this.byDate = byDate;
+
+        LocalDate newByDate = updateFields.getByDate();
+        if (newByDate != null) {
+            this.byDate = newByDate;
         }
     }
 

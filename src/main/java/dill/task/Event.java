@@ -40,21 +40,24 @@ public class Event extends Task {
         return !isBeforeStart && !isAfterEnd;
     }
 
-    public void updateTask(String taskName, LocalDate byDate, LocalDate startDate, LocalDate endDate) {
-        if (byDate != null) {
+    public void updateTask(UpdateFields updateFields) {
+        if (updateFields.getByDate() != null) {
             throw new IllegalArgumentException("An event task does not have a deadline!");
         }
 
-        LocalDate newStartDate = (startDate == null) ? this.startDate : startDate;
-        LocalDate newEndDate = (endDate == null) ? this.endDate : endDate;
+        LocalDate updateStartDate = updateFields.getStartDate();
+        LocalDate updateEndDate = updateFields.getEndDate();
+        LocalDate newStartDate = (updateStartDate == null) ? this.startDate : updateStartDate;
+        LocalDate newEndDate = (updateEndDate == null) ? this.endDate : updateEndDate;
         if (newStartDate.isAfter(newEndDate)) {
             throw new IllegalArgumentException("Start date cannot be after end date!");
         }
         this.startDate = newStartDate;
         this.endDate = newEndDate;
 
-        if (taskName != null) {
-            setTaskName(taskName);
+        String newTaskName = updateFields.getTaskName();
+        if (newTaskName != null) {
+            setTaskName(newTaskName);
         }
     }
 

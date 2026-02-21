@@ -21,12 +21,13 @@ public class ToDo extends Task {
         return TASK_TYPE;
     }
 
-    public void updateTask(String taskName, LocalDate byDate, LocalDate startDate, LocalDate endDate) {
-        if (byDate != null || startDate != null || endDate != null) {
+    public void updateTask(UpdateFields updateFields) {
+        if (updateFields.getByDate() != null || updateFields.getStartDate()!= null || updateFields.getEndDate() != null) {
             throw new IllegalArgumentException("A todo task does not have a date!");
         }
-        if (taskName != null) {
-            setTaskName(taskName);
+        String newTaskName = updateFields.getTaskName();
+        if (newTaskName!= null) {
+            setTaskName(newTaskName);
         }
     }
 

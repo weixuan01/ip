@@ -8,21 +8,16 @@ import dill.quote.QuoteList;
 import dill.storage.Storage;
 import dill.task.Task;
 import dill.task.TaskList;
+import dill.task.UpdateFields;
 import dill.userinterface.UiMessages;
 
 public class UpdateCommand extends Command {
     private int taskIndex;
-    private String taskName;
-    private LocalDate byDate;
-    private LocalDate startDate;
-    private LocalDate endDate;
+    private UpdateFields updateFields;
 
-    public UpdateCommand(int taskIndex, String taskName, LocalDate byDate, LocalDate startDate, LocalDate endDate) {
+    public UpdateCommand(int taskIndex, UpdateFields updateFields) {
         this.taskIndex = taskIndex;
-        this.taskName = taskName;
-        this.byDate = byDate;
-        this.startDate = startDate;
-        this.endDate = endDate;
+        this.updateFields = updateFields;
     }
 
     public String execute(TaskList taskList, Storage storage, QuoteList quoteList) throws ExecutionException {
@@ -31,7 +26,7 @@ public class UpdateCommand extends Command {
         try {
             Task task = taskList.getTask(taskIndex);
             String taskBefore = task.toString();
-            task.updateTask(taskName, byDate, startDate, endDate);
+            task.updateTask(updateFields);
             storage.saveTasks(taskList);
             messageBuilder.append(UiMessages.getTaskUpdateSuccess(taskBefore, task));
         } catch (IndexOutOfBoundsException e) {

@@ -21,7 +21,7 @@ public abstract class Task {
 
     public abstract String getTaskType();
 
-    public abstract void updateTask(String taskName, LocalDate byDate, LocalDate startDate, LocalDate endDate);
+    public abstract void updateTask(UpdateFields updateFields);
 
     public abstract Task cloneTask();
 
