@@ -18,6 +18,7 @@ public abstract class Command {
      * @param taskList The list of tasks to be executed on.
      * @param storage The data storage handler for saving and loading tasks.
      * @param quoteList The list of quotes containing motivational messages.
+     * @return The post-execution message to be displayed to the user.
      * @throws DillException If an error occurs during execution.
      */
     public abstract String execute(
@@ -32,6 +33,12 @@ public abstract class Command {
         return false;
     }
 
+    /**
+     * Formats a list of matching tasks into its string representation.
+     *
+     * @param matchingTasks The list of matching tasks.
+     * @return The formatted string representation of the matching tasks.
+     */
     protected String formatMatchingTasks(List<TaskList.MatchingTask> matchingTasks) {
         StringBuilder output = new StringBuilder();
         for (int i = 0; i < matchingTasks.size(); i++) {

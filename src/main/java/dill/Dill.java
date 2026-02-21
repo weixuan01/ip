@@ -43,10 +43,21 @@ public class Dill {
         assert quoteList != null : "quoteList must be initialized";
     }
 
+    /**
+     * Returns the greeting message to be displayed on GUI startup.
+     *
+     * @return The startup greeting message.
+     */
     public String getGuiBootMessage() {
         return UiMessages.getGreeting(loadMessage);
     }
 
+    /**
+     * Processes the user input from the GUI and returns Dill's response
+     *
+     * @param userInput The user input from the GUI.
+     * @return The response message.
+     */
     public String getResponse(String userInput) {
         assert userInput != null : "User input should not be null";
         try {

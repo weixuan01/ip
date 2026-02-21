@@ -15,6 +15,12 @@ import javafx.stage.Stage;
 public class Main extends Application {
     private Dill dill = new Dill();
 
+    /**
+     * Starts the JavaFX application by loading the FXML layout,
+     * injecting the Dill instance, and showing the primary stage.
+     *
+     * @param stage The primary stage for this application.
+     */
     public void start(Stage stage) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/view/MainWindow.fxml"));

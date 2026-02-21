@@ -24,14 +24,30 @@ public class Event extends Task {
         this.endDate = endDate;
     }
 
+    /**
+     * Returns the task type identifier for Event tasks.
+     *
+     * @return The task type as a string.
+     */
     public String getTaskType() {
         return TASK_TYPE;
     }
 
+    /**
+     * Returns the start and end dates of this event task as a string array.
+     *
+     * @return A two element array containing the start and end dates.
+     */
     public String[] getDates() {
         return new String[]{startDate.toString(), endDate.toString()};
     }
 
+    /**
+     * Checks whether the event occurs on the specified date.
+     *
+     * @param date The date to check against the task's start and end date.
+     * @return True if the specified date is within the start and end date (inclusive), false otherwise.
+     */
     public boolean isOccurringOn(LocalDate date) {
         assert date != null : "LocalDate object should not be null";
 
@@ -40,6 +56,11 @@ public class Event extends Task {
         return !isBeforeStart && !isAfterEnd;
     }
 
+    /**
+     * Updates this event task using the provided update fields.
+     *
+     * @param updateFields The UpdateFields object containing new values for this task.
+     */
     public void updateTask(UpdateFields updateFields) {
         if (updateFields.getByDate() != null) {
             throw new IllegalArgumentException("An event task does not have a deadline!");
@@ -61,6 +82,11 @@ public class Event extends Task {
         }
     }
 
+    /**
+     * Creates and returns a copy of this event task.
+     *
+     * @return A new Event object with the same name, start date, and end date.
+     */
     public Task cloneTask() {
         return new Event(this.getTaskName(), this.startDate, this.endDate);
     }

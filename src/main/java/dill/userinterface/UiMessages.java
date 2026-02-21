@@ -2,6 +2,9 @@ package dill.userinterface;
 
 import dill.task.Task;
 
+/**
+ * Represents the collection of user interface messages used by Dill.
+ */
 public class UiMessages {
     private static final String TASKS_LOAD_SUCCESS = "I found %d saved tasks. Let's pick up where we left off!";
 
@@ -61,7 +64,7 @@ public class UiMessages {
     private static final String MESSAGE_HELP =
             """
             Here are the available commands:
-            
+
             Managing Tasks:
             1. list
                 Displays the current tasks in the list.
@@ -83,7 +86,7 @@ public class UiMessages {
                 e.g., update 3 /name myTask /end 2026-03-14
             9. clone <task-id>
                 Duplicates the task with the specified task id.
-            
+
             Quick Tools:
             1. find <keyword>
                 Displays all tasks matching the specified keyword.
@@ -94,14 +97,31 @@ public class UiMessages {
             4. bye
                 Terminates the current session.""";
 
+    /**
+     * Returns the formatted greeting message displayed at startup.
+     *
+     * @param loadMessage The message describing the startup load status.
+     * @return The formatted greeting message.
+     */
     public static String getGreeting(String loadMessage) {
         return String.format(GREETING, loadMessage);
     }
 
+    /**
+     * Returns the exit message displayed when the user terminates the session.
+     *
+     * @return The exit message.
+     */
     public static String getExit() {
         return MESSAGE_EXIT;
     }
 
+    /**
+     * Returns the message displayed after successfully loading tasks.
+     *
+     * @param n The number of tasks successfully loaded.
+     * @return The load success message.
+     */
     public static String getLoadTasksSuccess(int n) {
         if (n > 0) {
             return String.format(TASKS_LOAD_SUCCESS, n);
@@ -110,42 +130,102 @@ public class UiMessages {
         }
     }
 
+    /**
+     * Returns the message displayed when an error occurs during loading.
+     *
+     * @return The load error message.
+     */
     public static String getLoadTasksError() {
         return TASKS_LOAD_ERROR;
     }
 
+    /**
+     * Returns the help message listing all available commands.
+     *
+     * @return The help message.
+     */
     public static String getHelp() {
         return MESSAGE_HELP;
     }
 
+    /**
+     * Returns the message displayed after successfully adding a task.
+     *
+     * @param task The task that was added.
+     * @param listSize The updated number of tasks in the list.
+     * @return The formatted add-success message.
+     */
     public static String getAddSuccess(Task task, int listSize) {
         return String.format(TASK_ADD_SUCCESS, task, listSize);
     }
 
+    /**
+     * Returns the message displayed after successfully deleting a task.
+     *
+     * @param task The task that was deleted.
+     * @param listSize The updated number of tasks in the list.
+     * @return The formatted delete-success message.
+     */
     public static String getDeleteSuccess(Task task, int listSize) {
         return String.format(TASK_DELETE_SUCCESS, task, listSize);
     }
 
+    /**
+     * Returns the message displayed after successfully marking a task as done.
+     *
+     * @param task The task that was marked as complete.
+     * @return The formatted mark-success message.
+     */
     public static String getMarkSuccess(Task task) {
         return String.format(TASK_MARK_SUCCESS, task);
     }
 
+    /**
+     * Returns the message displayed after successfully marking a task as not done.
+     *
+     * @param task The task that was marked as incomplete.
+     * @return The formatted unmark-success message.
+     */
     public static String getUnmarkSuccess(Task task) {
         return String.format(TASK_UNMARK_SUCCESS, task);
     }
 
+    /**
+     * Returns the message displayed when the task storage file is corrupted.
+     *
+     * @return The corruption error message.
+     */
     public static String getTasksLoadCorrupt() {
         return TASKS_LOAD_CORRUPT;
     }
 
+    /**
+     * Returns the message displayed when an error occurs while saving tasks.
+     *
+     * @return The save error message.
+     */
     public static String getTasksSaveError() {
         return TASKS_SAVE_ERROR;
     }
 
+    /**
+     * Returns the message displayed after successfully updating a task.
+     *
+     * @param taskBefore The string representation of the task before the update.
+     * @param taskAfter The updated task.
+     * @return The formatted update-success message.
+     */
     public static String getTaskUpdateSuccess(String taskBefore, Task taskAfter) {
         return String.format(TASK_UPDATE_SUCCESS, taskBefore, taskAfter);
     }
 
+    /**
+     * Returns the message displayed after successfully cloning a task.
+     *
+     * @param clonedTask The duplicated task.
+     * @param listSize The updated number of tasks in the list.
+     * @return The formatted clone-success message.
+     */
     public static String getCloneSuccess(Task clonedTask, int listSize) {
         return String.format(TASK_CLONE_SUCCESS, clonedTask, listSize);
     }

@@ -32,6 +32,7 @@ public class QuoteList {
 
     /**
      * Creates an instance of QuoteList with the specified list of quotes.
+     *
      * @param quotes The list of motivational quotes.
      */
     public QuoteList(List<String> quotes) {
@@ -41,6 +42,7 @@ public class QuoteList {
 
     /**
      * Returns a random quote from the list, or a default quote if the list is empty.
+     *
      * @return A quote string
      */
     public String getRandomQuote() {
@@ -51,6 +53,11 @@ public class QuoteList {
         return quotes.get(randIndex);
     }
 
+    /**
+     * Returns the predefined default list of quotes
+     *
+     * @return A list of default quotes.
+     */
     public static List<String> getDefaultQuotes() {
         return DEFAULT_QUOTES;
     }

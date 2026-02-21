@@ -223,22 +223,22 @@ public class Parser {
     }
 
     private static void setUpdateFields(
-            UpdateFields updateFields, String flag, String value) throws InvalidCommandException{
+            UpdateFields updateFields, String flag, String value) throws InvalidCommandException {
         switch (flag) {
-            case "/name":
-                updateFields.setTaskName(value);
-                break;
-            case "/by":
-                updateFields.setByDate(parseDate(value));
-                break;
-            case "/start":
-                updateFields.setStartDate(parseDate(value));
-                break;
-            case "/end":
-                updateFields.setEndDate(parseDate(value));
-                break;
-            default:
-                throw new InvalidCommandException("These flags are currently supported: /name, /by, /start, /end");
+        case "/name":
+            updateFields.setTaskName(value);
+            break;
+        case "/by":
+            updateFields.setByDate(parseDate(value));
+            break;
+        case "/start":
+            updateFields.setStartDate(parseDate(value));
+            break;
+        case "/end":
+            updateFields.setEndDate(parseDate(value));
+            break;
+        default:
+            throw new InvalidCommandException("These flags are currently supported: /name, /by, /start, /end");
         }
     }
 }

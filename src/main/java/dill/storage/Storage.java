@@ -115,6 +115,7 @@ public class Storage {
 
     /**
      * Load quotes from the quote storage file.
+     *
      * @return A list of string quotes loaded from storage.
      * @throws StorageException If the file path does not exist or the file is unreadable.
      */
@@ -135,6 +136,15 @@ public class Storage {
         } catch (FileNotFoundException e) {
             throw new StorageException("Quote storage file deleted or moved.");
         }
+    }
+
+    /**
+     * Sets a flag that tracks whether the task file is writable.
+     *
+     * @param isTaskWritable true if task file is writable, false otherwise.
+     */
+    public void setTaskWritable(boolean isTaskWritable) {
+        this.isTaskWritable = isTaskWritable;
     }
 
     private List<String> loadDefaultQuotes() throws StorageException {
@@ -163,10 +173,6 @@ public class Storage {
         }
 
         return quotes;
-    }
-
-    public void setTaskWritable(boolean isTaskWritable) {
-        this.isTaskWritable = isTaskWritable;
     }
 
     private String encodeTask(Task task) {

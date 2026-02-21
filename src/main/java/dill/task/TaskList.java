@@ -11,19 +11,38 @@ import java.util.stream.IntStream;
 public class TaskList {
     private List<Task> tasks;
 
+    /**
+     * Represents a task that matches a search condition.
+     */
     public static class MatchingTask {
         private Task task;
         private int index;
 
+        /**
+         * Creates an instance of MatchingTask and initializes it with a task and its index in the task list.
+         *
+         * @param task The matching task.
+         * @param index The index of the task in the task list.
+         */
         public MatchingTask(Task task, int index) {
             this.task = task;
             this.index = index;
         }
 
+        /**
+         * Returns the matching task.
+         *
+         * @return The task that matched the search criteria.
+         */
         public Task getTask() {
             return this.task;
         }
 
+        /**
+         * Returns the index of the matching task in the task list.
+         *
+         * @return The zero-based index of the task.
+         */
         public int getIndex() {
             return this.index;
         }
@@ -119,7 +138,7 @@ public class TaskList {
      * Search for tasks in the list with names containing the specified keyword.
      *
      * @param keyword The specified matching keyword.
-     * @return A formatted list of strings representing the matching tasks.
+     * @return A list of matching tasks.
      */
     public List<MatchingTask> filterByName(String keyword) {
         return IntStream.range(0, tasks.size())
@@ -128,6 +147,12 @@ public class TaskList {
                 .toList();
     }
 
+    /**
+     * Search for tasks in the list that occur on the specified date.
+     *
+     * @param date The date to filter tasks by.
+     * @return A list of matching tasks.
+     */
     public List<MatchingTask> filterByDate(LocalDate date) {
         List<MatchingTask> matchingTasks = new ArrayList<>();
         for (int i = 0; i < tasks.size(); i++) {

@@ -1,7 +1,5 @@
 package dill.task;
 
-import java.time.LocalDate;
-
 /**
  * Represents a task with a given name, the most basic task type.
  */
@@ -17,20 +15,37 @@ public class ToDo extends Task {
         super(taskName);
     }
 
+    /**
+     * Returns the task type identifier for ToDo tasks.
+     *
+     * @return The task type as a string.
+     */
     public String getTaskType() {
         return TASK_TYPE;
     }
 
+    /**
+     * Updates this todo task using the provided update fields.
+     *
+     * @param updateFields The UpdateFields object containing new values for this task.
+     */
     public void updateTask(UpdateFields updateFields) {
-        if (updateFields.getByDate() != null || updateFields.getStartDate()!= null || updateFields.getEndDate() != null) {
+        if (updateFields.getByDate() != null || updateFields.getStartDate() != null
+                || updateFields.getEndDate() != null) {
             throw new IllegalArgumentException("A todo task does not have a date!");
         }
+
         String newTaskName = updateFields.getTaskName();
-        if (newTaskName!= null) {
+        if (newTaskName != null) {
             setTaskName(newTaskName);
         }
     }
 
+    /**
+     * Creates and returns a copy of this todo task.
+     *
+     * @return A new ToDo object with the same name.
+     */
     public Task cloneTask() {
         return new ToDo(this.getTaskName());
     }
