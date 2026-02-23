@@ -43,8 +43,8 @@ public class UpdateCommand extends Command {
             Task task = taskList.getTask(taskIndex);
             String taskBefore = task.toString();
             task.updateTask(updateFields);
-            storage.saveTasks(taskList);
             messageBuilder.append(UiMessages.getTaskUpdateSuccess(taskBefore, task));
+            storage.saveTasks(taskList);
         } catch (IndexOutOfBoundsException e) {
             throw new ExecutionException("I cannot update an entry that is not in the list!");
         } catch (IllegalArgumentException e) {
