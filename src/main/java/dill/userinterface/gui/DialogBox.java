@@ -73,4 +73,17 @@ public class DialogBox extends HBox {
                 + "-fx-font-size: 12px;");
         return db;
     }
+
+    public static DialogBox getDillErrorDialog(String text, Image img) {
+        DialogBox db = new DialogBox(text, img);
+        db.flip();
+
+        db.dialog.setStyle("-fx-background-color: #FFD2D2; "
+                + "-fx-background-radius: 15; "
+                + "-fx-padding: 10 15 10 15;" // Top, Right, Bottom, Left
+                + "-fx-font-family: 'Verdana';"
+                + "-fx-font-size: 12px;"
+                + "-fx-text-fill: #900000;");
+        return db;
+    }
 }

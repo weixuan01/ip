@@ -1,6 +1,9 @@
 package dill.userinterface.gui;
 
 import dill.Dill;
+import dill.exception.DillException;
+import dill.exception.StorageException;
+import dill.userinterface.UiMessages;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
@@ -46,11 +49,27 @@ public class MainWindow extends AnchorPane {
     @FXML
     private void handleUserInput() {
         String input = userInput.getText();
-        String response = dill.getResponse(input);
-        dialogContainer.getChildren().addAll(
-                DialogBox.getUserDialog(input, userImage),
-                DialogBox.getDillDialog(response, dillImage)
-        );
+        String response;
+        try {
+            response = dill.getResponse(input);
+            dialogContainer.getChildren().addAll(
+                    DialogBox.getUserDialog(input, userImage),
+                    DialogBox.getDillDialog(response, dillImage)
+            );
+        } catch (StorageException e) {
+            response = UiMessages.getTasksSaveError();
+            dialogContainer.getChildren().addAll(
+                    DialogBox.getUserDialog(input, userImage),
+                    DialogBox.getDillErrorDialog(response, dillImage)
+            );
+        } catch (DillException e) {
+            response = e.getMessage();
+            dialogContainer.getChildren().addAll(
+                    DialogBox.getUserDialog(input, userImage),
+                    DialogBox.getDillErrorDialog(response, dillImage)
+            );
+        }
+
         if (input.equals("bye")) {
             javafx.animation.PauseTransition delay = new javafx.animation.PauseTransition(
                     javafx.util.Duration.seconds(3));
