@@ -58,16 +58,10 @@ public class Dill {
      * @param userInput The user input from the GUI.
      * @return The response message.
      */
-    public String getResponse(String userInput) {
+    public String getResponse(String userInput) throws DillException {
         assert userInput != null : "User input should not be null";
-        try {
-            Command cmd = Parser.parse(userInput);
-            return cmd.execute(taskList, storage, quoteList);
-        } catch (StorageException e) {
-            return UiMessages.getTasksSaveError();
-        } catch (DillException e) {
-            return e.getMessage();
-        }
+        Command cmd = Parser.parse(userInput);
+        return cmd.execute(taskList, storage, quoteList);
     }
 
     /**
@@ -111,7 +105,8 @@ public class Dill {
         try {
             return new QuoteList(storage.loadQuotes());
         } catch (StorageException e) {
-            messageBuilder.append("\n").append(e.getMessage());
+            messageBuilder.append("\n")
+                    .append(e.getMessage());
             return new QuoteList();
         }
     }

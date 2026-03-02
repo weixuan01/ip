@@ -14,6 +14,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 
 /**
  * Represents a dialog box consisting of an ImageView to represent the speaker's face
@@ -36,8 +37,6 @@ public class DialogBox extends HBox {
         }
         dialog.setText(text);
         displayPicture.setImage(img);
-        Circle clip = new Circle(49.5, 49.5, 49.5);
-        displayPicture.setClip(clip);
     }
 
     /**
@@ -52,6 +51,8 @@ public class DialogBox extends HBox {
 
     public static DialogBox getUserDialog(String text, Image img) {
         DialogBox db = new DialogBox(text, img);
+        Circle clip = new Circle(49.5, 49.5, 49.5);
+        db.displayPicture.setClip(clip);
 
         db.dialog.setStyle("-fx-background-color: #6A5ACD; "
                 + "-fx-background-radius: 15; "
@@ -64,6 +65,10 @@ public class DialogBox extends HBox {
 
     public static DialogBox getDillDialog(String text, Image img) {
         DialogBox db = new DialogBox(text, img);
+        Rectangle squircleClip = new Rectangle(99, 99);
+        squircleClip.setArcWidth(35);
+        squircleClip.setArcHeight(35);
+        db.displayPicture.setClip(squircleClip);
         db.flip();
 
         db.dialog.setStyle("-fx-background-color: #FFFFFF; "
@@ -71,6 +76,23 @@ public class DialogBox extends HBox {
                 + "-fx-padding: 10 15 10 15;" // Top, Right, Bottom, Left
                 + "-fx-font-family: 'Verdana';"
                 + "-fx-font-size: 12px;");
+        return db;
+    }
+
+    public static DialogBox getDillErrorDialog(String text, Image img) {
+        DialogBox db = new DialogBox(text, img);
+        Rectangle squircleClip = new Rectangle(99, 99);
+        squircleClip.setArcWidth(35);
+        squircleClip.setArcHeight(35);
+        db.displayPicture.setClip(squircleClip);
+        db.flip();
+
+        db.dialog.setStyle("-fx-background-color: #FFD2D2; "
+                + "-fx-background-radius: 15; "
+                + "-fx-padding: 10 15 10 15;" // Top, Right, Bottom, Left
+                + "-fx-font-family: 'Verdana';"
+                + "-fx-font-size: 12px;"
+                + "-fx-text-fill: #900000;");
         return db;
     }
 }
