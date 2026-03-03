@@ -37,6 +37,8 @@ public class DialogBox extends HBox {
         }
         dialog.setText(text);
         displayPicture.setImage(img);
+        Circle clip = new Circle(49.5, 49.5, 49.5);
+        displayPicture.setClip(clip);
     }
 
     /**
@@ -51,8 +53,6 @@ public class DialogBox extends HBox {
 
     public static DialogBox getUserDialog(String text, Image img) {
         DialogBox db = new DialogBox(text, img);
-        Circle clip = new Circle(49.5, 49.5, 49.5);
-        db.displayPicture.setClip(clip);
 
         db.dialog.setStyle("-fx-background-color: #6A5ACD; "
                 + "-fx-background-radius: 15; "
@@ -65,10 +65,6 @@ public class DialogBox extends HBox {
 
     public static DialogBox getDillDialog(String text, Image img) {
         DialogBox db = new DialogBox(text, img);
-        Rectangle squircleClip = new Rectangle(99, 99);
-        squircleClip.setArcWidth(35);
-        squircleClip.setArcHeight(35);
-        db.displayPicture.setClip(squircleClip);
         db.flip();
 
         db.dialog.setStyle("-fx-background-color: #FFFFFF; "
@@ -81,10 +77,6 @@ public class DialogBox extends HBox {
 
     public static DialogBox getDillErrorDialog(String text, Image img) {
         DialogBox db = new DialogBox(text, img);
-        Rectangle squircleClip = new Rectangle(99, 99);
-        squircleClip.setArcWidth(35);
-        squircleClip.setArcHeight(35);
-        db.displayPicture.setClip(squircleClip);
         db.flip();
 
         db.dialog.setStyle("-fx-background-color: #FFD2D2; "
