@@ -41,7 +41,7 @@ public class DeleteCommand extends Command {
             storage.saveTasks(taskList);
             return message;
         } catch (IndexOutOfBoundsException e) {
-            throw new ExecutionException("I cannot delete a task that is not in the list!");
+            throw new ExecutionException(UiMessages.getTaskIdNotFound());
         } catch (StorageException e) {
             return message + "\n" + e.getMessage();
         }

@@ -57,7 +57,7 @@ public class Deadline extends Task {
      */
     public void updateTask(UpdateFields updateFields) {
         if (updateFields.getStartDate() != null || updateFields.getEndDate() != null) {
-            throw new IllegalArgumentException("A deadline task does not have start and end dates!");
+            throw new IllegalArgumentException("Hold on! A deadline task does not have a start or end date!");
         }
 
         String newTaskName = updateFields.getTaskName();

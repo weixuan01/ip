@@ -63,7 +63,7 @@ public class Event extends Task {
      */
     public void updateTask(UpdateFields updateFields) {
         if (updateFields.getByDate() != null) {
-            throw new IllegalArgumentException("An event task does not have a deadline!");
+            throw new IllegalArgumentException("Hold on! An event task does not have a deadline!");
         }
 
         LocalDate updateStartDate = updateFields.getStartDate();
@@ -71,7 +71,8 @@ public class Event extends Task {
         LocalDate newStartDate = (updateStartDate == null) ? this.startDate : updateStartDate;
         LocalDate newEndDate = (updateEndDate == null) ? this.endDate : updateEndDate;
         if (newStartDate.isAfter(newEndDate)) {
-            throw new IllegalArgumentException("Start date cannot be after end date!");
+            throw new IllegalArgumentException("Wait a second... are we time travelling?"
+                    + " The start date cannot be after the end date!");
         }
         this.startDate = newStartDate;
         this.endDate = newEndDate;
