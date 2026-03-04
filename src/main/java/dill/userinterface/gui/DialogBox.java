@@ -10,9 +10,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 
 /**
@@ -35,9 +38,20 @@ public class DialogBox extends HBox {
             e.printStackTrace();
         }
         dialog.setText(text);
-        displayPicture.setImage(img);
-        Circle clip = new Circle(49.5, 49.5, 49.5);
-        displayPicture.setClip(clip);
+
+        Circle pictureCircle = new Circle(49.5);
+        pictureCircle.setFill(new ImagePattern(img));
+
+        DropShadow pictureShadow = new DropShadow();
+        pictureShadow.setRadius(12.0);
+        pictureShadow.setOffsetY(4.0);
+        pictureShadow.setColor(Color.color(0, 0, 0, 0.3));
+        pictureCircle.setEffect(pictureShadow);
+
+        int imageIndex = this.getChildren().indexOf(displayPicture);
+        if (imageIndex != -1) {
+            this.getChildren().set(imageIndex, pictureCircle);
+        }
     }
 
     /**
@@ -58,7 +72,8 @@ public class DialogBox extends HBox {
                 + "-fx-padding: 10 15 10 15;" // Top, Right, Bottom, Left
                 + "-fx-text-fill: #FFFFFF;"
                 + "-fx-font-family: 'Verdana';"
-                + "-fx-font-size: 12px;");
+                + "-fx-font-size: 12px;"
+                + "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 4);");
         return db;
     }
 
@@ -70,7 +85,8 @@ public class DialogBox extends HBox {
                 + "-fx-background-radius: 15; "
                 + "-fx-padding: 10 15 10 15;" // Top, Right, Bottom, Left
                 + "-fx-font-family: 'Verdana';"
-                + "-fx-font-size: 12px;");
+                + "-fx-font-size: 12px;"
+                + "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 10, 0, 0, 4);");
         return db;
     }
 
@@ -83,7 +99,8 @@ public class DialogBox extends HBox {
                 + "-fx-padding: 10 15 10 15;" // Top, Right, Bottom, Left
                 + "-fx-font-family: 'Verdana';"
                 + "-fx-font-size: 12px;"
-                + "-fx-text-fill: #900000;");
+                + "-fx-text-fill: #900000;"
+                + "-fx-effect: dropshadow(three-pass-box, rgba(144,0,0,0.2), 10, 0, 0, 4);");
         return db;
     }
 }
