@@ -42,6 +42,9 @@ public class DialogBox extends HBox {
         Circle pictureCircle = new Circle(49.5);
         pictureCircle.setFill(new ImagePattern(img));
 
+        pictureCircle.setStroke(Color.WHITE); // Set border color
+        pictureCircle.setStrokeWidth(2.0); // Set border thickness
+
         DropShadow pictureShadow = new DropShadow();
         pictureShadow.setRadius(12.0);
         pictureShadow.setOffsetY(4.0);
