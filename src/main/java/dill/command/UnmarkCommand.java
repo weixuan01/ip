@@ -39,7 +39,7 @@ public class UnmarkCommand extends Command {
             message += UiMessages.getUnmarkSuccess(taskList.getTask(taskIndex));
             storage.saveTasks(taskList);
         } catch (IndexOutOfBoundsException e) {
-            throw new ExecutionException("I cannot unmark a task that is not in the list!");
+            throw new ExecutionException(UiMessages.getTaskIdNotFound());
         } catch (StorageException e) {
             message += "\n" + e.getMessage();
         }

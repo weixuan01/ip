@@ -23,11 +23,11 @@ public class ListCommand extends Command {
         List<Task> tasks = taskList.getTaskList();
         StringBuilder output = new StringBuilder();
         if (tasks.isEmpty()) {
-            output.append("There are no tasks in the list!");
+            output.append("Zero tasks on the list! You seem to be very free.");
             return output.toString();
         }
 
-        output.append("Here are the tasks in your list:\n");
+        output.append("I have pulled up the master list! Here is our current plan:\n");
         for (int i = 0; i < tasks.size(); i++) {
             output.append("  ")
                     .append(i + 1)

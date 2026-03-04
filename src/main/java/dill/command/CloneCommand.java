@@ -41,7 +41,7 @@ public class CloneCommand extends Command {
             messageBuilder.append(UiMessages.getCloneSuccess(clonedTask, taskList.getSize()));
             storage.saveTasks(taskList);
         } catch (IndexOutOfBoundsException e) {
-            throw new ExecutionException("I cannot clone a task that is not in the list!");
+            throw new ExecutionException(UiMessages.getTaskIdNotFound());
         } catch (StorageException e) {
             messageBuilder.append("\n")
                     .append(e.getMessage());

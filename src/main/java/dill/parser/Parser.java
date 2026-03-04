@@ -88,14 +88,14 @@ public class Parser {
         case "clone":
             return validateClone(args);
         default:
-            throw new InvalidCommandException("I'm not quite sure what you meant.\n"
-                    + "Type \"help\" if you wish to view a list of available commands.");
+            throw new InvalidCommandException("Hmmm, that command does not seem to be in my database!\n"
+                    + "Type \"help\" to see what I can do.");
         }
     }
 
     private static Command validateMark(String args) throws InvalidCommandException {
         if (args.isEmpty()) {
-            throw new InvalidCommandException("Please specify a task id to mark.");
+            throw new InvalidCommandException("Whoops! You forgot to give me a task id to mark. (e.g., mark 3)");
         }
         int taskIndex = parseTaskId(args) - 1;
         return new MarkCommand(taskIndex);
@@ -103,7 +103,7 @@ public class Parser {
 
     private static Command validateUnmark(String args) throws InvalidCommandException {
         if (args.isEmpty()) {
-            throw new InvalidCommandException("Please specify a task id to unmark.");
+            throw new InvalidCommandException("Whoops! You forgot to give me a task id to unmark. (e.g., unmark 3)");
         }
         int taskIndex = parseTaskId(args) - 1;
         return new UnmarkCommand(taskIndex);
@@ -111,7 +111,7 @@ public class Parser {
 
     private static Command validateDelete(String args) throws InvalidCommandException {
         if (args.isEmpty()) {
-            throw new InvalidCommandException("Please specify a task id to delete.");
+            throw new InvalidCommandException("Whoops! You forgot to give me a task id to delete. (e.g., delete 3)");
         }
         int taskIndex = parseTaskId(args) - 1;
         return new DeleteCommand(taskIndex);
@@ -119,7 +119,8 @@ public class Parser {
 
     private static Command validateToDo(String args) throws InvalidCommandException {
         if (args.isEmpty()) {
-            throw new InvalidCommandException("Please specify a todo task in the format todo <task-name>");
+            throw new InvalidCommandException(
+                    "Wait, what are we doing? Please tell me a task name! (e.g., todo study)");
         }
         return new AddCommand(new ToDo(args));
     }
@@ -127,8 +128,8 @@ public class Parser {
     private static Command validateDeadline(String args) throws InvalidCommandException {
         Matcher matcher = DEADLINE_ARGS_FORMAT.matcher(args);
         if (!matcher.matches()) {
-            throw new InvalidCommandException("Please specify a deadline task in the format "
-                    + "deadline <task-name> /by <yyyy-mm-dd>");
+            throw new InvalidCommandException("Hold up! The deadline format is a little off."
+                    + " Please use: deadline <task-name> /by <yyyy-mm-dd>");
         }
         assert matcher.groupCount() == 3 : "Matcher should have 2 groups";
         String taskName = matcher.group(1);
@@ -140,8 +141,8 @@ public class Parser {
     private static Command validateEvent(String args) throws InvalidCommandException {
         Matcher matcher = EVENT_ARGS_FORMAT.matcher(args);
         if (!matcher.matches()) {
-            throw new InvalidCommandException("Please specify an event task in the format "
-                    + "event <task-name> /start <yyyy-mm-dd> /end <yyyy-mm-dd>");
+            throw new InvalidCommandException("Hold up! The event format is a little off."
+                    + " Please use: event <task-name> /start <yyyy-mm-dd> /end <yyyy-mm-dd>");
         }
         assert matcher.groupCount() == 3 : "Matcher should have 3 groups";
         String taskName = matcher.group(1);
@@ -150,21 +151,22 @@ public class Parser {
         LocalDate startDate = parseDate(rawStartDate);
         LocalDate endDate = parseDate(rawEndDate);
         if (startDate.isAfter(endDate)) {
-            throw new InvalidCommandException("Start date cannot be after the end date!");
+            throw new InvalidCommandException("Wait a second... are we time travelling?"
+                    + " The start date cannot be after the end date!");
         }
         return new AddCommand(new Event(taskName, startDate, endDate));
     }
 
     private static Command validateFind(String args) throws InvalidCommandException {
         if (args.isEmpty()) {
-            throw new InvalidCommandException("Please specify a keyword for matching.");
+            throw new InvalidCommandException("What are we looking for? Please give me a keyword to search!");
         }
         return new FindCommand(args);
     }
 
     private static Command validateView(String args) throws InvalidCommandException {
         if (args.isEmpty()) {
-            throw new InvalidCommandException("Please specify a date to view.");
+            throw new InvalidCommandException("Which date are we looking at? Please give me a date!");
         }
         LocalDate date = parseDate(args);
         return new ViewCommand(date);
@@ -172,13 +174,13 @@ public class Parser {
 
     private static Command validateUpdate(String args) throws InvalidCommandException {
         if (args.isEmpty()) {
-            throw new InvalidCommandException("Please specify a task id to update.");
+            throw new InvalidCommandException("Whoops! Which task are we updating? Please me a task id!");
         }
 
         String[] updateParts = args.split("\\s+", UPDATE_MAX_PARTS);
         if (updateParts.length == 1) {
-            throw new InvalidCommandException(
-                    "Please specify the fields to update using a flag followed by a value e.g., /by 2026-03-14");
+            throw new InvalidCommandException("I need a bit more information to update that!"
+                    + " Use a flag followed by a value. (e.g., update 3 /by 2026-03-14)");
         }
 
         int taskIndex = parseTaskId(updateParts[UPDATE_INDEX_TASKID]) - 1;
@@ -192,15 +194,15 @@ public class Parser {
             setUpdateFields(updateFields, flag, value);
         }
         if (updateFields.isEmpty()) {
-            throw new InvalidCommandException(
-                    "Please specify a new value for this task field e.g., /by 2026-03-14");
+            throw new InvalidCommandException("Looks like you forgot the new value for that field!"
+                            + " Please specify it. (e.g., /by 2026-03-14)");
         }
         return new UpdateCommand(taskIndex, updateFields);
     }
 
     private static Command validateClone(String args) throws InvalidCommandException {
         if (args.isEmpty()) {
-            throw new InvalidCommandException("Please specify a task id to clone.");
+            throw new InvalidCommandException("Which task are we cloning? Please give me a task id!");
         }
         int taskIndex = parseTaskId(args) - 1;
         return new CloneCommand(taskIndex);
@@ -210,7 +212,7 @@ public class Parser {
         try {
             return Integer.parseInt(taskId);
         } catch (NumberFormatException e) {
-            throw new InvalidCommandException("Task id must be an integer!");
+            throw new InvalidCommandException("Hold on! The task id must be an integer!");
         }
     }
 
@@ -218,7 +220,7 @@ public class Parser {
         try {
             return LocalDate.parse(date);
         } catch (DateTimeParseException e) {
-            throw new InvalidCommandException("Please specify dates in the format yyyy-mm-dd.");
+            throw new InvalidCommandException("Uh oh, I cannot read that date format! Please use: yyyy-mm-dd.");
         }
     }
 
@@ -238,7 +240,8 @@ public class Parser {
             updateFields.setEndDate(parseDate(value));
             break;
         default:
-            throw new InvalidCommandException("These flags are currently supported: /name, /by, /start, /end");
+            throw new InvalidCommandException("I cannot recognize that flag!"
+                    + " My supported flags are: /name, /by, /start, /end");
         }
     }
 }

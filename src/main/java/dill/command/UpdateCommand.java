@@ -46,7 +46,7 @@ public class UpdateCommand extends Command {
             messageBuilder.append(UiMessages.getTaskUpdateSuccess(taskBefore, task));
             storage.saveTasks(taskList);
         } catch (IndexOutOfBoundsException e) {
-            throw new ExecutionException("I cannot update an entry that is not in the list!");
+            throw new ExecutionException(UiMessages.getTaskIdNotFound());
         } catch (IllegalArgumentException e) {
             throw new ExecutionException(e.getMessage());
         } catch (StorageException e) {

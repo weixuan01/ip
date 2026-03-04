@@ -32,11 +32,11 @@ public class FindCommand extends Command {
         List<TaskList.MatchingTask> matchingTasks = taskList.filterByName(keyword);
         StringBuilder output = new StringBuilder();
         if (matchingTasks.isEmpty()) {
-            output.append("No matching tasks found.");
+            output.append("Search complete! I could not find any tasks matching that keyword.");
             return output.toString();
         }
 
-        output.append("Here are the matching tasks in your list:\n")
+        output.append("Bingo! Here are the matching tasks I have found:\n")
                 .append(formatMatchingTasks(matchingTasks));
         return output.toString();
     }

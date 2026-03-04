@@ -32,7 +32,7 @@ public class ToDo extends Task {
     public void updateTask(UpdateFields updateFields) {
         if (updateFields.getByDate() != null || updateFields.getStartDate() != null
                 || updateFields.getEndDate() != null) {
-            throw new IllegalArgumentException("A todo task does not have a date!");
+            throw new IllegalArgumentException("Hold on! A todo task does not have a date!");
         }
 
         String newTaskName = updateFields.getTaskName();

@@ -19,51 +19,53 @@ public class UiMessages {
     private static final String TASKS_SAVE_ERROR = "Oops! I encountered an issue while saving your tasks."
             + " I'll pause saving for the rest of this session while I work on a fix.";
 
+    private static final String TASK_ID_NOT_FOUND = "Hold up! I could not find a task with that id on our list!";
+
     private static final String MESSAGE_EXIT = "Bye. Hope to see you again soon!";
 
     private static final String GREETING =
             """
-            Hello! I'm Dill.
+            Hello there! I'm Dill.
             %s
             What shall we do this time?""";
 
     private static final String TASK_ADD_SUCCESS =
             """
-            Got it. I've added this task:
+            Logged it! Here's the new task:
               %s
-            Now you have %d tasks in the list.""";
+            That makes %d items on our list.""";
 
     private static final String TASK_DELETE_SUCCESS =
             """
-            Noted. I've removed this task:
+            Poof! Task deleted:
               %s
-            Now you have %d tasks in the list.""";
+            We are down to %d tasks now.""";
 
     private static final String TASK_MARK_SUCCESS =
             """
-            Nice! I've marked this task as done:
+            Hooray! Great work. I've marked this as done:
               %s""";
 
     private static final String TASK_UNMARK_SUCCESS =
             """
-            OK, I've marked this task as not done yet:
+            Whoops, hold on a minute! I've marked this as NOT done yet:
               %s""";
 
     private static final String TASK_UPDATE_SUCCESS =
             """
-            Got it! I have updated this task:
+            Update complete! I have tweaked the task:
               From: %s
               To    : %s""";
 
     private static final String TASK_CLONE_SUCCESS =
             """
-            Got it! I have cloned this task:
+            Ctrl+C, Ctrl+V! Task successfully cloned:
               %s
-            Now you have %d tasks in the list.""";
+            We now have %d tasks on the list.""";
 
     private static final String MESSAGE_HELP =
             """
-            Here are the available commands:
+            These are the commands I understand:
 
             Managing Tasks:
             1. list
@@ -228,5 +230,14 @@ public class UiMessages {
      */
     public static String getCloneSuccess(Task clonedTask, int listSize) {
         return String.format(TASK_CLONE_SUCCESS, clonedTask, listSize);
+    }
+
+    /**
+     * Returns the message displayed if task id is out of bounds.
+     *
+     * @return The task id not found message.
+     */
+    public static String getTaskIdNotFound() {
+        return TASK_ID_NOT_FOUND;
     }
 }
