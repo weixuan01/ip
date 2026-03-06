@@ -60,13 +60,13 @@ public class Parser {
 
         switch (cmd) {
         case "bye":
-            return new ExitCommand();
+            return validateBye(args);
         case "list":
-            return new ListCommand();
+            return validateList(args);
         case "help":
-            return new HelpCommand();
+            return validateHelp(args);
         case "cheer":
-            return new CheerCommand();
+            return validateCheer(args);
         case "mark":
             return validateMark(args);
         case "unmark":
@@ -88,7 +88,7 @@ public class Parser {
         case "clone":
             return validateClone(args);
         default:
-            throw new InvalidCommandException("Hmmm, that command does not seem to be in my database!\n"
+            throw new InvalidCommandException("Hmmm... that command does not seem to be in my database!\n"
                     + "Type \"help\" to see what I can do.");
         }
     }
@@ -206,6 +206,38 @@ public class Parser {
         }
         int taskIndex = parseTaskId(args) - 1;
         return new CloneCommand(taskIndex);
+    }
+
+    private static Command validateBye(String args) throws InvalidCommandException {
+        if (!args.isEmpty()) {
+            throw new InvalidCommandException(
+                    "No need for long goodbyes! Just type \"bye\" and you are set.");
+        }
+        return new ExitCommand();
+    }
+
+    private static Command validateList(String args) throws InvalidCommandException {
+        if (!args.isEmpty()) {
+            throw new InvalidCommandException(
+                    "Oops, I do not quite understand that! Did you mean just \"list\"?");
+        }
+        return new ListCommand();
+    }
+
+    private static Command validateHelp(String args) throws InvalidCommandException {
+        if (!args.isEmpty()) {
+            throw new InvalidCommandException(
+                    "Oops, I do not quite understand that! Did you mean just \"help\"?");
+        }
+        return new HelpCommand();
+    }
+
+    private static Command validateCheer(String args) throws InvalidCommandException {
+        if (!args.isEmpty()) {
+            throw new InvalidCommandException(
+                    "Oops, I do not quite understand that! Did you mean just \"cheer\"?");
+        }
+        return new CheerCommand();
     }
 
     private static int parseTaskId(String taskId) throws InvalidCommandException {
