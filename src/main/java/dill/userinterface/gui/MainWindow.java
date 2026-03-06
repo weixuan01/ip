@@ -49,6 +49,10 @@ public class MainWindow extends AnchorPane {
     @FXML
     private void handleUserInput() {
         String input = userInput.getText();
+        if (input.isEmpty()) {
+            return; // If empty string, do nothing
+        }
+
         String response;
         try {
             response = dill.getResponse(input);
