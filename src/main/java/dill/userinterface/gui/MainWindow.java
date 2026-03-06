@@ -49,6 +49,10 @@ public class MainWindow extends AnchorPane {
     @FXML
     private void handleUserInput() {
         String input = userInput.getText();
+        if (input.isEmpty()) {
+            return; // If empty string, do nothing
+        }
+
         String response;
         try {
             response = dill.getResponse(input);
@@ -70,7 +74,7 @@ public class MainWindow extends AnchorPane {
             );
         }
 
-        if (input.equals("bye")) {
+        if (input.equals("bye") || input.equals("bye ")) {
             javafx.animation.PauseTransition delay = new javafx.animation.PauseTransition(
                     javafx.util.Duration.seconds(3));
             delay.setOnFinished(event -> javafx.application.Platform.exit());
