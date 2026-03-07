@@ -22,6 +22,15 @@ public class FindCommand extends Command {
     }
 
     /**
+     * Returns the keyword associated with this FindCommand.
+     *
+     * @return The keyword to be used for filtering.
+     */
+    public String getKeyword() {
+        return this.keyword;
+    }
+
+    /**
      * Executes the find command by displaying all tasks matching the specified keyword.
      * @param taskList The list of tasks to be executed on.
      * @param storage The data storage handler for saving and loading tasks.
