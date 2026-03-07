@@ -6,6 +6,8 @@ import dill.task.Task;
  * Represents the collection of user interface messages used by Dill.
  */
 public class UiMessages {
+    private static String username;
+
     private static final String TASKS_LOAD_SUCCESS = "I found %d saved tasks. Let's pick up where we left off!";
 
     private static final String TASKS_LOAD_SUCCESS_EMPTY = "I could not find any saved tasks. Let's start fresh!";
@@ -21,13 +23,15 @@ public class UiMessages {
 
     private static final String TASK_ID_NOT_FOUND = "Hold up! I could not find a task with that id on our list!";
 
-    private static final String MESSAGE_EXIT = "Bye. Hope to see you again soon!";
+    private static final String MESSAGE_EXIT = "Bye, %s! Hope to see you again soon!";
+
+    private static final String MESSAGE_SET_NAME = "Alright, %s! What shall we do this time?";
 
     private static final String GREETING =
             """
             Hello there! I'm Dill.
             %s
-            What shall we do this time?""";
+            But first, how should I address you?""";
 
     private static final String TASK_ADD_SUCCESS =
             """
@@ -115,7 +119,7 @@ public class UiMessages {
      * @return The exit message.
      */
     public static String getExit() {
-        return MESSAGE_EXIT;
+        return String.format(MESSAGE_EXIT, username);
     }
 
     /**
@@ -239,5 +243,16 @@ public class UiMessages {
      */
     public static String getTaskIdNotFound() {
         return TASK_ID_NOT_FOUND;
+    }
+
+    /**
+     * Returns the message displayed after setting the username.
+     *
+     * @param name The username to be set.
+     * @return The username set message.
+     */
+    public static String setUsername(String name) {
+        username = name;
+        return String.format(MESSAGE_SET_NAME, username);
     }
 }

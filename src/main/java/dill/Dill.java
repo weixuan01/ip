@@ -65,6 +65,17 @@ public class Dill {
     }
 
     /**
+     * Sets the name of the user.
+     *
+     * @param userInput The name of the user.
+     * @return The response message from Dill acknowledging the username.
+     */
+    public String setName(String userInput) {
+        assert userInput != null : "User input should not be null";
+        return UiMessages.setUsername(userInput);
+    }
+
+    /**
      * Starts the main loop of the text-ui chatbot.
      * Displays a greeting message, then reads, parses, and executes inputs until an exit command ("bye") is given.
      */
