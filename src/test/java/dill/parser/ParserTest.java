@@ -1,14 +1,25 @@
 package dill.parser;
 
-import dill.command.*;
-
-import dill.exception.InvalidCommandException;
-import dill.task.ToDo;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.time.LocalDate;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
+
+import dill.command.AddCommand;
+import dill.command.CheerCommand;
+import dill.command.Command;
+import dill.command.ExitCommand;
+import dill.command.FindCommand;
+import dill.command.HelpCommand;
+import dill.command.ListCommand;
+import dill.command.MarkCommand;
+import dill.command.UnmarkCommand;
+import dill.command.ViewCommand;
+import dill.exception.InvalidCommandException;
+import dill.task.ToDo;
 
 public class ParserTest {
 
@@ -123,8 +134,8 @@ public class ParserTest {
     void parseToDoNoTaskName() {
         InvalidCommandException e = assertThrows(
                 InvalidCommandException.class, () -> Parser.parse("todo"));
-        assertEquals("Wait, what are we doing? Please tell me a task name! (e.g., todo study)"
-                , e.getMessage());
+        assertEquals("Wait, what are we doing? Please tell me a task name! (e.g., todo study)",
+                e.getMessage());
     }
 
     // Test find command with valid syntax
@@ -132,7 +143,7 @@ public class ParserTest {
     void parseFindValid() {
         Command cmd = assertDoesNotThrow(() -> Parser.parse("find assignment"));
         assertEquals(FindCommand.class, cmd.getClass());
-        assertEquals("assignment", ((FindCommand)cmd).getKeyword());
+        assertEquals("assignment", ((FindCommand) cmd).getKeyword());
     }
 
     // Test find command with invalid syntax (empty keyword)
@@ -148,7 +159,7 @@ public class ParserTest {
     void parseViewValid() {
         Command cmd = assertDoesNotThrow(() -> Parser.parse("view 2026-03-14"));
         assertEquals(ViewCommand.class, cmd.getClass());
-        assertEquals(LocalDate.parse("2026-03-14"), ((ViewCommand)cmd).getDate());
+        assertEquals(LocalDate.parse("2026-03-14"), ((ViewCommand) cmd).getDate());
     }
 
     // Test view command with invalid syntax (empty date)
@@ -172,6 +183,6 @@ public class ParserTest {
     void parseToDoValid() {
         Command cmd = assertDoesNotThrow(() -> Parser.parse("todo myname"));
         assertEquals(AddCommand.class, cmd.getClass());
-        assertEquals(ToDo.class, ((AddCommand)cmd).getTask().getClass());
+        assertEquals(ToDo.class, ((AddCommand) cmd).getTask().getClass());
     }
 }
