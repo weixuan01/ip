@@ -24,6 +24,15 @@ public class ViewCommand extends Command {
     }
 
     /**
+     * Returns the date associated with this ViewCommand.
+     *
+     * @return The date to filter tasks by.
+     */
+    public LocalDate getDate() {
+        return this.date;
+    }
+
+    /**
      * Executes the view command by
      *
      * @param taskList The list of tasks to be executed on.

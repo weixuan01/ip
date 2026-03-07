@@ -22,6 +22,15 @@ public class AddCommand extends Command {
     }
 
     /**
+     * Returns the task associated with this AddCommand.
+     *
+     * @return The task to be added.
+     */
+    public Task getTask() {
+        return this.task;
+    }
+
+    /**
      * Executes the addition of the task to the provided task list.
      *
      * @param taskList The list of tasks to be executed on.
