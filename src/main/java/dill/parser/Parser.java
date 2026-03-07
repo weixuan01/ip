@@ -131,7 +131,7 @@ public class Parser {
             throw new InvalidCommandException("Hold up! The deadline format is a little off."
                     + " Please use: deadline <task-name> /by <yyyy-mm-dd>");
         }
-        assert matcher.groupCount() == 3 : "Matcher should have 2 groups";
+        assert matcher.groupCount() == 2 : "Matcher should have 2 groups";
         String taskName = matcher.group(1);
         String rawDate = matcher.group(2);
         LocalDate date = parseDate(rawDate);
