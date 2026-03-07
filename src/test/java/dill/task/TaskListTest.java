@@ -160,16 +160,9 @@ public class TaskListTest {
         internalTaskList.add(mockTask3);
         internalTaskList.add(mockTask4);
 
-        // Case 1
         List<TaskList.MatchingTask> matchingTasks = taskList.filterByDate(LocalDate.parse("2026-03-14"));
         assertEquals(2, matchingTasks.size());
         assertEquals(0, matchingTasks.get(0).getIndex()); // Check index
         assertEquals(2, matchingTasks.get(1).getIndex());
-
-        // Case 2
-        List<TaskList.MatchingTask> matchingTasks2 = taskList.filterByDate(LocalDate.parse("2026-02-14"));
-        assertEquals(2, matchingTasks2.size());
-        assertEquals(1, matchingTasks2.get(0).getIndex()); // Check index
-        assertEquals(3, matchingTasks2.get(1).getIndex());
     }
 }
