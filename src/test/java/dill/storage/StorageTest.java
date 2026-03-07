@@ -41,8 +41,17 @@ public class StorageTest {
         when(mockTaskList.getSize()).thenReturn(2);
         when(mockTaskList.getTask(0)).thenReturn(mockTask1);
         when(mockTaskList.getTask(1)).thenReturn(mockTask2);
-        when(mockTask1.toFileString()).thenReturn("T | 1 | read");
-        when(mockTask2.toFileString()).thenReturn("D | 0 | assignment | 2026-03-14");
+
+        // For encodeTask helper method
+        when(mockTask1.getTaskType()).thenReturn("T");
+        when(mockTask1.getTaskName()).thenReturn("read");
+        when(mockTask1.getIsDone()).thenReturn(true);
+        when(mockTask1.getDates()).thenReturn(new String[0]);
+
+        when(mockTask2.getTaskType()).thenReturn("D");
+        when(mockTask2.getTaskName()).thenReturn("assignment");
+        when(mockTask2.getIsDone()).thenReturn(false);
+        when(mockTask2.getDates()).thenReturn(new String[]{"2026-03-14"});
 
         // Set isTaskWritable field in storage to true using reflection
         Field isTaskWritableField = Storage.class.getDeclaredField("isTaskWritable");
@@ -85,7 +94,7 @@ public class StorageTest {
 
     // Test loading tasks from an existing valid file with content
     @Test
-    void loadTasksExistingFileTest() throws IOException, NoSuchFieldException {
+    void loadTasksExistingFileTest() throws IOException {
         Path taskPath = tempDir.resolve("tasks.txt");
 
         // Create a temp storage file with some saved tasks.
