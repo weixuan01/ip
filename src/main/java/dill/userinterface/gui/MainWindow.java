@@ -29,6 +29,7 @@ public class MainWindow extends AnchorPane {
 
     private Image userImage = new Image(this.getClass().getResourceAsStream("/images/user.png"));
     private Image dillImage = new Image(this.getClass().getResourceAsStream("/images/dill.png"));
+    private boolean isName = true;
 
     @FXML
     public void initialize() {
@@ -54,24 +55,33 @@ public class MainWindow extends AnchorPane {
         }
 
         String response;
-        try {
-            response = dill.getResponse(input);
+        if (isName) {
+            response = dill.setName(input);
+            isName = false; // Only set name once
             dialogContainer.getChildren().addAll(
                     DialogBox.getUserDialog(input, userImage),
                     DialogBox.getDillDialog(response, dillImage)
             );
-        } catch (StorageException e) {
-            response = UiMessages.getTasksSaveError();
-            dialogContainer.getChildren().addAll(
-                    DialogBox.getUserDialog(input, userImage),
-                    DialogBox.getDillErrorDialog(response, dillImage)
-            );
-        } catch (DillException e) {
-            response = e.getMessage();
-            dialogContainer.getChildren().addAll(
-                    DialogBox.getUserDialog(input, userImage),
-                    DialogBox.getDillErrorDialog(response, dillImage)
-            );
+        } else {
+            try {
+                response = dill.getResponse(input);
+                dialogContainer.getChildren().addAll(
+                        DialogBox.getUserDialog(input, userImage),
+                        DialogBox.getDillDialog(response, dillImage)
+                );
+            } catch (StorageException e) {
+                response = UiMessages.getTasksSaveError();
+                dialogContainer.getChildren().addAll(
+                        DialogBox.getUserDialog(input, userImage),
+                        DialogBox.getDillErrorDialog(response, dillImage)
+                );
+            } catch (DillException e) {
+                response = e.getMessage();
+                dialogContainer.getChildren().addAll(
+                        DialogBox.getUserDialog(input, userImage),
+                        DialogBox.getDillErrorDialog(response, dillImage)
+                );
+            }
         }
 
         if (input.equals("bye") || input.equals("bye ")) {
