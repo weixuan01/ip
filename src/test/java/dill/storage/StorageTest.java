@@ -19,8 +19,8 @@ import org.mockito.Mockito;
 import dill.task.Deadline;
 import dill.task.Event;
 import dill.task.Task;
-import dill.task.ToDo;
 import dill.task.TaskList;
+import dill.task.ToDo;
 
 public class StorageTest {
     @TempDir
