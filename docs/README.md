@@ -7,11 +7,9 @@ Dill is a task management chatbot designed to help users reclaim their time. By 
 ## Quick start
 
 1. Ensure you have Java `21` or above installed in your computer.
-2. Download the latest `.jar` from [here]().
+2. Download the latest `.jar` from [here](https://github.com/weixuan01/ip/releases/tag/A-Release).
 3. Copy the file to the folder you want to use as the *home folder* for Dill.
 4. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar dill.jar` command to run the application.  
-A GUI similar to the below should appear in a few seconds.
-   ![GUI startup image](./screenshots/Startup.png)
 
 ## Adding todos
 
@@ -60,9 +58,9 @@ Format: `update <task-id> <flag> <value> ...`
 * `task-id` must be a positive integer.
 * Supported `<flag>`: `/name`, `/by`, `/start`, `/end`.   
 * Multiple flags can be specified in a single command to update multiple fields at once.  
+
 Example: `update 2 /name cs2103de ip /by 2026-03-08`  
 Dill replies with an update success message.
-![update_example](./screenshots/Update.png)
 
 ## Cloning tasks
 Duplicates a specific task in the list.  
