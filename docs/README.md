@@ -9,8 +9,8 @@ Dill is a task management chatbot designed to help users reclaim their time. By 
 1. Ensure you have Java `21` or above installed in your computer.
 2. Download the latest `.jar` from [here]().
 3. Copy the file to the folder you want to use as the *home folder* for Dill.
-4. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar dill.jar` command to run the application.
-   A GUI similar to the below should appear in a few seconds.
+4. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar dill.jar` command to run the application.  
+A GUI similar to the below should appear in a few seconds.
    ![GUI startup image](./screenshots/Startup.png)
 
 ## Adding todos
@@ -19,7 +19,6 @@ Adds a todo task to the task list.
 Format: `todo <task-name>`  
 Example: `todo eat, sleep, repeat`  
 Dill replies with a success message if the todo task is added successfully.
-![todo example](./screenshots/Todo.png)
 
 ## Adding deadlines
 
@@ -27,20 +26,17 @@ Adds a deadline task to the task list.
 Format: `deadline <task-name> /by <yyyy-mm-dd>`  
 Example: `deadline assignment /by 2026-03-14`  
 Dill replies with a success message if the deadline task is added successfully.
-![deadline example](./screenshots/Deadline.png)
 
 ## Adding events
 Adds an event task to the task list.  
 Format: `event <task-name> /start <yyyy-mm-dd> /end <yyyy-mm-dd>`  
 Example: `event art exhibition /start 2026-03-14 /end 2026-05-18`  
 Dill replies with a success message if the event task is added successfully.
-![event example](./screenshots/Event.png)
 
 ## Listing tasks
 Lists all tasks currently in the task list.  
 Format: `list`  
 Dill replies with the list of tasks.
-![list_example](./screenshots/List.png)
 
 ## Marking tasks
 Mark a specific task in the list as done.  
@@ -49,7 +45,6 @@ Format: `mark <task-id>`
 
 Example: `mark 1`  
 Dill replies with a mark success message.
-![mark_example](./screenshots/Mark.png)
 
 ## Unmarking tasks
 Unmarks a specific task in the list.  
@@ -57,15 +52,14 @@ Format: `unmark <task-id>`
 * `task-id` must be a positive integer.
 
 Example: `unmark 1`  
-Dill replies with a unmark success message.
-![unmark_example](./screenshots/Unmark.png)
+Dill replies with an unmark success message.
 
 ## Updating tasks
 Updates a specific task in the list.  
 Format: `update <task-id> <flag> <value> ...`
 * `task-id` must be a positive integer.
 * Supported `<flag>`: `/name`, `/by`, `/start`, `/end`.   
-
+* Multiple flags can be specified in a single command to update multiple fields at once.  
 Example: `update 2 /name cs2103de ip /by 2026-03-08`  
 Dill replies with an update success message.
 ![update_example](./screenshots/Update.png)
@@ -77,15 +71,14 @@ Format: `clone <task-id>
 
 Example: `clone 3`  
 Dill replies with a clone success message.
-![clone_example](./screenshots/Clone.png)
 
 ## Deleting tasks
 Removes a specific from the list.  
 Format: `delete <task-id>`
-* `task-id` must be a positive integer.  
+* `task-id` must be a positive integer.   
+
 Example: `delete 4`  
 Dill replies with a delete success message.
-![delete_example](./screenshots/Delete.png)
 
 ## Finding tasks
 Filters tasks with names containing the specified keyword.  
@@ -95,23 +88,19 @@ Format: `find <keyword>`
 
 Example: `find cs2103de`  
 Dill replies with a list of matching tasks.
-![find_example](./screenshots/Find.png)
 
 ## Viewing tasks
 Filters tasks occuring on the specified date.  
 Format: `view <yyyy-mm-dd>`  
 Example: `view 2026-04-01`  
 Dill replies with a list of matching tasks.
-![view_example](./screenshots/View.png)
 
 ## Getting help
 Displays a user manual.   
 Format: `help`  
 Dill replies with a help message containing the list of available commands.
-![help_example](./screenshots/Help.png)
 
 ## Exiting the program
 Terminates the program.   
 Format: `bye`  
 Dill replies with a farewell message.
-![exit_example](./screenshots/Exit.png)
